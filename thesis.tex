@@ -1,0 +1,204 @@
+\documentclass[oneside,letterpaper]{memoir}
+%\usepackage{draftwatermark}
+%\SetWatermarkLightness{0.99}
+\usepackage{subfig}
+\usepackage{citthesis}
+
+\usepackage[T1]{fontenc}
+% Load lmodern for bold \ttfamily
+
+\usepackage[]{lmodern}
+%\usepackage[lighttt]{lmodern}
+%\usepackage[bitstream-charter]{mathdesign}
+%\usepackage[urw-garamond]{mathdesign}
+\usepackage[sc]{mathpazo}
+%\usepackage{fourier}
+%\usepackage{lmodern}
+
+\usepackage{stmaryrd}
+
+\usepackage[colorlinks,linkcolor=blue,filecolor=blue,citecolor=blue,urlcolor=blue,backref=page]{hyperref}
+
+\usepackage{color}
+\usepackage{caption}
+\usepackage{pbox}
+\usepackage{multirow}
+\usepackage[pdftex]{graphicx}
+\usepackage[cmex10]{amsmath}
+%\usepackage{subfigure}
+\usepackage{dsfont}
+\usepackage{breakurl}
+%\usepackage{subfigure}
+\usepackage{url}
+\usepackage{dsfont}
+\newcommand*{\red}{\textcolor{red}}
+%\usepackage{caption}
+%\let\subcaption\undefined
+%\let\subfloat\undefined
+\newsubfloat{figure}
+
+\usepackage{lipsum,graphicx,xcolor,varwidth}
+\usepackage[labelfont=bf]{caption} 
+%\newcommand{\captionbackgroundcolor}[1]{\colorlet{cpbgcol}{#1}}
+%\DeclareCaptionFont{black}{\color{black}}
+%\captionbackgroundcolor{black!10}
+%\DeclareCaptionFormat{overlay}{\colorbox{cpbgcol}{\centering%
+%		\begin{varwidth}{\dimexpr\captionwidth-2\fboxsep-2\fboxrule}
+%			#1#2#3
+%\end{varwidth}}}
+%\captionsetup{format=overlay,font=black}
+
+
+%\setauthor{Edward J. Schwartz}
+%\settitle{Semantic Abstraction Recovery for Scalable Static Binary Analysis}
+%\doctors
+%\setchair{Dr.\ David Brumley}
+%\setdept{Electrical and Computer Engineering}
+%\setdegrees{B.S., Computer Science, Millersville University\\
+%M.S., Information Security, Carnegie Mellon University}
+%\setdefdate{May 2014}
+%\setgraddate{May 2014}
+%\setcopyyear{2014}
+%\usepackage[6-9]{pagesel}
+
+
+
+\setcounter{tocdepth}{1}
+%\usepackage[titles]{tocloft}
+
+
+%Part on Table of Contents
+%\renewcommand{\thepart}{\Roman{part} :}
+%\renewcommand\cftpartpresnum{Part~}
+\newcommand{\addparttoc}[1]{%
+	\addtocontents{toc}{\begingroup\def\protect\cftpartpresnum{}}
+	\addcontentsline{toc}{part}{#1}
+	\addtocontents{toc}{\endgroup}}
+
+%\usepackage[dvipsnames]{xcolor}
+%\newcommand{\colorunknown}[1]{\textcolor{blue}{#1}}
+%\newcommand{\ov}[1]{\textcolor{blue}{#1}}
+
+%No newpage after Part
+%\documentclass{book}
+\usepackage{titlesec}
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+{\normalfont\huge\bfseries}{\centering\partname\ \thepart}{20pt}{\Huge\centering}
+\titlespacing*{\part}{0pt}{50pt}{40pt}
+\titleclass{\chapter}{straight}
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter} {0pt}{50pt}{40pt}
+
+\makeatletter
+\renewcommand\listoffigures{%
+	\@starttoc{lot}%
+}
+\makeatother
+
+\makeatletter
+\renewcommand\listoftables{%
+	\@starttoc{lot}%
+}
+\makeatother
+
+
+
+\begin{document}
+
+\frontmatter
+
+%\thetitlepage
+\input{title}
+
+%\copyrightpage
+
+%\section*{Acknowledgements}
+%Thanks!
+
+\newpage
+\section*{Abstract}
+Humans use subtle and elaborate body signals to convey their thoughts, emotions, and intentions. ``Kinesics" is a term that refers to the study of such body movements used in social communication, including facial expressions and hand gestures. Understanding kinesic signals is fundamental to understanding human communication; it is among the key technical barriers to making machines that can genuinely communicate with humans. Yet, the encoding of conveyed information by body movement is still poorly understood.
+
+This thesis proposal is focused on two major challenges in building a computational understanding of kinesic communication: (1) measuring full body motion as a continuous high bandwidth kinesic signal; and (2) modeling kinesic communication as information flow between coupled agents that continuously predict each others' response signals.  To measure kinesic signals between multiple interacting people, we first develop the \emph{Panoptic Studio}, a massively multiview system composed of more than five hundred camera sensors. The large number of views allows us to develop a method to robustly measure subtle 3D motions of bodies, hands, and faces of all individuals in a large group of people. To this end, a dataset containing 3D kinesic signals of more than two hundred sequences from hundreds of participants is collected and shared publicly.
+
+The Panoptic studio allows us to measure kinesic signals of a large group of interacting people for the first time. We propose to model these signals as information flow in a communication system. The core thesis of our approach is that a meaningful encoding of body movement will emerge from representations that are optimized for efficient prediction of these kinesic communication signals. We hope to see this approach inspire continuous and quantitative models in the future study of social behavior. 
+
+ %approach to model kinesic signals based on the large scale dataset we have collected. In our framework, our model takes social signals from other people as input and predicts the signals of the target person as output. Our goal is to build a model to mimic human's nonverbal interactions by understanding and producing kinesics signals. To this end, we also propose a way to quantify influence of each body part in social communication.
+
+\newpage
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+\tableofcontents
+\addtocontents{toc}{\protect\setcounter{tocdepth}{3}}
+%\listoffigures
+%\listoftables
+
+\mainmatter
+
+\input{intro}
+\input{relatedwork}
+
+\part{Measuring Kinesic Signals}
+\chapterprecishere{``Measure what is measurable, and make measurable what is not so."\par\raggedleft--- \textup{Galileo Galilei}}
+
+Scientific achievements are often preceded by new innovations of measurement methods. Similarly, a method to accurately measure kinesic signals at high resolution is the key to computationally analyze kinesic communication. In this part of thesis, we build a system, the Panoptic studio, developed to capture social interactions, and present novel algorithms to measure full body motion of multiple people in social situations. The measured kinesic signals include 3D movements of anatomical landmarks from face, body, and hands, and also contain dense 3D trajectories from body surfaces with part labels. 
+\pagebreak
+
+\input{system}
+\input{method_trajectorystream}
+\input{method_mocap}
+\input{dataset}
+
+\part{Modeling Kinesic Signals}
+\chapterprecishere{``We respond to gestures with an extreme alertness and, one might almost say, in accordance with an elaborate and secret code that is written nowhere, known by none, and understood by all"\par\raggedleft--- \textup{Edward Sapir~\cite{Sapir-1949}}}
+
+The Panoptic studio allows us to measure kinesic signals of a large group of interacting people for the first time. We propose to model these signals as information flow in a communication system. The core thesis of our approach is that a meaningful encoding of body movement will emerge from representations that are optimized for efficient prediction of these kinesic communication signals. We hope to see this approach inspire continuous and quantitative models in the future study of social behavior. 
+
+\pagebreak
+
+\input{method_prediction}
+
+\chapter{Summary}
+
+This objective of this thesis is to push the envelop of our understanding about kinesic signals in social communication. We have built a system and a method to measure high-resolution kinesic signals at their full bandwidth, down to the nuanced and momentary movements of multiple people in a group. This system enables us to collect a large scale dataset capturing social interactions of hundreds of participants for the first time, and it affords us the unprecedented opportunity to spur a new scientific revolution in computational theories in social communication.
+
+As proposed work, we present an approach to model kinesic communication by predicting response kinesic signals in an optimization framework. We present a preliminary result of predicting attention in a triadic scene, and show a quantification of the influence of each body part signals related to the attention prediction. The preliminary experiments are performed only for attention prediction task, and a single time instance is considered as an input and an output. We plan to extend this approach to various resolution of signals including spatial and temporal variations. The future work is summarized as follows:
+
+\begin{enumerate}
+	\item Building a model that \emph{understands} the flow of kinesic signals at high resolution in social communication. 
+	\item Quantifying the influence and role of each body signal in social communication.
+\end{enumerate}
+
+%
+%\section{Timeline}
+%
+%\begin{table}[h]
+%	\centering
+%	\caption{Tentative  timeline for completing the proposed work:}
+%	\label{table:timeline}
+%	\begin{tabular}{lclclclcl}
+%		\hline	
+%		Task & Section  & Target Deadline & Target Publication\\
+%		\hline	
+%		Improving Social Signal Measurements &  Section 5 &   Nov 2018 & CVPR 2018 \\
+%		\hline	
+%		Social Signal Importance Map &  Section 7 &   Jun 2017 & Science/Nature \\
+%		\hline	
+%		Pairwise Proxemics 2 &  Section 7 &   May 2018 & Science/Nature \\
+%		\hline	
+%		\textbf{Thesis Defense} &  - &   May 2018 \\	
+%		\hline	
+%	\end{tabular}
+%\end{table}
+
+\backmatter
+
+\bibliographystyle{IEEEtran}
+\bibliography{thesis}
+\end{document}
+
+%% Local Variables: 
+%% mode: latex
+%% TeX-master: t
+%% End: 
