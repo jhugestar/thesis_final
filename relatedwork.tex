@@ -1,8 +1,187 @@
 % !TEX root = thesis.tex
 
-\chapter{Related Work}
+\chapter{Background}
+
+The objective of this thesis is to endow machines with the social signal processing ability to understand the kinesic signals (body languages)  of humans. To achieve the goal, we first should understand the protocol or ``rules" about how humans are using theses signals for communication. Unfortunately, our understanding about the protocol is still limited, although more than a century of studies on this problem from many different field including psychology, sociology, behavior science, and so on. The core idea of this thesis is that we believe we can still accomplish the goal by data and machine learning techniques, although explicit definition of the protocol may not be still challenging (we have seen similar history in many field including especially natural language processing). But it is still worth looking back the seminal work in psychology field to define and tackle this problem. Computational approaches have been also tried in many literatures. To this end, we discuss the method to measure subtle details in computer vision area, and also machine learning literatures related to our work. 
+
+
+Nonverbal communication are often categorized into subfields. Hall first introduced the concept of proxemics to describe how humans use their personal space during communication~\cite{Hall66}, and similarly Kendon studied spatial and orientational formations (named F-formation) established when multiple people communicate in a common space~\cite{kendon90}. Birdwhistell presented the term ``kinesics" to refer to the study of face and body movements of human in communication~\cite{Birdwhistell52, ekman1969}. Among them, facial expressions have been gained most of the attentions by researchers. Ekman pioneered the study of relation between emotions and facial expressions, and best known for the Facial Action Code System (FACS), a system to describe facial expressions using combinations of atomic units (Action Units)~\cite{ekman1977facial}. Since then, this system remains a standard to annotate and measure facial expressions, making a broad impact in various fields. Body gestures is relatively poorly explored area compared to the face, although multiple researchers address the importance of body languages in communications~\cite{Gelder09, Moore13, Meeren-2005, Aviezer-2012}. Surprisingly study for nonverbal communication is still in its infancy, and the approaches proposed several decades ago are still the most widely used methods available~\cite{Moore13}. 
+The fundamental limitation of this study is a lack in measuring the data, and without it it is extremely hard to build or demonstrate models and theory.  
+\\
+
+There has been computational approahces to tackle this problem. These are based on sensing rather than observation study or manual coding scheme. 
+
+
+
+But mainly they are focus on faces (since mostly sensing face is easier). Their scenarios are extremely limited. 
+
+
+
+
+
+Now we hope to expand the whole idea for entire body. we know we can use all bodies. Without including this signals, our answer should be misleading. Fortuantely, this is the time that this type of research can be possible. Good sensors are available. Good measurement thechnique can be possible. There exist a nice model to incorporate all this.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kinesic signals play a crucial role in human social communication, and, due to its important role in communication, nonverbal communication has received a lot of attentions by psychologies.  Since the goal of Artificial Intelligence is to mimic human's intelligence, and the social intelligence is also an important factor to be considered. In that sense, it is worth looking back the history of work in pychology where understanding kinesic signal has been tried 
+
+
+
+
+
+
+
+
+Historically, Mehrabian found in his research that more than 93 percent of emotional meaning is transmitted nonverbally~\cite{Mehrabian67,Mehrabian81}. Birdwhistell~\cite{Birdwhistell70} further asserted that nonverbal communication accounts for approximately two-thirds of what we communicate. Although there exist controversy regarding the quantification of the relative importance of nonverbal signals, it is still widely accepted by researchers that nonverbal signals have more impact than the verbal part in communications~\cite{Moore13}.
+
+
+
+
+
+If we define the social signals are the channels we put various messages (word, emotion, intention and so on ) for communication, then basically all possible signals -- voice, vocal tones, facial expression, finger motion, body location, and body orientations -- can be a part of the signals.   Language should be the most studied field, and in this thesis we focus on the nonverbal parts. Researchers categories this into several subcatetories, including including Proxemics, Kinesics, Vocalics, and Haptics. This thesis is more related to the visual cues which can be captured by camera sensors, so mostly related to the Proxemics and Kinesics. 
+
+The interest of this field has been there for centuries. The research has been mostly lead by pychology or cognitive sciences. The field has been gained the attention from roboticist and computer scientist who wish to build a machine or robot which can genuinely interact with humans.  In the end, we have to know the communicative protocol humans are using first, to equip the ability to machines, and this makes that it is worth taking a look at the work done in other field. At the same time, there exist interesting thought that probably we can simply throw away all previous method. We can see the similar consequence in the language field. It has been prooved that without any complicated rules or grammar linguist have been built for centuries are not required to build machine to use the langues -- understand human's language, use it, and translate to other languages. Current success is most leveraged by data itself. The rules, patterns, features are just automatically discovered and extracted by machine learning techniques from the large scale dataset. 
+
+Basically we want to get the answer from the similar thought for body languages. Surely this data driven approach should be more suitable to the body language part since, compared to verbal counter part, we have been failed to build any rules and grammars for the body languages yet. This means it is challenging, but maybe this data driven and computational methods should be the right direction to solve this problem. 
+
+What would be the major obstacle? Data! Compared to the tons of language data, nonverbal body language data is less available. We may consider images and videos, but they are really raw data which is hard to directly processing for "extracting the rules for social signals", because baisically they are pixels as a raw format, and we need to extract scemantic meanings out of that. And, as you know, this is the fundamental goal of all computer vision fields, and this means that we need to solve computer vision problem first to tackle the target problem. 
+
+But still there are similar approached to tackle the problem with available technology and methods. Most of them are more focused on the face part (since there were practically working already up to some level). In this paper, we will explore exisisting trials in the similar track. 
+
+
+
+Social Signal Processing is one of the term to refer to the similar track --- using computational method to understand social signals. A good review paper is also available. And good conferences ICMI, virtual humans are there. 
+
+
+
+
+Several aspect of interpersonal non-verbal signals have been studied, and they are often restricted by existing measurement techniques. 
+
+
+Non-computational methods are dependent to the human coder who describe or annotate specific or global event of the interaction. As expected the annotation tends to be subject, cannot capture enough details, and not easy to be scale. 
+
+
+Computational methods have been tried, but mostly on the face. Face-to-face interaction between doctor-patient, mother-baby, negotiation, and so on. Most of them are on the static or table setup so that cameras or sensors can focus on the target part. 
+
+
+
+
+Computational method for the bodies are extremely limited. Total body are extremely limited. Why is it limited? Any solution?
+
+
+
+Building dataset is challenging. Needs several experts [Sun 2011]. 
+There are dataset [Sun 2011, face DBs, salsa and so on]. 
+
+Annotation? unclear..
+
+
+Interaction vs Psudointeraction
+
+
+
+
+
+
+
+
+
+
+But this field often considered very limited scenarios. For example, negotiation, sentimental analysis, and so on. And each field defined the task and evaluation method by themselved. Unfortuatnly, the output of a result is hardly generalizable and different setup requires to build a different theory or method. 
+
+
+
+
+Formation, Proximics can be one since they are easier to measure. 
+
+
+Synchrony and mimicary is another one
+
+
+
+Turn taking, gestures, emotion recognition and so on. 	
+
+
+interaction is a dynamic process between people exchanging or coordinating signals
+
+Mother infant interaction
+
+Mostly dyad, triad and polyad are rare
+
+Establishing rapport (machine is connected to the human and they feel that they are on the same page)
+
+
+
+
+
+
+Specific focus on faces. 
+
+
+
+What about body??
+
+ 
+
+
+
 
 This chapter reviews related work in capturing and modeling kinesic signals in social interactions. While nonverbal communication in general includes all types of ``other-than-words" communication channels including Proxemics, Kinesics, Vocalics, and Haptics, in this thesis we use this term to refer to the communication by kinesic signals. 
+
+
+
+
+Pychology? 
+
+What is the social interaction?
+
+Synchrony, mimicary?
+
+
+What is the traditional method? Coding. User study....  What is the limitation?
+
+
+Coding Interactive Behavior(CIB)
+
+What is the current conclusion? 
+
+
+Often dyadic. Hard to triadic. 
+
+
+Any background for the computational method??
+
+
+
+What is the scope ? definition of my social signal processing?
+
+
+signals are subtle. previous measurements are too coarse.
+
+%Computational Analysis for Social Signals
+
+Faces
+
+Bodies
+
+
+Synchrony Review paper. 
+Social Signal Processing review paper 
 
 
 %How can we represent social interection
@@ -10,7 +189,6 @@ This chapter reviews related work in capturing and modeling kinesic signals in s
 
 \section{Cognitive Science}
 Theory of mind
-ㅅㄷㅅㄷ
 
 \section{Psychology}
 Theory of mind
@@ -42,6 +220,15 @@ Nonverbal communication are often categorized into subfields. Hall first introdu
 
 Cameras have been used as a tool to record and study social interaction. Even Darwin, in his foundational treatise on the expression of emotion, used photographs to prompt participant response to expressions~\cite{Darwin-1872}. Since then, photographs have been--and continue to be--a fundamental tool in studying social behavior~\cite{Hall-1962,Izard-1971,Ekman-1977}. When the video camera was invented, it too became an integral tool to study the dynamics of social interaction~\cite{Muybridge-1887,Yarbus-1967}. In most of the work, however, the rerecorded scenes are analyzed by human annotators requiring them to spend an enormous amount of time. More importantly, the observer-based annotation system is subject to bias despite efforts to make annotation guidelines, and subtle details in nonverbal signals are ignored due to the limitation in representing them by manual annotations. 
 
+
+\section{Computationally Modeling Kinesic Signals}
+Over the last decade, there has been increasing interests in computationally analyzing nonverbal communication by measuring signals via computer vision techniques.  Analyzing facial expression is one of the core examples~\cite{ChuDC13, Torre15, shan2009facial}. Other literatures present methods to automatically detect social cues from photos and videos, including detecting F-formation~\cite{setti2015f}, recognizing proxemics~\cite{yang2012recognizing}, recognizing emotions by body pose\cite{schindler2008recognizing}, and detecting social saliency~\cite{park20123d}. Affective Computing has also been growing up rapidly, where video cameras and other sensor measurements (EMG, electrodermal skin response, and heat rate) are used with computer vision and machine learning techniques to analyze emotion, social behavior, and roles~\cite{picard1997affective} in social interaction. 
+
+%Dataset
+The availability of large scale data is essential in computational analysis of social interaction. The AMI Meeting Corpus is one of the most extensive database containing group interactions, but only contains a contrived table meeting scenarios with limited number of views~\cite{carletta2005ami}. Several other datasets recording unstructured social scenes have also been presented, where multiple people (from 5 to 14 subjects) naturally communicate without restrictions in their behavior~\cite{Zen-10,Cristani-11,SALSA-15}. In contrast to the scenes captured in structured environment such as round-table meetings~\cite{carletta2005ami, Lepri-12}, the subjects in such unstructured environments show richer social signals in their body motion, locations, and orientations. However, due to the unconstrained nature, it is challenging to measure body motion of subjects, and, thus, relatively low dimensional signals (e.g., quantized body/head orientation) often are considered. None of the previous work addresses to reconstruct full body skeletal motion of individuals in social situations.
+
+
+
 \section{Automatically Measuring 3D Kinesic Signals}
 
 In computer vision, there have been a large number of approaches to measure 3D structure and motion of dynamically moving people using multiple camera sensors. Kanade et al.~\cite{Kanade-1997} pioneered the use of multi-view sensing systems to ``virtualize" reality, using 51 cameras mounted on a geodesic dome of 5 meters in diameter. A number of systems were subsequently proposed to produce realtime virtualizations~\cite{Matusik-2000,Matsuyama-2002,Gross-2003,Petit-2009}. Vlasic et al.~\cite{Vlasic-2009} recovered detail by applying multi-view photometric stereo constraints using a system with 1200 lights on a dome and eight cameras. More recently, a multimodal multi-view stereo system fusing 53 RGB cameras and 53 infrared cameras has been proposed to reconstruct high quality 3D virtual characters~\cite{Collet-15}. 
@@ -49,11 +236,9 @@ In computer vision, there have been a large number of approaches to measure 3D s
 Methods explicitly tackle markerless motion capture by producing 3D skeletal structures over time similar to their marker-based counterparts~\cite{Gall-09, Gavrila-96, Cheung-05,Plankers-03, Bregler-04, Kehl-06, Corazza-10, Vlasic-08, Brox-10, Stoll-11, deAguiar-2008, Vlasic-2008, Furukawa-2008}. The methods deform pre-defined articulated templates of fixed topology to recover the details that were subsampled or occluded in the set of views at a time instant. These methods require an offline method to generate a rigged 3D model for each individual, and the quality of the template is important to achieve high accuracy. The template models need to be aligned at the initial frame to be tracked, and usually a predefined pose (such as a T-pose) are assumed and performed by all individuals. The methods in this area fundamentally suffer from topological changes restricted by the template model, and, similar to other tracking methods, error accumulation is a critical issue in tracking for long durations. Although the 3D template-based method shows good performance---and has become a standard in markerless motion capture approaches---the requirement of a high quality 3D template for each individual limits the practicality of the method, especially in our scenario where dozens of individuals are involved, as the method does not scale well to multiple people. Previous work is demonstrated on a single actor with few exceptions \cite{Ye-2012, Liu-2013}. For example, it is required to segment image cues per subject to track them independently as in~\cite{Liu-2013}, which becomes more complicated if a large number of people are involved, as in our scenes. It should be noted that none of the previous markerless motion capture approaches focus on capturing non-verbal social behaviors of multiple naturally interacting people.
 
 
-\section{Computationally Modeling Kinesic Signals}
-Over the last decade, there has been increasing interests in computationally analyzing nonverbal communication by measuring signals via computer vision techniques.  Analyzing facial expression is one of the core examples~\cite{ChuDC13, Torre15, shan2009facial}. Other literatures present methods to automatically detect social cues from photos and videos, including detecting F-formation~\cite{setti2015f}, recognizing proxemics~\cite{yang2012recognizing}, recognizing emotions by body pose\cite{schindler2008recognizing}, and detecting social saliency~\cite{park20123d}. Affective Computing has also been growing up rapidly, where video cameras and other sensor measurements (EMG, electrodermal skin response, and heat rate) are used with computer vision and machine learning techniques to analyze emotion, social behavior, and roles~\cite{picard1997affective} in social interaction. 
 
-%Dataset
-The availability of large scale data is essential in computational analysis of social interaction. The AMI Meeting Corpus is one of the most extensive database containing group interactions, but only contains a contrived table meeting scenarios with limited number of views~\cite{carletta2005ami}. Several other datasets recording unstructured social scenes have also been presented, where multiple people (from 5 to 14 subjects) naturally communicate without restrictions in their behavior~\cite{Zen-10,Cristani-11,SALSA-15}. In contrast to the scenes captured in structured environment such as round-table meetings~\cite{carletta2005ami, Lepri-12}, the subjects in such unstructured environments show richer social signals in their body motion, locations, and orientations. However, due to the unconstrained nature, it is challenging to measure body motion of subjects, and, thus, relatively low dimensional signals (e.g., quantized body/head orientation) often are considered. None of the previous work addresses to reconstruct full body skeletal motion of individuals in social situations. %such challenging scenarios, although rich social signals are embedded in those subtle motions. 
+
+ %such challenging scenarios, although rich social signals are embedded in those subtle motions. 
 %
 %\section{Human Motion Prediction}
 %Predicting future human motion is an emerging area in computer vision and machine learning. Researchers propose approaches of predicting pedestrian's future trajectory~\cite{kitani2012activity}, forecasting human interaction in dyadic situations~\cite{huang2014action}. More recently, Deep Neural Network are used to predict future 3D motion from motion capture data~\cite{mnih2012conditional, Fragkiadaki_2015_ICCV, jain2016structural}, but they only focus on single subject's motion. A few literatures address point motion trajectory prediction in social situations~\cite{helbing1995social, alahi2016social}.
