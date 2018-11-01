@@ -2,19 +2,145 @@
 
 \chapter{Background}
 
-The objective of this thesis is to endow machines with the social signal processing ability to understand the kinesic signals (body languages)  of humans. To achieve the goal, we first should understand the protocol or ``rules" about how humans are using theses signals for communication. Unfortunately, our understanding about the protocol is still limited, although more than a century of studies on this problem from many different field including psychology, sociology, behavior science, and so on. The core idea of this thesis is that we believe we can still accomplish the goal by data and machine learning techniques, although explicit definition of the protocol may not be still challenging (we have seen similar history in many field including especially natural language processing). But it is still worth looking back the seminal work in psychology field to define and tackle this problem. Computational approaches have been also tried in many literatures. To this end, we discuss the method to measure subtle details in computer vision area, and also machine learning literatures related to our work. 
+The objective of this thesis is to endow machines with the social signal processing ability by which they can understand and use the kinesic signals (body languages)  of humans. This goal is hard to achieve without knowing how actually humans are performing it during the communication.  The problem is, however, our understanding on our own social signal ability is extremely limited, despite the long history of research to decipher this protocol, in many research field such as psychology, sociology, behavior science. The core idea of this thesis is motivated from the belief that the computational methods based on machine learning techniques with a large scale dataset can be the key to approach the solution where the protocol to process the social signals can be automatically learnt. In this section, the early work on human's kinesic signals (mostly non-computational methods) are discusses and more recent work to tackle the problem based on the computational methods are explored. Notably, the most of the previous computational methods are limited to relatively simple setup (dyadic motion, focusing faces, seating position), due to the lack of social signal measurement methods to extend the scope. The  social signal measurement system and method presented in this thesis are based on the cutting-edge techniques covering computer vision, computer graphics, and machine learning technqiues, and the related previous work is also discusses. 
 
 
-Nonverbal communication are often categorized into subfields. Hall first introduced the concept of proxemics to describe how humans use their personal space during communication~\cite{Hall66}, and similarly Kendon studied spatial and orientational formations (named F-formation) established when multiple people communicate in a common space~\cite{kendon90}. Birdwhistell presented the term ``kinesics" to refer to the study of face and body movements of human in communication~\cite{Birdwhistell52, ekman1969}. Among them, facial expressions have been gained most of the attentions by researchers. Ekman pioneered the study of relation between emotions and facial expressions, and best known for the Facial Action Code System (FACS), a system to describe facial expressions using combinations of atomic units (Action Units)~\cite{ekman1977facial}. Since then, this system remains a standard to annotate and measure facial expressions, making a broad impact in various fields. Body gestures is relatively poorly explored area compared to the face, although multiple researchers address the importance of body languages in communications~\cite{Gelder09, Moore13, Meeren-2005, Aviezer-2012}. Surprisingly study for nonverbal communication is still in its infancy, and the approaches proposed several decades ago are still the most widely used methods available~\cite{Moore13}. 
+Nonverbal communication is categorized into subfields, including kinesics (body language), proxemics (distance),  physical appearance,  vocalics,  and haptics (touch) \cite{}. Among them, this thesis mainly focuses on kinesics and proxemics. Hall first introduced the concept of proxemics to describe how humans use their personal space during communication~\cite{Hall66}, and similarly Kendon studied spatial and orientational formations (named F-formation) established when multiple people communicate in a common space~\cite{kendon90}. Birdwhistell presented the term ``kinesics" to refer to the study of face and body movements of human in communication~\cite{Birdwhistell52, ekman1969}. Among them, facial expressions have been gained most of the attentions by researchers. Ekman pioneered the study of relation between emotions and facial expressions, and best known for the Facial Action Code System (FACS), a system to describe facial expressions using combinations of atomic units (Action Units)~\cite{ekman1977facial}. Since then, this system remains a standard to annotate and measure facial expressions, making a broad impact in various fields. Body gestures is relatively poorly explored area compared to the face, although multiple researchers address the importance of body languages in communications~\cite{Gelder09, Moore13, Meeren-2005, Aviezer-2012}. 
+
+
+Surprisingly the study for nonverbal communication is still in its infancy despite the large attention of the fields, and the approaches proposed several decades ago are still the most widely used methods available~\cite{Moore13}. A core obstacle hindering the advance of the fields is the fact that the objective of the research goal is ambiguous. In the perspective of robotics and artificial intelligence, the main goal of exploring this field is to build a machine to use this ability to genuinely interact with human. Unfortunately, this goal is really far from the current technology. The subtle details cannot be objectively analyzes without the proper measurmenet tools which has been missing so far. Due to the reason, most of the previous research haven't extract meaningful output to be conveyed to building socially interacting machines. Then what kind of fields are  studies?
+
+
+
+One of the most objectively studies area is proxemics and F-formation. These fields are related to low dimensional features humans are making (at most 3 dimenstion for the location and  2 dimension for the orientation). It is possible to build the model for this and also it is possible to demonstrate the theory  by simple setup with even manual measurement. Hall piorneered this study and built the initial theory. Recently, computational methods using computer vision studies automatically finds groups, and HRI applications. 
+
+
+
+
+Face is another area where the model manually defined works still well. FACS are defined by Paul Ekman and his colleagues and since then this model has been used in many fields.  It is still the dominant method in computational methods and modeling.  TODO: FACS related hand coding system and computational method
+
+
+
+
+
+P. Ekman and W. Friesen. Facial action coding system: A
+technique for the measurement of facial movement. Consulting
+Psychologists Press, 1978.
+
+
+
+
+Automatic FACS detection:
+Much effort
+in automatic facial image analysis seeks to automatically
+recognize FACS action units [12, 20, 25, 27].
+
+G. Littlewort, M. Bartlett, I. Fasel, J. Susskind, and J. Movellan.
+Dynamics of facial expression extracted automatically
+from video. Image and Vision Computing, 24(6):615–625,
+2006.
+
+M. Pantic and L. Rothkrantz. Facial action recognition for facial
+expression analysis from static face images. IEEE Transactions
+on Systems, Man, and Cybernetics, pages 1449–
+1461, 2004.
+
+ Y. Tian, J. F. Cohn, and T. Kanade. Facial expression analysis.
+In S. Z. Li and A. K. Jain, editors, Handbook of face
+recognition. New York, New York: Springer, 2005.
+
+Y. Tong, W. Liao, and Q. Ji. Facial action unit recognition by
+exploiting their dynamic and semantic relationships. Transactions
+on Pattern Analysis and Machine Intelligence, pages
+1683–1699, 2007
+
+Tomas Simon∗
+, Minh Hoai Nguyen∗
+, Fernando De La Torre, Jeffrey F. Cohn 
+Action Unit Detection with Segment-based SVMs
+
+
+Comprehensive database for facial expression analysis
+
+T Kanade, Y Tian, JF Cohn - fg, 2000 - computer.org
+
+
+Automatic facial expression analysis: a survey
+
+
+Early work of auto face emotional express recognition
+M. Suwa, N. Sugie, and K. Fujimora, “A Preliminary Note on Pattern Recognition of Human Emotional Expression,” Proc. Int’l Joint Conf. Pattern Recognition, pp. 408-410, 1978
+
+
+
+
+
+
+
+
+%The face is a powerful channel of nonverbal communication.
+Facial expression provides cues about emotional response,
+regulates interpersonal behavior, and communicates
+aspects of psychopathology. To make use of the information
+afforded by facial expression, Ekman and Friesen [8] proposed
+the Facial Action Coding System (FACS). FACS is
+a comprehensive, anatomically-based system for measuring
+all visually discernible facial movement. It segments all facial
+activity on the basis of 44 unique “action units” (AUs),
+as well as several categories of head and eye positions an
+
+
+
+
+Face model also connected other studies such as person-person interaction (baby mother), and sentimental analysis to know the target subject facial expression.  TODO: this area.
+
+Infant-mother face-to-face interaction: Age and gender differences in coordination and the occurrence of miscoordination
+EZ Tronick, JF Cohn
+Child development, 85-92
+
+
+
+
+
+
+
+
+Kinesics and body languages are relatively less explored. The main problem is the limited way to describe the motion. Several method tried to build Action units for bodies, but they are not well defined yet. the amount of body data is limited. The way to capture body during the motion capture is limited. But still there are trials. 
+
+Sentimental analysis
+Synchrony?
+Classficiation??
+
+
+
+Computational method area.
+
+Affective computation. 
+
+
+Social Signal Processing.
+
+
+Alex pentland
+Morency. 
+Social Robotics.
+
+
+
 The fundamental limitation of this study is a lack in measuring the data, and without it it is extremely hard to build or demonstrate models and theory.  
-\\
-
-There has been computational approahces to tackle this problem. These are based on sensing rather than observation study or manual coding scheme. 
+Language was there. Face was there. What about body??
 
 
+Computer vision/graphics has made a great progress. Now this is the time. 
 
-But mainly they are focus on faces (since mostly sensing face is easier). Their scenarios are extremely limited. 
 
+Body measurement method.
+
+Body modeling
+
+
+There has been computational approahces to tackle this problem. These are based on sensing rather than observation study or manual coding scheme.  But mainly they are focus on faces (since mostly sensing face is easier). Their scenarios are extremely limited. 
+	
 
 
 

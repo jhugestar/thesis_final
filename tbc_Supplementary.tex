@@ -1,0 +1,209 @@
+\documentclass[11pt,english]{article}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{float}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphics}
+\usepackage[colorlinks]{hyperref}
+\usepackage{marginnote}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs,amsfonts,dsfont} 
+
+%\hypersetup{
+%    colorlinks,%
+%    linkcolor=RawSienna,%
+%    anchorcolor=black,
+%    filecolor=black,%
+%    citecolor=green,%
+%    urlcolor=magenta
+%}
+\usepackage{lmodern}
+\usepackage{babel}
+\date{\vspace{-5ex}}
+\begin{document}
+
+\title{Total Capture: A 3D Deformation Model for \\
+Tracking Faces, Hands, and Bodies \\
+(Supplementary Material) \thanks{Website:~\scriptsize{\url{http://www.cs.cmu.edu/\~hanbyulj/totalcapture}}}}
+
+\author{Hanbyul Joo$^{1}$ \hspace{0.25in} Tomas Simon$^{1,2}$ \hspace{0.25in} Yaser Sheikh$^{1,2}$\\
+	$^{1}$Carnegie Mellon University \hspace{0.25in} $^{2}$Facebook Reality Labs, Pittsburgh  \\
+\tt\small hanbyulj@cs.cmu.edu, \{tomas.simon, yaser.sheikh\}@fb.com
+}
+\maketitle
+
+\section{Building the Mesh Topology of the Frank Model}
+To define the shape of Frank model at the rest pose, we manually align the body model and other part models as shown Fig.~\ref{fig:buildingFrank} (a). The alignment is done by selecting a set of corresponding points and computing a similarity transform matrix between parts. Then, we manually stitched the aligned meshes in a single mesh topology by removing redundant parts and modifying the vertices around the borders to make the final mesh as seamless as possible. We also modified the shape of torso and feet of the final model to better match clothed people, as shown in Fig.~\ref{fig:buildingFrank} (b). Finally, a blending $\mathbf{C}$ used in Eq. (4) of the paper is computed to transform the aligned part models to the final Frank mesh shape. 
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{Franmodel_topology}
+    \caption{ (a) We manually align face and hand models on the mean shape of the body model at rest pose. (b) The mean shape of the Frank model is defined to minimize the seams around the borders. In building the shape of Frank, we also modify the original shape of the body model to make the model less naked (e.g., toes and shape of torsos as pointed by arrows).}
+    \label{fig:buildingFrank}
+\end{figure}
+
+
+\section{Motion Capture with Frank Model}
+
+\subsection{Feet Keypoint Detection}
+\begin{figure}[th]
+    \centering
+    \includegraphics[width=\linewidth]{fig/feet_examples}
+    \caption{ (Left) Definition of foot keypoints: tip of big and little toes and center of the heel bone.  (Right) Example images for foot keypoint annotations.}
+    \label{fig:feet_label}
+\end{figure}
+
+Example annotations for the feet landmarks can be seen in Fig.~\ref{fig:feet_label}. At test time, for a given person detection, we use a bounding box centered at the mean of the knee and ankle points (defining the shins) of both legs. As the size of the bounding box, we use a square of scale $3$ times the maximum difference between the point locations across all axes. 
+
+\subsection{Objective Function}
+\textbf{Seam Constraints:}  We encourage the vertices around the seam parts to be close by penalizing differences between the last  rings of vertices around the seam of each part, and the corresponding closest point in the body model in the rest pose expressed as barycentric coordinates,
+% \begin{align}
+% E_\textrm{seam} = &|| \mathbf{V}_{lh:B} - \mathbf{Y}_{B:lh} ||^2 +\\
+% &|| \mathbf{V}_{rh:B} - \mathbf{Y}_{B:rh} ||^2 +\\
+%  &|| \mathbf{V}_{F:B} - \mathbf{Y}_{B:F} ||^2,
+% \label{eq:glue_constraints}
+% \end{align}
+
+\begin{align}
+E_\textrm{seam} = &\sum_{(i,j)\in\mathcal{C}^{LH}} || \mathbf{B}_i\mathbf{V}^B - (\mathbf{v}^{LH}_{j})^T ||^2 +\\
+ &\sum_{(i,j)\in\mathcal{C}^{RH}} || \mathbf{B}_i \mathbf{V}^B - (\mathbf{v}^{RH}_{j})^T ||^2 +\\
+  &\sum_{(i,j)\in\mathcal{C}^{F}} || \mathbf{B}_i \mathbf{V}^B - (\mathbf{v}^{F}_{j})^T ||^2,
+\label{eq:glue_constraints}
+\end{align}
+% \begin{align}
+% E_\textrm{glue} = &\sum_{(i,j)\in\mathcal{C}^{LH}} || \mathbf{v}^B_{i} - \mathbf{v}^{LH}_{j} ||^2 +\\
+% &\sum_{(i,j)\in\mathcal{C}^{RH}} || \mathbf{v}^B_{i} - \mathbf{v}^{RH}_{j} ||^2 +\\
+%  &\sum_{(i,j)\in\mathcal{C}^{B}} || \mathbf{v}^B_{i} - \mathbf{v}^{F}_{j} ||^2,
+% \label{eq:glue_constraints}
+% \end{align}
+where the set $\mathcal{C}^{LH}$ contains correspondences $(i,j)$ where $j$ indexes the last two rings of vertices around the seam of the left hand, and $i$ denotes the corresponding closest point in the body model in the rest pose expressed as barycentric coordinates with $\mathbf{B}_i\,{\in}\,\mathds{R}^{1\times N^B}$ (where $\mathbf{B}_i\mathbf{1}_{N^B}{=}1$), and similarly for the right hand. For the face, we use the last three rings of vertices, as shown in Fig.~\ref{fig:seams}.
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{artifact_seam.jpg}
+    \caption{ (a and b) Frank model keeps the original parameterization of part models and it may have artifacts around the borders (in this figures we intentionally manipulate parameters to visualize the artifact). We define a seam constraint to avoid this inconsistency among parts, which are shown in the green liens in (a) and (b). (c) and (d) show the vertices selected to define the seam constraint. In (c) and (d), the top figures show the hand and face part models and the bottom figures show the vertices in the body model.}
+    \label{fig:seams}
+\end{figure}
+
+\noindent \textbf{Prior Cost:} 
+All PCA-derived parameters are penalized with the corresponding variance, which by construction of our basis is normalized to 1, so that:
+\begin{align}
+E_\textrm{prior}^F &= \lambda_{SF} ||\phi^F||^2 + \lambda_{PF} ||\theta^F||^2\\
+E_\textrm{prior}^B &= \lambda_{SB} ||\phi^B||^2 + \lambda_{PB} ||\theta^B||^2\\
+E_\textrm{prior}^H &= \lambda_{SH} ||\phi^H-1||^2 + \lambda_{PH} ||\theta^H||^2
+\end{align}
+where, for simplicity, we penalize pose parameters that deviate from the rest pose with a small weight, and we encourage hand scaling factors to be close to 1,
+% \begin{align}
+% E_\textrm{prior}^F = E^F_\textrm{prior}(\phi^F) + E^F_\textrm{prior}(\theta^F)\\
+% E^F_\textrm{prior}(\phi^F) = {\phi^F}^T\phi^F\\
+% E^F_\textrm{prior}(\theta^F) = {\theta^F}^T\theta^F,
+% \end{align}
+and similarly for other part model parameters. We use different weights for the priors on different parts ($\lambda_{SF}=\lambda_{SH}=10^{-2}$, $\lambda_{SB}=10^{-2}, \lambda_{PF}=10^{-4}, \lambda_{PB}=10^{-6}$, and $\lambda_{PH}=10^{-7}$).
+
+
+\subsection{Optimization Procedure}
+The complete model is highly nonlinear, and due to the limited degrees of freedom of the skeletal joints, the optimization can get stuck in bad local minima. 
+% Similarly, the ICP term requires a reasonable initial alignment between the model and measurements to find correspondences. 
+Therefore, instead of optimizing the complete model initially, we fit the model in phases, starting with a subset of measurements and strong priors that are relaxed as optimization progresses.
+
+Model fitting is performed on each frame independently. To initialize the overall translation and rotation, we use four keypoints on the torso (left and right shoulders and hips) without using the ICP term, and with strong weight on the priors. Once the torso parts are approximately aligned, we use all available keypoints of all body parts, with small weight for the priors. The results at this stage already provide reasonable motion capture but do not accurately capture the shape (i.e., silhouette) of the subject. Finally, the entire optimization is performed including the ICP term to find correspondences with the 3D point cloud. We run the final optimization two times, finding new correspondences each time. For the optimization we use Levenberg-Marquardt with the Ceres Solver library~\cite{ceres-solver}. 
+
+\section{Creating Adam}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{Deform_weight_result.jpg}
+    \caption{ (a) Visualizing the weight $\mathbf{W}$ in Eq. (15). The black region means low weight allowing more deformation and the red region means higher weight allowing litting deformation. (b and c) Examples of out-of-shape space fitting results. For each example, the Frank model fitting result (left), after deformation (center), and input image are shown (right).}
+    \label{fig:deformation}
+\end{figure}
+
+% \begin{figure}[t]	
+% 	\includegraphics[width=\linewidth]{fig/deltaRecon_examples}
+% 	\caption{Delta Reconstruction Results. For each example, (left) Original Frankenstein model output; (center) Delta deformation along normal direction; (c) An example view.}
+% 	\label{fig:deltarecon}
+% \end{figure}
+
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{snapshot05.png}
+    \caption{ An overview of the reconstructed 350 shapes by fitting the Frank model.}
+    \label{fig:frank_350}
+\end{figure}
+
+\subsection{Fitting Clothes and Hair}
+
+In Eq (15), we use a diagonal weight matrix $\mathbf{W}\in\mathds{R}^{N^U\times N^U}$ to avoid large deformations where the 3D point cloud has lower resolution than the original mesh, such as details in the face and hands. The visualization of this weight matrix is shown in Fig.~\ref{fig:deformation} (a). The examples of deformed meshes are shown in Fig.~\ref{fig:deformation} (b) and (c). We run this process for 70 subjects with 5 different poses, resulting in 350 meshes, as shown in Fig.~\ref{fig:frank_350}.
+
+
+% \noindent \textbf{Visibility Maps: } 
+% Deforming out of model space can introduce artifacts if false correspondences are established with the noisy point clouds that we get from our limited resolution cameras. 
+% % This is particularly true with the point cloud reconstructions we were able to get with the limited resolution of our multicamera system. 
+% Problematic regions include joint regions, where association can match points to a different body part. To avoid this, we discard ``unreliable'' correspondences using a visibility heuristic. We compute the visibility of every vertex from the cameras used to reconstruct the point cloud, and use this as a reliability measure: if a vertex is not visible from sufficient cameras, it is unlikely to have a corresponding 3D match, so we do not correspond such difficult areas (e.g., below the arms, between the legs). 
+
+% \noindent \textbf{Multi Frame Fitting: } To further reduce noise, we solve for the surface $\Delta$ using multiple frames simultaneously. This can be done by stacking the linear constraints in Eq. (15) of the paper obtained from multiple frames in a single system. 
+% \begin{align}
+% \begin{pmatrix} \mathbf{N}_1^T  \\ \left( \mathbf{W} \mathbf{L} \mathbf{N}_2 \right)^T \\ \mathbf{N}_2^T  \\ \left( \mathbf{W} \mathbf{L} \mathbf{N}_1 \right)^T \\ \cdots \end{pmatrix} \Delta
+% = \begin{pmatrix} (\mathbf{P}_1 - \mathbf{V}_1)^T \\ \mathbf{0}  \\ (\mathbf{P}_2 - \mathbf{V}_2)^T \\ \mathbf{0} \\ \cdots \end{pmatrix}
+% \end{align},
+
+% where subscripts means frames. In practice, we use five frames with different pose to optimize the shape of the same 
+
+% \begin{figure}[t]	
+% 	\includegraphics[width=0.32\columnwidth,trim=800 80 500 90, clip]{fig/visibility_corres/visibility_5frames_1iter}
+% 	\includegraphics[width=0.32\columnwidth,trim=800 80 500 90, clip]{fig/visibility_corres/1_1iter_noVis}	
+% 	\includegraphics[width=0.32\columnwidth,trim=800 80 500 90, clip]{fig/visibility_corres/1_1iter_visibility_1frames}
+% 	%\includegraphics[width=0.24\columnwidth,trim=0 0 0 0, clip]{fig/visibility_corres/visibilityMap}	
+	
+% 	\caption{Delta Reconstruction Results. (a) Original Frankenstein model output; (b) Delta deformation without visibility map; (c) Delta deformation with visibility map; (D) color coded visibility map (blue with low visibility, and red with high visibility).}
+% 	\label{fig:deltarecon}
+% \end{figure}
+
+
+% \begin{figure}[t]    
+% 	\includegraphics[width=\columnwidth]{fig/compare_franken_adam}    
+% 	%\includegraphics[width=\columnwidth]{fig/compare_franken_adam2}    
+% 	\caption{Comparison between the shape space of Frankenstein model and Adam model. For each example, (left) an input image; (middle) Frankenstein model fitting result; (right) Adam model fitting result with the same 3D measurements.}
+% 	\label{fig:compare_franken_adam}
+% \end{figure}
+
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{regressor_mean.jpg}
+\caption{(Left and center) Joint locations and corresponding vertices (indicated by colors) after optimization. (Right) Mean shape of Adam model. }
+\label{fig:jointregressor}
+\end{figure}
+
+\subsection{Building Joint Regression and Shape Space}
+The joint regression matrix $\mathbf{J}^A$ of Adam, with the 61 joints including hand joints and their corresponding vertices are visualized in the left and center of  Fig.~\ref{fig:jointregressor}. The mean shape of Adam is shown on the right of Fig.~\ref{fig:jointregressor}.
+
+
+% \subsection{Blending Weight}
+
+% Blending weight figures
+
+
+% \subsection{Shape Basis}
+
+
+% Coverage. Percentage Explained shape
+
+% Visualize each component
+
+
+
+\subsection{Optical Flow Propagation in Tracking With Adam}
+While fitting each frame independently has benefits---it does not suffer from error accumulation and frames can be fit in parallel---it typically produces jittery motion. To reduce this jitter, we use optical flow to propagate the initial, per-frame fit to neighboring frames to find a smoother solution. More concretely, given the fitting results at the frame $t$, we propagate this mesh to  frames $t{-}1$ and $t{+}1$ using optical flow at each vertex, which is triangulated into 3D using the method of~\cite{Joo2014}. Therefore, each vertex has at most three candidate positions: the original mesh, and the forward and backward propagated vertices (subject to a forward-backward consistency check). Given these propagated meshes, we reoptimize the model parameters by using all propagated mesh vertices as additional keypoints to find a compromise mesh. 
+
+% \section{Additional Results}
+
+{\small
+	\bibliographystyle{ieee}
+	\bibliography{tbc-bibliography}
+}
+\end{document}
