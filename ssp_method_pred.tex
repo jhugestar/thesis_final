@@ -1,11 +1,11 @@
-% !TEX root = cvpr19_socialPred.tex
+% !TEX root = thesis.tex
 
 \section{Social Signal Prediction in Haggling Scenes}
 We regress the function defined in Equation~\ref{equation:F_ours} using the data \ref{equation:measurement} collected from our haggling sequences. To further constrain the problem we assume that the target person is the seller positioned on the left side of the buyer, and as input we use the social signals of buyer ($\mathbf{X}^1$) and the other seller ($\mathbf{X}^2$). Based on our social signal measurements, the input and output of the function is represented as the measurement types described in Eq.~\ref{equation:measurement}. For example,
 \begin{equation}
 \begin{gathered}
-\mathbf{Y} = [ \mathbf{x}^0, \mathbf{\theta}^0, \mathbf{\phi}^0, \mathbf{J}^0, \mathbf{F}^0, \mathbf{H}^0, \mathbf{V}^0, \mathbf{S}^0 ]\\
-\mathbf{X}^i = [ \mathbf{x}^i, \mathbf{\theta}^i, \mathbf{\phi}^i, \mathbf{J}^i, \mathbf{F}^i, \mathbf{H}^i, \mathbf{V}^i, \mathbf{S}^i ],
+\mathbf{Y} = [ \mathbf{x}^0, \boldsymbol{\theta}^0, \boldsymbol{\phi}^0, \mathbf{J}^0, \mathbf{F}^0, \mathbf{H}^0, \mathbf{V}^0, \mathbf{S}^0 ]\\
+\mathbf{X}^i = [ \mathbf{x}^i, \boldsymbol{\theta}^i, \boldsymbol{\phi}^i, \mathbf{J}^i, \mathbf{F}^i, \mathbf{H}^i, \mathbf{V}^i, \mathbf{S}^i ],
 \end{gathered}
 \end{equation}
 where we use the superscript 0 to denote the social signals of the target subject (the output of social signal prediction). Directly considering or predicting these full spectrum social signals is challenging and hard to analyze. In our work, we introduce several sub-problems using baseline methods. 
@@ -36,7 +36,7 @@ As another sub-problem, we predict the location and orientations of the target p
  \mathbf{Y}_p (t_0:t) = \mathcal{F}_p ( \mathbf{X}_p^1(t_0:t), \mathbf{X}_p^2(t_0:t)),
  \label{eq:pred_formation}
 \end{gather}
-where $\mathbf{Y}_p$ and $\mathbf{X}_p^i$ contains global location and orientation signals $[\mathbf{x}, \mathbf{\theta}, \mathbf{\phi} ]$ for the target subject and others.
+where $\mathbf{Y}_p$ and $\mathbf{X}_p^i$ contains global location and orientation signals $[\mathbf{x}, \boldsymbol{\theta}, \boldsymbol{\phi} ]$ for the target subject and others.
 Note that we only consider the positions and orientations on the ground plane (in 2D), ignoring the height of the subjects. Thus $\mathbf{x} \in \mathbb{R}^2 $ representing $x$ and $z$ coordinate of the subjects. We use a 2D unit vector to represent the orientations $\theta \in \mathbb {R}^2$ and face orientation $\phi \in \mathbb{R}^2$, because the angle representation has a discontinuity issue when wrapping around $2\phi$ and $-2\phi$. In summary, $\mathbf{X}^i(t)$ and $\mathbf{X}^i(t)$ are a $6 \times N$ dimensional matrix where $N = t- t_0$ is the size of the temporal window. This prediction problem is intended to see whether the machine can learn how to build a social formation to interact with humans~\cite{vazquez2017towards}. Social formation is one of the most noticeable social properties with strong correlation, allowing us to easily evaluate the performance.
 
 

@@ -1,4 +1,3 @@
-% !TEX encoding = UTF-8 Unicode
 % !TEX root = thesis.tex
 
 
@@ -401,52 +400,5 @@ In this chapter, we present a method to reason about the time-varying visibility
 
 A key benefit of our approach is that it does not use any spatial or temporal regularization over the position of the point---the regularization used in our approach is over visibility. This results in ``faithful" reconstruction of 3D point motion that is not biased or smoothed out by prior models of deformation, and this advantage is essential in measuring objective kinesic signals in social situations. 
 
-% The most common cause of failure are imaging artifacts, such as motion blur and saturation. %As these kinds of artifacts are unavoidable especially when considering outdoor environments, an important direction of future work is to investigate techniques to re-associate points. 
-
-
-
-%\section{Discussion}
-%We present a method to estimate the time-varying visibility for 3D trajectory reconstruction to leverage large numbers of views. We present novel cues (motion consistency, geometric consistency, and visibility regularization prior) for visibility estimation, and fuse them with the commonly used photometric consistency cue, within a MAP estimation framework. We demonstrate that our algorithm provides a more accurate visibility and, consequently, produces longer and denser 3D trajectories than a baseline using only photometric consistency. Unlike the photometric consistency cue, The motion consistency cue is complementary to the photometric cue, as it does not require the texture and the explicit 3D shape of the target 3D patch. Although the motion consistency cue can be ambiguous, this ambiguity, in practice, usually occurs for the cameras behind the target patch when the whole object body (including the patch) undergoes pure translation; this case is handled well by the geometric consistency of the patch and camera. 
-%
-%A key benefit of our approach is that it does not use any spatial or temporal regularization over the position of the point---the regularization used in our approach is over visibility. This results in ``faithful" reconstruction of 3D point motion, that is not biased or smoothed out by prior models of deformation. The most common cause of failure are imaging artifacts, such as motion blur and saturation. As these kinds of artifacts are unavoidable especially when considering outdoor environments, an important direction of future work is to investigate techniques to re-associate points. 
-
-%; although we can apply the regularization over the position as a post-processing of our method, if it is needed. %For further study, we plan to use these precise measurements of 3D motion to analyze social information and context contained in natural motion among interacting people, which contains highly subtle. 
-
-
-%For further study, we plan to use these precise measurements of 3D motion to analyze social information and context contained in natural motion among interacting people. Such motion has been considered as a challenging area because the motion often highly subtle and the precision and scale of 3D motion estimation achieved in this paper provide, perhaps for the first time, the opportunity to measure and analyze subtle motion in the interaction of multiple people. 
-
-%We present a method to estimate the time-varying visibility for 3D trajectories reconstruction by leveraging large number of views. We present novel cues (motion consistency, geometric consistency, and visibility regularization prior) for visibility estimation, and fuse them with the common cue photometric consistency, motion-consistency does not require the texture of the 3D patch, and any explicit 3D shape or precise normal. In the end, we fuses a MAP estimate for visibility estimation by fusing various cues, including photo-consistency, motion-consistency, camera-patch relation, and the visibility of proximal cameras. We posit that accurate visibility can increase 3D tracking performance by leverage a large scale cameras, and demonstrate that our MAP based method provide a reliable visibility and our tracking algorithm based on the correct visibility produces accurate, dense, and long 3D trajectories that can better leverage increasing number of viewpoints.
-
-
-
-%\textbf{Hyun Soo}: Please describe pros and cons of each visibility cues here.
-%As the number of cameras increases, the likelihood of being confused by appearance increases. This makes 3D dynamic reconstruction to fully leverage the benefit of increasing number of cameras difficult. In this paper, we study the role of visibility that influences quality of large scale reconstruction. 
-
-%We demonstrate that optimally estimated visibility facilitates to computationally understand a dynamic scene. The accurate and long trajectories will also be useful to analyze human social behaviors that are often governed by subtle social signals.  
-
-%
-%\section*{Appendix}
-%Proof of Equation~(\ref{Eq:nullspace}): Without loss of generality, we can define the projection matrix as $\mathbf{P} = \left[\begin{array}{cc}\mathbf{I}&\mathbf{0}\end{array}\right]$. Then, Equation~(\ref{eq:ambiguousMotion}) can be rewritten as,
-%\begin{eqnarray}
-%\left[\mathbf{X'}(t)\right]_\times \mathbf{X}(t) &=& \mathbf{0} \label{Eq:prop}\\
-%\left[\mathbf{X'}(t+1)\right]_\times \mathbf{X}(t+1) &=& \mathbf{0} \label{Eq:prop1},
-%\end{eqnarray}
-%given $\mathbf{P} = \left[\begin{array}{cc} \mathbf{I} & \mathbf{0} \end{array}\right]$ where $\left[\cdot\right]_\times$ is the skew-symmetric representation of cross product. $\mathbf{X'}(t)$ is linearly proportional to $\mathbf{X}(t)$ because of Equation~(\ref{Eq:prop}) and thus, $\mathbf{X'}(t) = \alpha \mathbf{X}(t)$ where $\alpha$ is a scalar. $\alpha \neq 1$ because then $\mathbf{X'}(t)\neq \mathbf{X}(t)$.
-%
-%From Equation~(\ref{Eq:transform2}), Equation~(\ref{Eq:prop1}) can be rewritten as,
-%\begin{eqnarray}
-%\mathbf{0} &=& \left[\mathbf{A}\mathbf{X'}(t)+\mathbf{a}\right]_\times \left(\mathbf{A}\mathbf{X}(t)+\mathbf{a}\right)\nonumber\\
-%&=& \left[\mathbf{A}\mathbf{X'}(t)\right]_\times \mathbf{A}\mathbf{X}(t)+\left[\mathbf{a}\right]_\times \mathbf{A}\mathbf{X}(t)\nonumber\\
-%&+&\left[\mathbf{A}\mathbf{X'}(t)\right]_\times \mathbf{a}+\left[\mathbf{a}\right]_\times \mathbf{a}\nonumber\\
-%&=&(1-\alpha) \left[\mathbf{a}\right]_\times \mathbf{A}\mathbf{X}(t) \label{Eq:null},
-%\end{eqnarray}
-%where $
-%\left[\mathbf{A}\mathbf{X'}(t)\right]_\times \mathbf{A}\mathbf{X}(t)
-%=\alpha\left[\mathbf{A}\mathbf{X}(t)\right]_\times \mathbf{A}\mathbf{X}(t)
-%= \mathbf{0}\nonumber.$
-%Equation~(\ref{Eq:null}) implies Equation~(\ref{Eq:nullspace}). 
-%
-%\section*{Acknowledgements}
-%This material is based upon work supported by the National Science Foundation under Grants No. 1353120 and 1029679. % Hanbyul Joo was supported, in part, by the Samsung Scholarship. 
 
 \pagebreak

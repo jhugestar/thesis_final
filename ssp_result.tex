@@ -12,7 +12,7 @@ Our dataset has the measurement of fully voluntary motions of interacting people
 
 \begin{table}[t]
 	\centering
-	\footnotesize
+%	\footnotesize
 	\caption{Average distances (cm) between subjects. B, RS, and LS denote buyer, right seller, and left seller respectively.}
 	\label{table:proxemics_comp}
 	\begin{tabular}{l| l| l| l| l}
@@ -53,9 +53,7 @@ Our dataset has the measurement of fully voluntary motions of interacting people
 We compare the binary speaking classification performance in Table ~\ref{table:speaking_class}. The task is to classify the speaking status of the target person, and we use three different body motion sources: (1) the target person's own body motion, (2) the other seller's body motion, (3) a random person's body motion. As shown in the results, the own body motion has the strongest correlation, but the other seller's body motion is also very predictive, showing that there exists a clear social link during their interaction. As expected, the classification performance using a random person's motion as input shows about the chance level (50\%). For the experiment (3), we use the same network trained for (2), but use the body motion from a subject in some other arbitrary sequence (excluding our current target sequence) as input. Presumably, the classification method using the other person's body signals learns the ``turn-taking" property in the social interaction, and predicts that the target person is speaking if little motion is observed from the other sellers (who would be listening). %This kind of study is important to make machines better understand human social behaviors, and can be facilitated from the data where natural social interactions are captured.  %This kin %shows an interesting insight that the body motions % the strong correlation of social signals can be used as a prior for predicting human behaviors. 
 \begin{table}[t]
 	\centering
-	\footnotesize
-	\caption{Speaking Classification Accuracy using different source of body motion signals as input}
-	\label{table:speaking_class}
+%	\footnotesize
 	\begin{tabular}{l| l| l| l}
 		\hline
 		%Types & Avg. dist. (cm) & Std.(cm) & Min dist. (cm)  & Max dist. (cm)\\
@@ -66,6 +64,7 @@ We compare the binary speaking classification performance in Table ~\ref{table:s
 		Accuracy & 80.70\% & 75.30\% & 51.05\%\\       %new
 		\hline
 	\end{tabular}
+	\caption{Speaking Classification Accuracy using different source of body motion signals as input\label{table:speaking_class}}
 \end{table}
 
 
@@ -101,8 +100,7 @@ We predict the formation of social interaction by predicting the location and or
 		Pose+face+body & \underline {\textbf{24.59}} (10.23) &  \underline {\textbf{0.21}} (0.06) &  \underline {\textbf{0.29}} (0.09) \\
 		\hline
 	\end{tabular}
-	\label{table:predForm_errors}
-	\caption{Social Formation Prediction Errors (cm). Average position error between our estimation and ground-truth are reported in centimeters. The body orientation and face orientation are computed between the distance of estimated facial/body normal direction and GTs.}
+	\caption{Social Formation Prediction Errors (cm). Average position error between our estimation and ground-truth are reported in centimeters. The body orientation and face orientation are computed between the distance of estimated facial/body normal direction and GTs.\label{table:predForm_errors}}
 \end{table}
 
 % %Body only
@@ -153,9 +151,9 @@ We predict the formation of social interaction by predicting the location and or
 
 \begin{table}[t]
 	\centering
-	\footnotesize
+%	\footnotesize
 	%\caption{Social Body Gesture Prediction Errors}
-	\label{table:predBody_errors}
+	
 	\begin{tabular}{c| c| c}
 		
 		\hline
@@ -177,7 +175,7 @@ We predict the formation of social interaction by predicting the location and or
 		Hybrid & 8.61  & 1.84\\
 		\hline
 	\end{tabular}
-	\caption{Social Body Gesture Prediction Errors (cm). Body orientation and face orientation are computed between estimated and GT unit vectors (need to be fixed)}
+	\caption{Social Body Gesture Prediction Errors (cm). Body orientation and face orientation are computed between estimated and GT unit vectors (need to be fixed) \label{table:predBody_errors}}
 \end{table}
 
 

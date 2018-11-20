@@ -1,6 +1,7 @@
 % !TEX root = thesis.tex
 
-\chapter{Towards Social Artificial Intelligence: Nonverbal Social Signal Prediction in A Triadic Interaction}
+\chapter{Nonverbal Social Signal Prediction}
+\label{chapter:prediction}
 %
 %%%%%%%%%% ABSTRACT
 %\begin{abstract}
@@ -12,12 +13,6 @@
 \section{Introduction}
 The way humans communicate is one of the clearest factors that differentiates us from other animals. Along with verbal language, we use many other channels for communication, including eye contact, facial expression, body gestures, and hand motions, collectively referred to as non-verbal social signals~\cite{Moore13}. Notably, the use of all these channels is important in social interactions, where subtle emotions and intentions are transmitted via the combination of such signals. Endowing machines with such social interaction abilities is an essential goal of Artificial Intelligence (AI) to make machines that can effectively cooperate with humans. This area is related to multidisciplinary research fields covering psychology, natural language processing, affective computing, human-robot interaction, machine learning, and computer vision.
 
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{ssp_fig/intro}
-	\caption{We aim to build social artificial intelligence by building a model to learn the correlation between the input and output social signals. (Left) An example scene of RAPID-ABC test to detect autism spectrum disorder ~\cite{mathys2013beyond} and (Right) An illustration to describe social signal prediction task.}
-	\label{fig:intro}
-\end{figure}
 
 A way to endow machines with such social skills would be to encode all the rules that humans observe during social communication. Unfortunately, nonverbal interaction is still poorly understood despite its importance in social communication~\cite{Mehrabian67,Mehrabian81,Birdwhistell-1970}, making it hard to formalize rules about how to understand and use social signals. Interestingly, we have recently witnessed a great achievement in Natural Language Processing showing the potential to make machines ``freely" communicate with humans using written language and speech~\cite{young2018recent}. This success has been lead by data-driven approaches leveraging large-scale language datasets and a powerful modeling tool, deep neural networks, to automatically learn the patterns of human verbal communication. Remarkably, these achievements have not made extensive use of the prior knowledge about grammar and the structure of languages that linguists have accumulated over centuries. Motivated by this, we may hypothesize that a similar approach can be applicable in modeling nonverbal communication. 
 
@@ -37,6 +32,12 @@ In this paper, we introduce a new research domain with the long-term aim to buil
     \item Several baseline initial outputs in several scenarios
 \end{itemize}
 
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{ssp_fig/intro}
+	\caption{We aim to build social artificial intelligence by building a model to learn the correlation between the input and output social signals. (Left) An example scene of RAPID-ABC test to detect autism spectrum disorder ~\cite{mathys2013beyond} and (Right) An illustration to describe social signal prediction task.}
+	\label{fig:intro}
+\end{figure}
 
 % 1) We have 
 
