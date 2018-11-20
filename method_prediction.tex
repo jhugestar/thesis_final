@@ -1,8 +1,41 @@
 % !TEX encoding = UTF-8 Unicode
 % !TEX root = thesis.tex
 
-\chapter{Kinesic Signal Prediction \textbf{(Proposed)}}
+\chapter{Kinesic Signal Prediction}
 \label{chapter:prediction}
+
+
+Question? What do we mean by understanding social signal? Let's guess how humans are doing (any previous work maybe in pychology?).  First human senses signals. React by sending response  signals. To computationally study this (or mimic this), first we need to measure the signals up to human level, which we have shown in previous chapters. And then? we need to see how this signals and understood. What do we mean by understood? First we may define a model to define internal status. The signal changes internal status and output is generated (mind model?). However, defining internal status would hard. 
+
+
+Can we take a bit data-driven way (Rather than model drive)? Means that we define a models (which is probably hard to see the inside). But we define the input/output and trained the model to generate simlar output given input? What is the pros and cons of this model? Cons is that we may loose the interpretability of the model. Pros is we are able to consider complicated behaviors which is hard to define, assuming enough data is given. 
+
+
+The major challenge is that the amount of the data we can collect from the system is limited. So we need to define a problem more concisely. Importatly, it is better to define a social situation where all people are in the similar social situation (haggling)
+
+
+Now, let's define the research problem to study social interaction in a data driven way. As a key evidence, by checking whether there exist any correlation between signals. If some signals are correlated (or not independent) we may think that one signal is used to better predict other signals. 
+
+We start this by considering each individual's own signal. For example, we can easily consider that there eixst high corelation among speech, face, body, hands. The correlation between speech and face are most ovcious (due to the lip motion), and have been studied (previous work). The correlation between voice and body are also in ``artificial scenario". In our case, we study this in authentic social interaction scenarios. We quantitatively and qualitatively shows that we can predict one signals from another up to some level (mostly constrained by the measurment)
+
+
+Then, we expand the similar approach to the multiple people scenario. In this case, we see whether other people's signal can be used to predict our target person's signals. Most obvious singals are social formation (locations and orientation). So we start with this. We shows that the location and orientation can be predicted by other people cues, showing that humans have strong patterns (signals) to form a social interaction, and this can be automatially learnt by machine. 
+
+And we dive more into complicated signals's correlations (which is the beauty of our method). For example, we now see whether we can predict a single of the target subject by others. 
+
+
+
+
+Correlaton and prediction. 
+
+
+
+
+
+
+
+
+
 In this chapter we propose an approach to model kinesic signals in social communication based on a large scale database collected in the Panoptic Studio. Drawing an analogy from telecommunications, social communication can be considered as a process of exchanging messages among people, as senders and receivers, as shown in Figure~\ref{fig:kinesicflow}. The transmitted messages in social communication convey individual's thoughts, emotions, and intentions, which cannot be conveyed by verbal language. Consider a sender sending an internal message to a receiver. The messages originated from the sender's mind are emitted through various channels of signals. The conversion from the internal messages to the emitted social signals inside a sender can be considered as an ``encoding" stage. The converted signals are exposed through display ports of the sender such as voice, facial expressions, and body motions. The signals from the sender are then received by a receiver. The receiver first senses the transmitted signals by body ``sensors" such as eyes and ears. These sensed data is further processed by the receiver's perception system to reason about higher level semantic meanings of the data. For example, kinesic signals are sensed by visual sensors (eyes) as a form of stereo videos, and 3D structures of other people, as well as locations of 3D anatomical landmarks, are inferred. To this end, the signals are interpreted as messages conveying the sender's thoughts.  These processed of a receiver can be considered as a ``decoding" process. 
 
 What we can explicitly measure in this social communication flow is the signals exposed by a sender. In prior work, these signals are observed and manually hand-coded by human annotators into discrete events and categories; otherwise, limited parts in a relatively simple social setup are measured by a few sensors (e.g., face landmarks by a couple of cameras)~\cite{harrigan2013methodology, dael2015measuring}. Our method using the Panoptic Studio allows us to measure kinesic signals of a large group of interacting people at high resolution from full body parts (face, hand, and body). However, it is still unclear how these signals are used to convey information for social communication. These signals exist in a continuous high dimensional space, and a subtle change of the signals can transmit a completely different meaning. Modeling such signals requires analyzing the subtlety embedded in the signals, and, thus, prior work that categorizes them into discrete hand-crafted codes cannot satisfy this requirement. Importantly, we have no way to objectively measure or represent internal messages before the encoding stage by a sender and interpretation of a receiver after the decoding. Manually coding the conveyed messages of the signals means projecting the original high dimensional signals into low dimensional space by a manually defined mapping function, which can cause a severe data distortion and bias. 
