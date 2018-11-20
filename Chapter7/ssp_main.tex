@@ -1,0 +1,229 @@
+% !TEX root = thesis.tex
+
+\chapter{Nonverbal Social Signal Prediction}
+\label{chapter:prediction}
+%
+%%%%%%%%%% ABSTRACT
+%\begin{abstract}
+%   In this paper, we present a new research task to understand human social interactions via computational methods, to ultimately endow machines with the ability of encoding and decoding the social signals humans use. This research direction is essential to make machine that genuinely communicate with humans. We first formulate the social signal prediction problem as a way to model social behaviors by finding the implicit correlations among social signals in a data-driven way. We then present a new dataset, where the full-spectrum of multi-modal social signals (including face, body, and finger motions) are captured in a triadic social interaction scenario. Several baseline approaches and their results are presented to model social interactions in the presented social prediction framework. Finally we discuss the potential of this new task and guide the future directions. 
+%\end{abstract}
+
+%%%%%%%%% BODY TEXT
+
+\section{Introduction}
+The way humans communicate is one of the clearest factors that differentiates us from other animals. Along with verbal language, we use many other channels for communication, including eye contact, facial expression, body gestures, and hand motions, collectively referred to as non-verbal social signals~\cite{Moore13}. Notably, the use of all these channels is important in social interactions, where subtle emotions and intentions are transmitted via the combination of such signals. Endowing machines with such social interaction abilities is an essential goal of Artificial Intelligence (AI) to make machines that can effectively cooperate with humans. This area is related to multidisciplinary research fields covering psychology, natural language processing, affective computing, human-robot interaction, machine learning, and computer vision.
+
+
+A way to endow machines with such social skills would be to encode all the rules that humans observe during social communication. Unfortunately, nonverbal interaction is still poorly understood despite its importance in social communication~\cite{Mehrabian67,Mehrabian81,Birdwhistell-1970}, making it hard to formalize rules about how to understand and use social signals. Interestingly, we have recently witnessed a great achievement in Natural Language Processing showing the potential to make machines ``freely" communicate with humans using written language and speech~\cite{young2018recent}. This success has been lead by data-driven approaches leveraging large-scale language datasets and a powerful modeling tool, deep neural networks, to automatically learn the patterns of human verbal communication. Remarkably, these achievements have not made extensive use of the prior knowledge about grammar and the structure of languages that linguists have accumulated over centuries. Motivated by this, we may hypothesize that a similar approach can be applicable in modeling nonverbal communication. 
+
+
+However, there exists a fundamental difficulty in building a data-driven nonverbal communication model: the data is extremely rare. In the verbal language domain, words contain the full expressive power to record verbal signals by composition of a handful of discrete symbols. Especially on the Internet, there already exist millions of articles or dialogues which are readily usable for data-driven methods (either supervised or unsupervised). Similarly, speech audio can be readily digitized and large datasets are available. However, for non-verbal signals, how to ``record" or collect these signals is uncertain. Imagine a situation where a group of people are communicating in our daily life. The positions and orientations of individuals, their body gestures, gaze, and facial expressions (among others) are the data we are interested in. Notably, these ``social signals" emitted from all people in the group need to be collected simultaneously to study their correlation and causality. Although there also exist millions of videos where our daily activities---including social interactions---are captured on the Internet, these raw videos cannot be directly used to understand the rules of non-verbal interactions because we have to extract all semantic visual cues (relative location, face, body pose, and so on) from the raw pixels. %Fortunately, measuring human behavior including person detection~\cite{}, body pose estimation~\cite{}, face keypoint detection, hand keypoint estimation, markerless motion captures have all been greatly advanced, enabling us to collect non-verbal signal dataset.
+
+
+% % Unfortunately, we haven't make the similar success in nonverbal language part, and the major difficulty hindering the progress is the lack of available dataset where computational methods can be tested. 
+
+% Consider a situation where a group of people are communicating in our daily life. They first meet each other, and then they make a special formation to start the communication (either standing or sitting). Someone starts speaking while others may listen, and the speaking turns are circling here and there. Both speaker and listeners use additional channels to transmit additional information which is not fully conveyed by language only, such as hand gestures, facial expression, nodding, eye gaze direction and so on. All these signals and rules presented during the communication is the signals we want to model. But, how can we ``record" or measure these signals so that we can apply the computational methods? In verbal language, words have the full expressive power to record the signals. Especially in the Internet, there already exist tons of literature or dialogues specifying the language signals humans use in our daily life. There is no such complete data for the non-verbal signals. Although there exist millions of video data where our daily activities including social interaction in the Internet, these raw videos cannot be directly used to understand the rules of non-verbal interactions, because we have to extract all semantic visual cues (person location, face, body pose, and so on) out of the raw pixels, which is basically the goal of computer vision area. Notably, these signals should be handled for the visual footage where multiple people are naturally interacting. Due to the person's body orientation and occlusion issues, measuring such signals itself is a challenging problem, despite the great advances of the human detection, pose estimation, reconstruction area in computer vision.
+
+
+In this paper, we introduce a new research domain with the long-term aim to build machines that can genuinely interact with humans using non-verbal signals. The key idea of this problem is to define the social interaction as a signal prediction problem among individuals. We formulate that humans are communicating by receiving a set of social signals from others and emitting response signals as output, which are again directed to others as inputs (illustrated in Fig.~\ref{fig:intro}). Thus, we hypothesize that the social behavior ability can be learned by finding the patterns between these signal flows. Importantly, we aim to include as many signal modalities as possible to study the correlation among social signals. Since studying this in-the-wild is hard due to limits of signal measurement technology (e.g., motion capture) as well as the large variety of interaction contexts, we collect a large-scale dataset where these signals are accurately measured for naturally interacting people in a specific triadic social interaction scenario. Our dataset includes about 180 sequences of the negotiation game protocol, where 120 subject participated. We use the state-of-the art markerless motion capture technology~\cite{joo2018} to measure various social signal indicators. We use a deep neural network to model the social signal prediction problem. We study various types of human behaviors including proxemics, F-formation, and body gestures, and speaking timing. In this paper, we introduce several baseline results for the social signal prediction task. In summary, we present:
+\begin{itemize}
+    \item A new dataset of triadic interactions with full spectrum capture of social signals. 
+    \item A formal definition of the problem for social signal prediction
+    \item Several baseline initial outputs in several scenarios
+\end{itemize}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{ssp_fig/intro}
+	\caption{We aim to build social artificial intelligence by building a model to learn the correlation between the input and output social signals. (Left) An example scene of RAPID-ABC test to detect autism spectrum disorder ~\cite{mathys2013beyond} and (Right) An illustration to describe social signal prediction task.}
+	\label{fig:intro}
+\end{figure}
+
+% 1) We have 
+
+% 2) General notations and social signal prediction problem. We formulate the prediction problem. 
+
+% 3) We start from a simple signals. Proxemics and F-formation, and we make extension to more complicated signals, body and faces in social situation. We define the problem based on the difficulty. 
+
+%     - position only
+%     - body orientation (low freq.)
+%     - face orientation
+%     - body skeleton
+%         - just better vis. from formation
+%         - speaking / non-speaking (conditioned)
+%         - social dynamics / social sync (nodding, synchrony, realistic?)
+        
+%     - Face/Hands
+%         - just better vis. from formation + body
+%         - speaking / non-speaking
+%         - social dynamics / social sync (nodding, synchrony, realistic?)
+
+
+% 5) We built a way to evaluate our method, as follows. 
+
+% 1. L2 error
+% 2. Classification error
+% 3. Adding distribution and randomness (VAE?)
+
+% 6) Conclusion and Future direciton
+
+
+
+
+% Social interaction  long history but poor knowledge. Harder to define by manually defined models than language model. Language has grammar, what about nonverbal cues? We have seen the advance of language (and chatbot as the output). Limited measurment tool is the problem.  Language has tons of data in the web. No need to measure since verbal languages are directly mapped and recorded by letters. What about non verbal cues?
+
+% A major advanced in facial expression (coding system, interaction). Body is limited, especially multi people's body, which are more commonly observable in our daily life. But vision made major advances. There exist robust tools. Now this problem is used in a practical level. We need to consider how to realize the social interaction model based on this tools. 
+
+
+% However, It is not easy to computationally model social interaction. Extremely limited previous work. We may think it by using the analogy of language model or chatbot. We found (1) data is important, (2) nerual model is crucial. This paper presentned such direction for the first time. new DB can drive new research direction advances. MNist, Imagenet, 3D shapenet. 3D human DB, faceNet, and so on. 
+
+% Thus, 
+
+% 1) We have collected a sufficient amount of DB to study this assuming a specific (but still realistic) social situations. 
+
+% 2) General notations and social signal prediction problem. We formulate the prediction problem. 
+
+% 3) We start from a simple signals. Proxemics and F-formation, and we make extension to more complicated signals, body and faces in social situation. We define the problem based on the difficulty. 
+
+%     - position only
+%     - body orientation (low freq.)
+%     - face orientation
+%     - body skeleton
+%         - just better vis. from formation
+%         - speaking / non-speaking (conditioned)
+%         - social dynamics / social sync (nodding, synchrony, realistic?)
+        
+%     - Face/Hands
+%         - just better vis. from formation + body
+%         - speaking / non-speaking
+%         - social dynamics / social sync (nodding, synchrony, realistic?)
+
+
+% 5) We built a way to evaluate our method, as follows. 
+
+% 1. L2 error
+% 2. Classification error
+% 3. Adding distribution and randomness (VAE?)
+
+% 6) Conclusion and Future direciton
+
+% We start from indivdiual's multi modal signals, and show several noticeable component we can explore. 
+
+% 4) Social formation. Simple but strong correlation among people which  well studied in previous work. We see wheather this social aspect can be learnt by machine. 
+
+% Comparison to proxemics. 
+% Evalution: body location, body orientation, face orientation. Orientation vs speaking GT?
+
+% 5) More complicated singnals are studied. For example, body 2 body. However, the diverse is huge and motion are subtle, and less noticeable. So we focused on some cues by defining evalution tools. 
+
+
+% Evalutation: How do we know it is working? Number may not be important. What else can we notices? It is hard, because we can feel but cannot define. 
+
+% 1) Location + orientations 
+% 2) orientation vs speaking
+% 3) turn taking?
+
+% 4) dynamics? nodding? Speed? human study?
+
+
+
+\section{Background}
+
+\textbf{Psychology:}
+Due to its importance in social communication, nonverbal cues have received significant attention in psychology. Work in this area is often categorized into diverse subfields including Proxemics, Kinesics, Vocalics, and Haptics. In our work, we focus only on Proxemics and Kinesics, which are closely related to visual cues. Hall first introduced the concept of Proxemics to describe how humans use their personal space during communications~\cite{Hall66}, and Kendon studied the spatial formations and orientations established when multiple people communicate in a common space (named F-formation)~\cite{kendon90}. Facial expression in particular has received lots of attention by researchers since the pioneering work of Charles Darwin~\cite{Darwin-1872}. Ekman studied the relation between emotions and facial expressions, and presented Facial Action Code System (FACS) by introducing a system to describe facial expressions using combinations of atomic units (Action Units)~\cite{ekman1977facial}. Since then, this system remains as the de-facto standard to annotate and measure facial expressions, and has had a broad impact in across many fields. Compared to the face, body gestures remain relatively unexplored even though research has substantiated the importance of body language in communication~\cite{Gelder09, Moore13, Meeren-2005, Aviezer-2012}. In spite of the efforts of many researchers in diverse fields, little progress has been made in understanding nonverbal communications, and the approaches proposed several decades ago are still the most widely used methods available~\cite{Moore13}. 
+
+\textbf{Social Signal Processing:}
+There has been increasing interest in studying nonverbal communication using computational methods~\cite{vinciarelli2009social}. Analyzing facial expression has been a core focus in the vision community ~\cite{ChuDC13, Torre15, shan2009facial}. Many other methods to automatically detect social cues from photos and videos have also been proposed, including F-formation detection~\cite{setti2015f}, recognizing proxemics from photos~\cite{yang2012recognizing}, detecting attention~\cite{Fathi-2012}, recognizing emotions by body pose\cite{schindler2008recognizing}, and detecting social saliency~\cite{park20123d}. Affective computing fields has been growing up rapidly, where computer vision and other sensor measurements are used with machine learning technique to understand human's emotion, social behavior, and roles~\cite{picard1997affective}. 
+
+\textbf{Forecasting human motion:}
+Predicting or forecasting human motion is an emerging area in computer vision and machine learning. Researchers propose approaches for predicting pedestrian's future trajectory~\cite{kitani2012activity} or forecasting human interaction in dyadic situations~\cite{huang2014action}. More recently, deep neural network are used to predict future 3D poses from motion capture data~\cite{mnih2012conditional, Fragkiadaki_2015_ICCV, jain2016structural}, but they focus on periodic motions such as walk cycles. Recent work tries to forecast human body motion in the 2D image domain~\cite{walker2016uncertain, villegas2017learning}. A few works address trajectory prediction in social situations~\cite{helbing1995social, alahi2016social, gupta2018social}. 
+
+%Holden's work
+%Graphics Jehee's
+%Sergey Levin's work
+
+\textbf{Social Signal Dataset:}
+How to measure and collect nonverbal signal data is important to pursue a data-driven approach for our goal. However, only few datasets contain socially interacting group motion~\cite{alameda2016salsa, mccowan2005ami, lepri2012connecting, rehg2013decoding}. The scenes in these datasets are often in a table setup, limiting free body movement and capturing the upper-body only. There are datasets that capture more freely moving multiple people (e.g., cocktail party)~\cite{Zen-10, Cristani-11, farenzena2009social}, but these only contain location and orientation measurements for the people, introduced to study the social formation only. Datasets providing rich 3D body motion information captured with motion capture techniques exist, but they contains single subjects' motion only\cite{gross2001cmu, h36m_pami, sigal2010humaneva}. More recently, however, full body motion data of interacting groups using a large number of camera system was proposed for social interaction capture~\cite{Joo-15}. This work shows a potential in collecting a large scale social interaction data without the usual issues caused by wearing a motion capture suit and markers.
+
+\textbf{Measuring Kinesic Signals:} Detecting human bodies and keypoints in images has advanced greatly in computer vision. There exist publicly available 2D face keypoint detectors~\cite{baltruvsaitis2016openface}, body pose detectors~\cite{cao2017realtime, Wei2016, Newell-16}, and hand pose detectors~\cite{simon2017hand}. 3D motion can be obtained by markerless motion capture in a multiview setup~\cite{Gall-09,Liu-2013,Elhayek-15, joo2017panoptic, joo2018}, by RGB-D cameras~\cite{Shotton2011,Baak2011}, or even by monocular cameras~\cite{Ramakrishna2012,Bogo2016,martinez2017simple,zhou2017towards,Moreno-noguer2017,mehta2017monocular}. Recently, methods to capture both body and hands have also been introduced~\cite{MANO:SIGGRAPHASIA:2017,joo2018}. 
+
+\input{Chapter7/ssp_method_def}
+\input{Chapter7/ssp_method_db}
+\input{Chapter7/ssp_method_pred}
+\input{Chapter7/ssp_result}
+
+\subsection{Discussion}
+We introduce a social signal prediction task, to ultimately endow machines with the ability to socially interact with humans. For this objective, we present a large-scale social interaction dataset where the full-spectrum of multi-modal social signals are measured on a carefully designed negotiation scenario. Our dataset can play an important role to understand the correlation and causality of diverse channels of social signals by applying computational methods. Our baseline results show a potential to exploit our dataset to mimic human behaviors. As a core open question, a better evaluation metric is required to quantify natural social behaviors. Collecting social interaction dataset in-the-wild should be another important future direction to study social interactions at scale. %In our work, we mainly focus on triadic interactions, but more general social scenarios also need to be considered.
+
+% Additional cues, face and body orientation, is helpful to better estimate the location. But the improvement is not so big. And no obvious qualitative evidence is found. I guess this is due to the limited representation way for the angles.
+
+% Easy work can be done and easily noticeable. Hard one is hard since is is less noticeble. What is the missing piece?
+
+% \section{Using social cues to predict other people's signal}
+% The use of social cues are important to guess the target person's signal, assuming body signals are used for sicial interaction. For example, if we know that a person is speaking, this can be a cue that other people are listening (e.g., high probabity of nodding). In this section, we see that other people's cues (social geometry, face, body, speaking) can be helpful to predict target subject's social signal
+
+
+
+% \subsection{Social Formation 2 Body}
+
+% Trajectory and orientation prediction --- Body motion inference (legs)
+
+% Speaking signal --- Body motion inference
+
+
+
+% \section{Higher level social signal understanding}
+
+
+% \subsection{Winner Classifcation: What makes motion more persuasive?)}
+
+
+% \subsection{Quantitying Social Signal: What part is more influential}
+% Attention model? Just simple weighting?
+% LInear model to get some scalar value for each feature... Softmax (to make sum as one) ... weighting....
+
+% \subsection{Real vs Fake social interaction?}
+
+
+
+%
+%
+%\subsection{By Using Body and Face Orientation}
+%
+%
+%Input: Two people location + orientation of face
+%output: location and orientation of the target person
+%
+% 
+%Baseline: given two people, regress another person. 
+%Absolute location with embedding?
+%Relative location
+%
+%Comparison to Hall's model. F-formation
+%
+%GAN loss: add gan loss
+%
+%
+%
+%\section{Body based Speaking/Silence Classification}
+%
+%\section{Face based Speaking/Silence Classification}
+%
+%
+%\section{Speaking Signal to Face generation}
+%
+%
+%\section{Speaking Signal to Other people's Speaking Signal Generation}
+%
+%
+%\section{Speaking Signal}
+
+
+
+%
+%
+%{\small
+%\bibliographystyle{ieee}
+%\bibliography{socialSignal,thesis}
+%}
+
