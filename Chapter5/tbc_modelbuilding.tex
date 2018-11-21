@@ -33,7 +33,7 @@
 
 \begin{figure}[t]
 	\includegraphics[trim={1cm 0 0 0 }, width=\columnwidth]{tbc_figures/building_frank_3}
-	\caption{Part models and the Frank model. (a) The body model~\cite{Loper2015}; (b) the face model~\cite{cao2014facewarehouse}; and (c) a hand rig. In (a-c), the red dots have corresponding 3D keypoints reconstructed by detectors; (d) Body only model; (e) Face and hand models substitute the corresponding parts of the body model. Alignments are ensured by  $\mathbf{\Gamma}$s; and (f) The blending matrix $\mathbf{C}$ is applied to produce a seamless mesh.} %(d) Aligned face and hand models (gray meshes) to the body model (the blue wireframe mesh); and (e) the seamless Frank model.}
+	\caption{Part models and the Frank model. (a) The body model~\cite{Loper2015}; (b) the face model~\cite{cao2014facewarehouse}; and (c) a hand rig. In (a-c), the red dots have corresponding 3D keypoints reconstructed by detectors; (d) Body only model; (e) Face and hand models substitute the corresponding parts of the body model. Alignments are ensured by  $\bm{\Gamma}$s; and (f) The blending matrix $\mathbf{C}$ is applied to produce a seamless mesh.} %(d) Aligned face and hand models (gray meshes) to the body model (the blue wireframe mesh); and (e) the seamless Frank model.}
 	\label{fig:frankenstein_part_aligned}
 	%	\label{fig:frankenstein_mesh}
 	% Yaser: (d) and (e) as a separate figure
@@ -147,14 +147,14 @@ with $\mathbf{V}^F = \{ \mathbf{v}^F_i\}_{i=1}^{N^F}$, where the $i$-th vertex i
 \end{align}
 where, as before, $\mathbf{v}^{F0}_i$ denotes $i$-th vertex of the mean shape, and $\phi^F_k$ and $\theta^F_s$ are the $k$-th face identity (shape) and $s$-th facial expression (pose) parameters respectively. Here, $\mathbf{f}^k_i\in\mathds{R}^3$ is the $i$-th vertex of the $k$-th identity blendshape ($K_{f}=150$), and $\mathbf{e}^s_i\in\mathds{R}^3$ is the $i$-th vertex of the $s$-th expression blendshape ($K_{e}=200$). 
 
-Finally, a transformation $\mathbf{T}^F$ brings the face vertices into world coordinates. To ensure that the face vertices transform in accordance to the rest of the body, we assume that the mean face $\mathbf{v}^{F0}_i$ is aligned with the body mean shape as shown in Fig.~\ref{fig:frankenstein_part_aligned}, which is manually done in building the model. This way, we can apply the transformation of the body model's head joint $\mathbf{T}^B_{j=F}(\boldsymbol{\theta}^B)$ as a global transformation for the face model in Eq.~\ref{eq:face_pose}. However, to keep the face in alignment with the body, an additional transform matrix $\mathbf{\Gamma}^F \in \textrm{SE(3)}$ is required to compensate for displacements in the root location of the face joint due to body shape changes in Eq.~\ref{eq:full_lbs_pose}. 
+Finally, a transformation $\mathbf{T}^F$ brings the face vertices into world coordinates. To ensure that the face vertices transform in accordance to the rest of the body, we assume that the mean face $\mathbf{v}^{F0}_i$ is aligned with the body mean shape as shown in Fig.~\ref{fig:frankenstein_part_aligned}, which is manually done in building the model. This way, we can apply the transformation of the body model's head joint $\mathbf{T}^B_{j=F}(\boldsymbol{\theta}^B)$ as a global transformation for the face model in Eq.~\ref{eq:face_pose}. However, to keep the face in alignment with the body, an additional transform matrix $\bm{\Gamma}^F \in \textrm{SE(3)}$ is required to compensate for displacements in the root location of the face joint due to body shape changes in Eq.~\ref{eq:full_lbs_pose}. 
 
 Finally, each face vertex position is given by:
 \begin{align}
-\mathbf{v}^F_i = \mathbf{I}_{3\times 4} \cdot \mathbf{T}^B_{j=F} \cdot \mathbf{\Gamma}^F \begin{pmatrix} \hat{\mathbf{v}}^F_i \\ 1 \end{pmatrix},
+\mathbf{v}^F_i = \mathbf{I}_{3\times 4} \cdot \mathbf{T}^B_{j=F} \cdot \bm{\Gamma}^F \begin{pmatrix} \hat{\mathbf{v}}^F_i \\ 1 \end{pmatrix},
 \label{eq:face_pose}
 \end{align}
-where the transform $\mathbf{\Gamma}^F$, which is directly determined by the body shape parameters $\boldsymbol{\phi}^B$, aligns the face model with the body model.
+where the transform $\bm{\Gamma}^F$, which is directly determined by the body shape parameters $\boldsymbol{\phi}^B$, aligns the face model with the body model.
 
 %\subsection{Hand Model}
 %We use an artist rigged hand mesh. Our hand model has $J^H{=}16$ joints and, similarly to the body model, the mesh is deformed via linear blend skinning. The hand model has a fixed shape, but we introduce scaling parameters to allow for different finger sizes by adding $X$,$Y$, and $Z$ scaling factors to each bone. The left hand and right hand models are exactly the same (but reflected), so we refer to either of them as H in this section for clarity.
@@ -175,9 +175,9 @@ where the transform $\mathbf{\Gamma}^F$, which is directly determined by the bod
 %\end{align}
 %As before, the $\mathbf{T}^H_0$ is a global transformation for the hand model and to be rigidly linked on the skeletal hierarchy of the Frankenstein Model, this is defined by the transformation of the corresponding hand of the Body model: 
 %\begin{align}
-%\mathbf{T}^H_0  =  \mathbf{T}^B_{j=H} \cdot \mathbf{\Gamma}^H
+%\mathbf{T}^H_0  =  \mathbf{T}^B_{j=H} \cdot \bm{\Gamma}^H
 %\end{align}
-%where $\mathbf{\Gamma}^H$ is a transformation to remain the hand model to be aligned with the body model, determined by shape parameters of body model, and $\mathbf{T}^B_{j=H}$ is the transformation of the corresponding hand in the body model. 
+%where $\bm{\Gamma}^H$ is a transformation to remain the hand model to be aligned with the body model, determined by shape parameters of body model, and $\mathbf{T}^B_{j=H}$ is the transformation of the corresponding hand in the body model. 
 
 \subsection{Hand Model}
 We use an artist-rigged hand mesh. Our hand model has $J^H{=}16$ joints and the mesh is again deformed via linear blend skinning. The hand model has a fixed shape, but we introduce scaling parameters for each bone to allow for different finger sizes.
@@ -193,17 +193,17 @@ with respect to its parent, $\boldsymbol{\theta}_j^H\in\mathds{R}^3$, and an add
 % \end{align}
 where $\operatorname{eul}(\boldsymbol{\theta}^H_j)$ converts from an Euler angle representation to a $3\times 3$ rotation matrix and $\operatorname{diag}(\boldsymbol{\phi}^H_j)$ is the $3\times 3$ diagonal matrix with the $X$,$Y$,$Z$ scaling factors $\mathbf{\phi}^H_j$ on the diagonal. The vertices of the hand in world coordinates are given by LBS with weights $w^H_{i,j}$: 
 \begin{align}
-\mathbf{v}^H_i= \mathbf{I}_{3\times 4} \cdot  \mathbf{T}^B_{j=H} \cdot \mathbf{\Gamma}^H \cdot \sum_{j=1}^J w^H_{i,j}\mathbf{T}^H_j \begin{pmatrix} \mathbf{v}_i^{H0} \\ 1 \end{pmatrix}.
+\mathbf{v}^H_i= \mathbf{I}_{3\times 4} \cdot  \mathbf{T}^B_{j=H} \cdot \bm{\Gamma}^H \cdot \sum_{j=1}^J w^H_{i,j}\mathbf{T}^H_j \begin{pmatrix} \mathbf{v}_i^{H0} \\ 1 \end{pmatrix}.
 \label{eq:lbs_hand}
 \end{align}
-where $\mathbf{v}^{H0}_i$ denotes $i$-th vertex of the mean shape , $\mathbf{T}^H_j$ is each bone's composed transform (with all parents in the hierarchy), $\mathbf{T}^B_{j=H}  \in \textrm{SE(3)}$ is the transformation of the corresponding hand joint in the body model, and $\mathbf{\Gamma}^H$ is the transformation that aligns the hand model to the body model. As with the face, this transform depends on the shape parameters of the body model.
+where $\mathbf{v}^{H0}_i$ denotes $i$-th vertex of the mean shape , $\mathbf{T}^H_j$ is each bone's composed transform (with all parents in the hierarchy), $\mathbf{T}^B_{j=H}  \in \textrm{SE(3)}$ is the transformation of the corresponding hand joint in the body model, and $\bm{\Gamma}^H$ is the transformation that aligns the hand model to the body model. As with the face, this transform depends on the shape parameters of the body model.
 
 
 
 %\begin{figure}[t]
 %	\includegraphics[width=0.49\columnwidth,trim=550 110 530 90, clip]{fig/smplChange_1}	
 %	\includegraphics[width=0.49\columnwidth,trim=550 110 530 90, clip]{fig/smplChange_2}
-%	\caption{Frankenstein model in the rest pose after changing the first and fifth linear blendshapes of the body part model. $\mathbf{\Gamma}^F$ and $\mathbf{\Gamma}^F$ are computed and applied for hand and face parts so that they are still aligned with deformed body models.}
+%	\caption{Frankenstein model in the rest pose after changing the first and fifth linear blendshapes of the body part model. $\bm{\Gamma}^F$ and $\bm{\Gamma}^F$ are computed and applied for hand and face parts so that they are still aligned with deformed body models.}
 %	\label{fig:frankenstein_mesh_alignement}
 %\end{figure}
 

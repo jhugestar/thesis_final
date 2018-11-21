@@ -455,6 +455,61 @@ In this result section, we mainly focus on the performance of body motion captur
 
 
 
+\begin{figure}[t]
+	\centering
+	\captionsetup{position=top}
+	\begin{subfigure}{\textwidth}
+		\includegraphics[width=\textwidth]{figures/0822_quant_noLegend/legend}
+	\end{subfigure}\\
+	\begin{subfigure}{0.245\textwidth}
+
+		\includegraphics[trim=40 180 60 		170,clip,width=\textwidth]{figures/0822_quant_noLegend/PCK-Threshold-two-people.pdf}
+%		\caption{Two people}		
+	\end{subfigure}
+	\begin{subfigure}{0.245\textwidth}
+
+		\includegraphics[trim=40 180 60 		170,clip,width=\textwidth]{figures/0822_quant_noLegend/PCK-Threshold-three-people.pdf}
+		%\caption{Three  people}
+	\end{subfigure}
+	\begin{subfigure}{0.245\textwidth}
+
+		\includegraphics[trim=40 180 60 		170,clip,width=\textwidth]{figures/0822_quant_noLegend/PCK-Threshold-five-people.pdf}
+		%\caption{Five people}
+	\end{subfigure}
+	\begin{subfigure}{0.245\textwidth}
+
+		\includegraphics[trim=40 180 60 		170,clip,width=\textwidth]{figures/0822_quant_noLegend/PCK-Threshold-seven-people.pdf}
+%		\caption{Seven people}
+	\end{subfigure}\\
+		\begin{subfigure}{0.245\textwidth}
+			
+			\includegraphics[width=\textwidth]{figures/0807_quant_noLegend/two}
+	\caption{Two people}		
+		\end{subfigure}
+		\begin{subfigure}{0.245\textwidth}
+			
+			\includegraphics[width=\textwidth]{figures/0807_quant_noLegend/three}
+	\caption{Three people}		
+		\end{subfigure}
+		\begin{subfigure}{0.245\textwidth}
+			
+			\includegraphics[width=\textwidth]{figures/0807_quant_noLegend/five}
+	\caption{Five people}		
+		\end{subfigure}
+		\begin{subfigure}{0.245\textwidth}
+			
+			\includegraphics[width=\textwidth]{figures/0807_quant_noLegend/seven}
+		\caption{Seven people}		
+		\end{subfigure}
+		
+
+%	\subfloat{\includegraphics[width=0.9\textwidth]{figures/0822_quant_noLegend/legend}} 
+%	\subfloat{\includegraphics[width=0.9\textwidth]{figures/0822_quant_noLegend/legend}} 
+	\caption{Performance evaluation using Probability of Correct Keypoint (PCK) metric for varying number and type of cameras on \emph{160422 ultimatum1}. We use the result of 480 VGA cameras after manually excluding outliers as ground truth. The X-axis of each graph represents thresholds, and the Y-axis represents accuracy by the thresholds. Each graph is generated for scenes with a different number of people. The results demonstrate that more views (rather than higher resolution) are beneficial to improve accuracy, and the distinction is more noticeable if the scene contains more people.} 
+	\label{fig:quant1}
+\end{figure}
+
+
 %	\begin{table} [t]	
 %		\centering
 %		\caption{Summary of the Panoptic Studio dataset.}\label{Table:socialDataset}
@@ -548,7 +603,7 @@ We quantitatively evaluate the performance of our method for the \emph{160226 ul
 \begin{figure}[t]
 	\centering
 	\captionsetup{position=top}
-	\includegraphics[trim=40 340 60 340,clip,width=0.8\linewidth]{figures/quant_stage2/160226_mafia2-Stage2-nodeLocation-h7-j11-1.pdf}   \\
+	\includegraphics[trim=40 340 60 340,clip,width=\linewidth]{figures/quant_stage2/160226_mafia2-Stage2-nodeLocation-h7-j11-1.pdf}   \\
 	%\subfigure[Y Coordinate]{\includegraphics[trim=40 340 60 340,clip,width=\columnwidth]{imgs/quant/stage2/160226_mafia2-Stage2-nodeLocation-h7-j11-2.pdf}}   \\
 	%\subfigure[Z Coordinate]{\includegraphics[trim=40 340 60 340,clip,width=\columnwidth]{imgs/quant/stage2/160226_mafia2-Stage2-nodeLocation-h7-j11-3.pdf}}   
 	%	\subfigure[Seven people]{\label{Fig:quant2-1}\includegraphics[trim=40 180 60 170,clip,width=0.24\textwidth]{imgs/quant/0720_quant_noLegend/PCK-Threshold-seven-people.pdf}} 
@@ -701,7 +756,7 @@ On the other hand, the \emph{dancer} sequences contain fast motion and unusual p
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.8\linewidth]{figures/FailureCases3}
+	\includegraphics[width=\linewidth]{figures/FailureCases3}
 	%\subfigure[]{\includegraphics[trim=0 0 1000 0,clip,height=0.23\columnwidth]{imgs/160422UltimatumFailures}}   
 	%\subfigure[]{\includegraphics[trim=800 0 0 0,clip,height=0.23\columnwidth]{imgs/160422UltimatumFailures}}   
 	\caption{Example failure cases. For each column, the first row shows the projection of reconstructed 3D skeletons on a view where the red colored parts are manually annotated outliers. The second row shows the 2D pose detection results. (Left) The hands are severely occluded and only visible from few cameras where they are too close to be detected by 2D pose detector. (Center) The left/right legs are confused in performing 2D pose detection, which causes failures in our 3D inference. (Right) The toddler is not detected by the pose detector, since he is severely occluded. }\label{fig:failures}

@@ -1,4 +1,4 @@
-% !TEX root = thesis.tex
+% !TEX root = ../thesis.tex
 
 %
 %
@@ -85,6 +85,15 @@ Similar to the VGA cameras, HD cameras are modularized and each pair of cameras 
 Each RGB+D sensor is connected to a dedicated capture node that is mounted on the dome exterior. To capture at rates of approximately 30 Hz, the nodes are equipped with two SSD drives each and store color, depth, and infrared frames as well as body and face detections from the Kinect SDK. A separate master node controls and coordinates the 10 capture nodes via the local network.
 
 An example scene captured by all the sensors are shown in the Figure~\ref{fig:panopticviews}. The data size of a minute of data is about 600 GB. 
+
+\begin{figure}[t]
+	\centering       
+	\includegraphics[trim=0 0 0 0,clip,width=\linewidth]{figures/Teaser}
+	
+	\caption{An example scene from 521 camera views of the Panoptic Studio}
+	\label{fig:panopticviews}
+\end{figure}
+
 
 \begin{figure}[t]
 	\includegraphics[width=\linewidth]{figures/Dome_architecture_0815}

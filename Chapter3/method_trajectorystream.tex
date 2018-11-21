@@ -45,7 +45,7 @@ A 3D point is projected onto the $i^{\textrm th}$ camera associated with a $3\ti
 
 The 3D patch is projected onto the camera plane to form the projected patch $\mathbf{s}_i(t) = \{\mathbf{x}_i(t), \mathbf{y}_i^u(t), \mathbf{y}_i^v(t), \mathbf{q}_i(t) \}$, where $\mathbf{x}_i(t)$, $\mathbf{y}^u(t)$, and $\mathbf{y}^v(t) \in \mathds{R}^2$ are the projected points, i.e., $\widehat{\mathbf{x}}_i(t) \cong \mathbf{P}_i \widehat{\mathbf{X}}(t)$, $\widehat{\mathbf{y}}_i^u(t) \cong \mathbf{P}_i \widehat{\mathbf{Y}}^u(t)$, and $\widehat{\mathbf{y}}_i^v(t) \cong \mathbf{P}_i \widehat{\mathbf{Y}}^v(t)$, where $\widehat{\cdot}$ is the homogeneous coordinate representation of each vector. $\mathbf{q}_i  \in \mathds{R}^m$ is the texture information of the projected patch, which is defined by a concatenation of all the intensities from the $i^{\textrm th}$camera, corresponding to the projected grid positions of $\mathbf{S}$, and normalized as in Equation~(\ref{Eq:normalized_texture}). Ideally, $\mathbf{Q}=\mathbf{q}_i$ if the 3D patch $\mathbf{S}$ is visible from the $i^{\textrm th}$ camera, discounting illumination variation. We denote $\mathbf{m}_i$ as 2D optical flow at $\mathbf{x}_i(t-1)$ in the $i^{\textrm th}$ camera, as shown in Figure~\ref{fig:notation}. 
 
-The relationship between the $i^{\textrm th}$ camera and patch can be defined by the co-visibility set $\mathbf{\Gamma}_i = \{\gamma^c_i, \gamma^p_i\}$, where
+The relationship between the $i^{\textrm th}$ camera and patch can be defined by the co-visibility set $\bm{\Gamma}_i = \{\gamma^c_i, \gamma^p_i\}$, where
 \begin{eqnarray}
 \gamma^c_i = \frac{ (\mathbf{X}-\mathbf{C}_i)^\mathsf{T}\mathbf{o}_i} { || \mathbf{X}-\mathbf{C}_i || }~~~{\textrm and}~~~\gamma^p_i = \frac{ (\mathbf{C}_i - \mathbf{X})^\mathsf{T}\mathbf{N}} { || \mathbf{C}_i - \mathbf{X} || }, \nonumber
 \end{eqnarray}
@@ -86,14 +86,14 @@ Patch tracking and visibility estimation are interdependent processes. At each t
 \section{Visibility Estimation\label{sec:Optimal-Visibility-Estimation}}
 %In this section, we model visibility estimation as MAP inference using various cues presented in the subsequent subsections. In subsection~\ref{sub:Photo-Cue}, we describe appearance consistency, a common way to deal with visibility~\cite{Carceroni2002,Devernay2006,Furukawa2008}. Then, we present a novel cue, motion consistency for visibility estimation (subsection~\ref{sub:Motion-Cue}). We also model additional cues the relation between camera centers and patch normal direction (subsection~\ref{sub:Normal-cue}), and the prior likelihood of two cameras to be in a visible set using a Markov Random Field (subsection~\ref{sub:prior}). Finally, we describe an algorithm to optimally estimate visibility based on all the available cues by finding the minimum cut of a capacitated graph over cameras (subsection~\ref{sub:graphcuts}).
 
-In this section, we present a method to compute the maximum a posteriori (MAP) estimate of visibility $\mathbf{V}$ using photometric consistency, motion consistency, and geometric consistency, with a proximity prior. These cues are represented using 2D texture $\{ \mathbf{q}_i \}_{i=1}^N$, 2D optical flow $\{ \mathbf{m}_i \}_{i=1}^N$, and the co-visibility set $\{ \mathbf{\Gamma}_i \}_{i=1}^N$. Given these cues and by applying Bayes theorem, the probability of visibility is
+In this section, we present a method to compute the maximum a posteriori (MAP) estimate of visibility $\mathbf{V}$ using photometric consistency, motion consistency, and geometric consistency, with a proximity prior. These cues are represented using 2D texture $\{ \mathbf{q}_i \}_{i=1}^N$, 2D optical flow $\{ \mathbf{m}_i \}_{i=1}^N$, and the co-visibility set $\{ \bm{\Gamma}_i \}_{i=1}^N$. Given these cues and by applying Bayes theorem, the probability of visibility is
 \begin{align}
-&P( \mathbf{V} | \mathbf{q}_1, \mathbf{m}_1, \mathbf{\Gamma}_1, \cdots, \mathbf{q}_N,  \mathbf{m}_N, \mathbf{\Gamma}_N ) \nonumber\\
-&\propto P(\mathbf{q}_1, \mathbf{m}_1, \mathbf{\Gamma}_1, \cdots, \mathbf{q}_N,  \mathbf{m}_N, \mathbf{\Gamma}_N |  \mathbf{V}) P(\mathbf{V}).  \nonumber
+&P( \mathbf{V} | \mathbf{q}_1, \mathbf{m}_1, \bm{\Gamma}_1, \cdots, \mathbf{q}_N,  \mathbf{m}_N, \bm{\Gamma}_N ) \nonumber\\
+&\propto P(\mathbf{q}_1, \mathbf{m}_1, \bm{\Gamma}_1, \cdots, \mathbf{q}_N,  \mathbf{m}_N, \bm{\Gamma}_N |  \mathbf{V}) P(\mathbf{V}).  \nonumber
 \end{align}
 %\begin{eqnarray}
-%&& P( \mathbf{V} | \mathbf{q}_1, \mathbf{m}_1, \mathbf{\Gamma}_1, \cdots, \mathbf{q}_N,  \mathbf{m}_N, \mathbf{\Gamma}_N ) \nonumber\\
-%&\propto& P(\mathbf{q}_1, \mathbf{m}_1, \mathbf{\Gamma}_1, \cdots, \mathbf{q}_N,  \mathbf{m}_N, \mathbf{\Gamma}_N |  \mathbf{V}) P(\mathbf{V}).  \nonumber
+%&& P( \mathbf{V} | \mathbf{q}_1, \mathbf{m}_1, \bm{\Gamma}_1, \cdots, \mathbf{q}_N,  \mathbf{m}_N, \bm{\Gamma}_N ) \nonumber\\
+%&\propto& P(\mathbf{q}_1, \mathbf{m}_1, \bm{\Gamma}_1, \cdots, \mathbf{q}_N,  \mathbf{m}_N, \bm{\Gamma}_N |  \mathbf{V}) P(\mathbf{V}).  \nonumber
 %\end{eqnarray}
 
 %Assuming that (1) the probability of cues for each camera is conditionally independent given visibility and (2) that cue is conditionally independent given the visibility of its camera, the probability can be written as
@@ -101,17 +101,17 @@ Given the visibility of each camera, we assume that (1) the cues in that camera 
 \begin{eqnarray}
 %&=& \left( \prod_{i=1}^{N} P( \mathbf{q}_i,\mathbf{m}_i,\gamma_i | \mathbf{v}_1, \cdots, \mathbf{v}_N) \right) P(\mathbf{v}_1, \cdots, \mathbf{v}_N) \nonumber\\
 %&=& \left( \prod_{i=1}^{N} P( \mathbf{q}_i,\mathbf{m}_i,\gamma_i | \mathbf{v}_i) \right) P(\mathbf{v}_1, \cdots, \mathbf{v}_N) \nonumber\\
-\left( \prod_{i=1}^{N} P( \mathbf{q}_i | \mathbf{v}_i )P( \mathbf{m}_i | \mathbf{v}_i) P( \mathbf{\Gamma}_i| \mathbf{v}_i) \right)P(\mathbf{V}).
+\left( \prod_{i=1}^{N} P( \mathbf{q}_i | \mathbf{v}_i )P( \mathbf{m}_i | \mathbf{v}_i) P( \bm{\Gamma}_i| \mathbf{v}_i) \right)P(\mathbf{V}).
 \label{eq:initProb}
 \end{eqnarray}
 The MAP estimate of visibility $\mathbf{V}^*$ can be obtained by maximizing the expression in Equation~(\ref{eq:initProb}), i.e., 
 \begin{eqnarray}
-\mathbf{V^*} = \underset{\mathbf{V}}{\operatorname{argmax}}  \left( \prod_{i=1}^{N} P( \mathbf{q}_i | \mathbf{v}_i )P( \mathbf{m}_i | \mathbf{v}_i)P( \mathbf{\Gamma}_i| \mathbf{v}_i) \right) P(\mathbf{V}), \nonumber
+\mathbf{V^*} = \underset{\mathbf{V}}{\operatorname{argmax}}  \left( \prod_{i=1}^{N} P( \mathbf{q}_i | \mathbf{v}_i )P( \mathbf{m}_i | \mathbf{v}_i)P( \bm{\Gamma}_i| \mathbf{v}_i) \right) P(\mathbf{V}), \nonumber
 \end{eqnarray}
 or equivalently,
 \begin{eqnarray}
 \mathbf{V^*} =\underset{\mathbf{V}}{\operatorname{argmax}}  \sum_{i=1}^{N} \log P( \mathbf{q}_i | \mathbf{v}_i)  + \sum_{i=1}^{N} \log P( \mathbf{m}_i | \mathbf{v}_i ) +\nonumber\\
-+ \sum_{i=1}^{N} \log P( \mathbf{\Gamma}_i| \mathbf{v}_i) + \log P(\mathbf{V}).
++ \sum_{i=1}^{N} \log P( \bm{\Gamma}_i| \mathbf{v}_i) + \log P(\mathbf{V}).
 \label{eq:goalFunction}
 \end{eqnarray}
 We describe the probability of each cue and the prior in the subsequent sub-sections, and compute the MAP estimate by finding the minimum cut of a capacitated graph over cameras~\cite{boykov2001fast}. 
@@ -219,10 +219,10 @@ where ${\textrm null}(\cdot)$ is the null space of $\cdot$. See the Appendix for
 
 \subsection{Geometric consistency} \label{sub:Normal-cue}
 
-Oriented patches are only visible from cameras whose ``look-at" vector $\mathbf{o}_i$ is in the opposite direction to the patch normal $\mathbf{N}$ and in front of it. We incorporate this geometric cue based on the co-visibility set $\mathbf{\Gamma}_i$ considering the camera position relative to the patch normal direction and the patch position relative to the camera ``look-at" vector. The probability of $\mathbf{\Gamma}_i$, given visibility $\mathbf{v}_i$, can be written as 
+Oriented patches are only visible from cameras whose ``look-at" vector $\mathbf{o}_i$ is in the opposite direction to the patch normal $\mathbf{N}$ and in front of it. We incorporate this geometric cue based on the co-visibility set $\bm{\Gamma}_i$ considering the camera position relative to the patch normal direction and the patch position relative to the camera ``look-at" vector. The probability of $\bm{\Gamma}_i$, given visibility $\mathbf{v}_i$, can be written as 
 %(We will show a couple of exceptional cased in our experimental results), i.e., camera view angle with respect to the current patch normal:
 \begin{eqnarray}
-P(\mathbf{\Gamma}_i | \mathbf{v}_i ) = \begin{cases} \frac{1}{ (1- \tau_c)(1- \tau_p)} & {\textrm if~} \gamma_i^c \geq \tau_c,{\textrm and~} \gamma_i^p \geq  \tau_p  \\
+P(\bm{\Gamma}_i | \mathbf{v}_i ) = \begin{cases} \frac{1}{ (1- \tau_c)(1- \tau_p)} & {\textrm if~} \gamma_i^c \geq \tau_c,{\textrm and~} \gamma_i^p \geq  \tau_p  \\
 0 & {\textrm otherwise,}\end{cases} 
 %P(\mathbf{C}_i ~|~ \mathbf{v}_i = 1) &=& \begin{cases} \frac{1}{\rho} & {\rm if~} \mathbf{N}^\mathsf{T} \overline{\mathbf{X} \mathbf{C}_i}  > \tau\\\
 %                                                           0 & {\rm otherwise.}\end{cases}
@@ -277,7 +277,7 @@ where $E_d$ encodes photometric consistency, motion consistency, and geometric c
 %0 & {\rm otherwise,}\end{cases} 
 %\end{eqnarray}
 \begin{eqnarray}
-E_d(\mathbf{v}_i) =& \frac{\| \mathbf{m}_i - ( \mathbf{x}_i(t) - \mathbf{x}_i(t-1) )  \|^2} {2\sigma^2} -\kappa {\mathbf{Q}_i}^\mathsf{T} \mathbf{q}_i + \delta(\mathbf{\Gamma}_i ) \nonumber\\
+E_d(\mathbf{v}_i) =& \frac{\| \mathbf{m}_i - ( \mathbf{x}_i(t) - \mathbf{x}_i(t-1) )  \|^2} {2\sigma^2} -\kappa {\mathbf{Q}_i}^\mathsf{T} \mathbf{q}_i + \delta(\bm{\Gamma}_i ) \nonumber\\
 E_s(\mathbf{v}_i,\mathbf{v}_j) =& \begin{cases} 0 & {\textrm if~} \mathbf{v}_i=\mathbf{v}_j  \nonumber\\                                                             
 g_\textrm{s}(\mathbf{P}_i,\mathbf{P}_j) & {\textrm otherwise,}\end{cases} 
 \end{eqnarray}
@@ -312,7 +312,6 @@ where $\delta = \log(1-\tau_c)(1-\tau_p)$  if $\gamma_i^c > \tau_c$ and $\gamma_
 		\includegraphics[width=\textwidth]{figures/MAP}
 		\caption{MAP}
 	\end{subfigure}\\
-	
 		\begin{subfigure}{0.3\textwidth}
 			\includegraphics[width=\textwidth]{figures/GT_input_final}
 			\caption{Selected patch}
@@ -340,7 +339,7 @@ where $\delta = \log(1-\tau_c)(1-\tau_p)$  if $\gamma_i^c > \tau_c$ and $\gamma_
 
 % \subsection{System Setup and Datasets}
 
-We evaluate our algorithm on a variety of challenging scenes in the presence of significant occlusion (Circular Movement and Falling Boxes), large displacement (Confetti and Fluid motion), and topological change (Falling boxes and Volleyball). Our visibility estimation enables us to better leverage a large number of cameras in producing accurate and long trajectories. The dataset used in the evaluation is summarized in Table~\ref{Table:dataset} and is available on the project website. The sequences were captured at the CMU Panoptic Studio~\cite{PanopticStudio2014} containing 480 cameras capturing 640$\times$480 video at 25 Hz. The cameras are extrinsically and intrinsically calibrated, and are synchronized via an external clock.
+We evaluate our algorithm on a variety of challenging scenes in the presence of significant occlusion (Circular Movement and Falling Boxes), large displacement (Confetti and Fluid motion), and topological change (Falling boxes and Volleyball). Our visibility estimation enables us to better leverage a large number of cameras in producing accurate and long trajectories. The dataset used in the evaluation is summarized in Table~\ref{Table:dataset} and is available on the project website. The sequences were captured at the CMU Panoptic Studio~\cite{joo2017panoptic} containing 480 cameras capturing 640$\times$480 video at 25 Hz. The cameras are extrinsically and intrinsically calibrated, and are synchronized via an external clock.
 
 
 \begin{table} [t]
@@ -373,17 +372,25 @@ We evaluate our algorithm on a variety of challenging scenes in the presence of 
 %\footnotetext{We warp the camera positions for better visualization.}
 
 \subsection{Quantitative Evaluation}
-\noindent\textbf{Visibility Estimation Accuracy.} We select an arbitrary patch in the Circular Movement sequence reconstructed at a time instance, and manually generate ground-truth visibility data at each sampled time instance by selecting cameras where the target patch is visible. We compare our visibility estimation method (MAP) against a baseline method based on photometric consistency alone, which is a cue commonly used by previous approaches~\cite{Carceroni2002,Devernay2006,Furukawa2008}. Visibility estimation results generated from each method at a time instance are visualized in Figure~\ref{Fig:visibilityError}. As a criterion, we compute the true positive detection rate between the ground truth data and $\mathbf{V}(t)$ estimated by both methods. The true positive rate from each method is shown in Figure~\ref{Fig:VisibilityError}, demonstrating that our method outperforms the baseline method by a significant margin.\\ %In particular, almost all of error of the proposed method are caused by the cameras located at extreme view angle with respect to the patch where it is hard to determine the ground truth value. 
+\noindent\textbf{Visibility Estimation Accuracy.} We select an arbitrary patch in the Circular Movement sequence reconstructed at a time instance, and manually generate ground-truth visibility data at each sampled time instance by selecting cameras where the target patch is visible. We compare our visibility estimation method (MAP) against a baseline method based on photometric consistency alone, which is a cue commonly used by previous approaches~\cite{Carceroni2002,Devernay2006,Furukawa2008}. Visibility estimation results generated from each method at a time instance are visualized in Figure~\ref{Fig:visibilityError}. As a criterion, we compute the true positive detection rate between the ground truth data and $\mathbf{V}(t)$ estimated by both methods. The true positive rate from each method is shown in Figure~\ref{Fig:visibilityError}, demonstrating that our method outperforms the baseline method by a significant margin.\\ %In particular, almost all of error of the proposed method are caused by the cameras located at extreme view angle with respect to the patch where it is hard to determine the ground truth value. 
 \noindent \textbf{Tracking Accuracy and Length.}
 We evaluate our method considering both tracking accuracy and trajectory length. Inspired by the evaluation criterion proposed by Furukawa and Ponce~\cite{Furukawa2008}, a test sequence is generated by appending it at the end of itself in reverse order, and the tracking algorithm is performed on the generated sequence. The tracked patches must return back to the original position, if tracking is accurate. In this experiment, the 3D error is defined by the 3D distance between initial and the final locations of the target point. We generate five test sequences using the Circular Movement sequence by changing the duration (10 to 50 frames) from a fixed initial frame. For the evaluation, we count the number of successfully reconstructed trajectories that have less than 2 cm drift error. Figure~\ref{Fig:traj_distance_histo} shows a histogram of the number of trajectories using 480 cameras.  Our MAP estimate method outperforms the method based on photometric consistency in terms of both number of trajectories and length of trajectories. We also perform experiments with different number of cameras by uniformly sampling cameras to examine its impact on tracking success rate. Figure~\ref{Fig:survivedPt} shows how our method leverages a large number of cameras. Note that the number of successfully tracked trajectories increases faster than the method based on photometric consistency. 
-%
-%\begin{figure}[t]
-%	\centering       
-%	\subfloat[Tracking Performance]{\label{Fig:traj_distance_histo}\includegraphics[width=0.4\textwidth]{figures/Circular_Cam480_pt_length3}}
-%	\subfloat[Number of cameras]{\label{Fig:survivedPt}\includegraphics[width=0.4\textwidth]{figures/Circular_PtNum_CamNum3}}     
-%	\caption{(a) Our MAP estimate outperforms the baseline method in terms of the number of trajectories and the length of trajectories. (b) Our method leverages the large number of views, and shows a faster increasing curve than the baseline method.} 
-%	\label{Fig:quantitative}
-%\end{figure}
+
+\begin{figure}[t]
+	\centering       
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{figures/Circular_Cam480_pt_length3}
+		\caption{Tracking Performance}
+		\label{Fig:traj_distance_histo}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{figures/Circular_PtNum_CamNum3}
+		\caption{Number of cameras}
+		\label{Fig:survivedPt}
+	\end{subfigure}
+	\caption{(a) Our MAP estimate outperforms the baseline method in terms of the number of trajectories and the length of trajectories. (b) Our method leverages the large number of views, and shows a faster increasing curve than the baseline method.} 
+	\label{Fig:quantitative}
+\end{figure}
 
 \begin{figure}[th]
 	\centering       
@@ -427,12 +434,36 @@ We generate an initial patch cloud for a selected time instance, and perform for
 % \begin{comment}
 \begin{figure}[t]
 	\centering       
-	\includegraphics[width=0.45\textwidth]{figures/circle_small} 
-	\includegraphics[width=0.45\textwidth]{figures/volleyBall_small}\\
-	\includegraphics[width=0.45\textwidth]{figures/baseball_small}
-	\includegraphics[width=0.45\textwidth]{figures/box_small}\\
-	\includegraphics[width=0.45\textwidth]{figures/confetti_small}
-	\includegraphics[width=0.45\textwidth]{figures/fluid_small}   
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{figures/circle_small} 
+		\caption{Circular movement}
+		\label{Fig:circular}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{figures/volleyBall_small}\\
+			\caption{Volleyball}
+			\label{Fig:ball_play}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{figures/baseball_small}
+			\caption{Bat Swing}
+			\label{Fig:baseball}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{figures/box_small}\\
+			\caption{Falling boxes}
+			\label{Fig:box}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{figures/confetti_small}
+			\caption{Confetti}
+			\label{Fig:confetti}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\includegraphics[width=\textwidth]{figures/fluid_small}   
+			\caption{Fluid motion}
+			\label{Fig:fluid_motion}
+	\end{subfigure}
 	\caption{We reconstruct 3D trajectories in real world scenes in the presence of significant occlusion, large displacement, and topological change. The color codes the time that trajectory points are reconstructed. Note that each trajectory is individually reconstructed without any spatial or temporal regularization.} 
 	\label{Fig:qualtitative}
 \end{figure}
