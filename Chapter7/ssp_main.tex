@@ -10,7 +10,8 @@
 
 %%%%%%%%% BODY TEXT
 
-\section{Introduction}
+
+%\section{Introduction}
 The way humans communicate is one of the clearest factors that differentiates us from other animals. Along with verbal language, we use many other channels for communication, including eye contact, facial expression, body gestures, and hand motions, collectively referred to as non-verbal social signals~\cite{Moore13}. Notably, the use of all these channels is important in social interactions, where subtle emotions and intentions are transmitted via the combination of such signals. Endowing machines with such social interaction abilities is an essential goal of Artificial Intelligence (AI) to make machines that can effectively cooperate with humans. This area is related to multidisciplinary research fields covering psychology, natural language processing, affective computing, human-robot interaction, machine learning, and computer vision.
 
 
@@ -127,7 +128,7 @@ In this paper, we introduce a new research domain with the long-term aim to buil
 
 
 
-\section{Background}
+\section{Related Work}
 
 \textbf{Psychology:}
 Due to its importance in social communication, nonverbal cues have received significant attention in psychology. Work in this area is often categorized into diverse subfields including Proxemics, Kinesics, Vocalics, and Haptics. In our work, we focus only on Proxemics and Kinesics, which are closely related to visual cues. Hall first introduced the concept of Proxemics to describe how humans use their personal space during communications~\cite{Hall66}, and Kendon studied the spatial formations and orientations established when multiple people communicate in a common space (named F-formation)~\cite{kendon90}. Facial expression in particular has received lots of attention by researchers since the pioneering work of Charles Darwin~\cite{Darwin-1872}. Ekman studied the relation between emotions and facial expressions, and presented Facial Action Code System (FACS) by introducing a system to describe facial expressions using combinations of atomic units (Action Units)~\cite{ekman1977facial}. Since then, this system remains as the de-facto standard to annotate and measure facial expressions, and has had a broad impact in across many fields. Compared to the face, body gestures remain relatively unexplored even though research has substantiated the importance of body language in communication~\cite{Gelder09, Moore13, Meeren-2005, Aviezer-2012}. In spite of the efforts of many researchers in diverse fields, little progress has been made in understanding nonverbal communications, and the approaches proposed several decades ago are still the most widely used methods available~\cite{Moore13}. 
@@ -141,15 +142,16 @@ Predicting or forecasting human motion is an emerging area in computer vision an
 %Holden's work
 %Graphics Jehee's
 %Sergey Levin's work
-
-\textbf{Social Signal Dataset:}
-How to measure and collect nonverbal signal data is important to pursue a data-driven approach for our goal. However, only few datasets contain socially interacting group motion~\cite{alameda2016salsa, mccowan2005ami, lepri2012connecting, rehg2013decoding}. The scenes in these datasets are often in a table setup, limiting free body movement and capturing the upper-body only. There are datasets that capture more freely moving multiple people (e.g., cocktail party)~\cite{Zen-10, Cristani-11, farenzena2009social}, but these only contain location and orientation measurements for the people, introduced to study the social formation only. Datasets providing rich 3D body motion information captured with motion capture techniques exist, but they contains single subjects' motion only\cite{gross2001cmu, h36m_pami, sigal2010humaneva}. More recently, however, full body motion data of interacting groups using a large number of camera system was proposed for social interaction capture~\cite{Joo-15}. This work shows a potential in collecting a large scale social interaction data without the usual issues caused by wearing a motion capture suit and markers.
+%
+%\textbf{Social Signal Dataset:}
+%How to measure and collect nonverbal signal data is important to pursue a data-driven approach for our goal. However, only few datasets contain socially interacting group motion~\cite{alameda2016salsa, mccowan2005ami, lepri2012connecting, rehg2013decoding}. The scenes in these datasets are often in a table setup, limiting free body movement and capturing the upper-body only. There are datasets that capture more freely moving multiple people (e.g., cocktail party)~\cite{Zen-10, Cristani-11, farenzena2009social}, but these only contain location and orientation measurements for the people, introduced to study the social formation only. Datasets providing rich 3D body motion information captured with motion capture techniques exist, but they contains single subjects' motion only\cite{gross2001cmu, h36m_pami, sigal2010humaneva}. More recently, however, full body motion data of interacting groups using a large number of camera system was proposed for social interaction capture~\cite{Joo-15}. This work shows a potential in collecting a large scale social interaction data without the usual issues caused by wearing a motion capture suit and markers.
 
 \textbf{Measuring Kinesic Signals:} Detecting human bodies and keypoints in images has advanced greatly in computer vision. There exist publicly available 2D face keypoint detectors~\cite{baltruvsaitis2016openface}, body pose detectors~\cite{cao2017realtime, Wei2016, Newell-16}, and hand pose detectors~\cite{simon2017hand}. 3D motion can be obtained by markerless motion capture in a multiview setup~\cite{Gall-09,Liu-2013,Elhayek-15, joo2017panoptic, joo2018}, by RGB-D cameras~\cite{Shotton2011,Baak2011}, or even by monocular cameras~\cite{Ramakrishna2012,Bogo2016,martinez2017simple,zhou2017towards,Moreno-noguer2017,mehta2017monocular}. Recently, methods to capture both body and hands have also been introduced~\cite{MANO:SIGGRAPHASIA:2017,joo2018}. 
 
 \input{Chapter7/ssp_method_def}
 \input{Chapter7/ssp_method_db}
 \input{Chapter7/ssp_method_pred}
+\input{Chapter7/ssp_method_details}
 \input{Chapter7/ssp_result}
 
 \subsection{Discussion}
