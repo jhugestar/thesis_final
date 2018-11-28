@@ -2,7 +2,7 @@
 
 \chapter{The Triadic Interaction Dataset}
 \label{chapter:dataset}
-Availability of a large-scale dataset is essential to tackle the social signal prediction task in a data-driven way. Despite existing datasets that provide measurements for human motion and behaviors~\cite{carletta2005ami, Lepri-12, Zen-10,Cristani-11, SALSA-15, h36m_pami}, there is no dataset that satisfies the following core requirements for understanding non-verbal human behaviors: (1) capturing 3D full body motion at high-resolution (including face, body, and hands); (2) capturing signals of naturally interacting groups (more than two people to include attention switching); and (3) collecting the data at scale. The limited availability of the dataset motivates us to build a new dataset that contains social interactions among hundreds of interacting groups with the full-spectrum of 3D body motion measurements. The key properties of our dataset are as follows:
+Availability of a large-scale dataset is essential to computationally analyze the nonverbal communication in a data-driven manner. Despite existing datasets that provide measurements for human motion and behaviors~\cite{carletta2005ami, Lepri-12, Zen-10,Cristani-11, SALSA-15, h36m_pami}, there is no dataset that satisfies the following core requirements for understanding non-verbal human behaviors: (1) capturing 3D full body motion at high-resolution (including face, body, and hands); (2) capturing signals of naturally interacting groups (more than two people to include attention switching); and (3) collecting the data at scale. The limited availability of the dataset motivates us to build a new dataset that contains social interactions among hundreds of interacting groups with the full-spectrum of 3D body motion measurements. The key properties of our dataset are as follows:
 \begin{itemize}
 	\item Our dataset contains naturally interacting multiple people in a negotiation game scenario that is carefully designed in the collaboration with pychologists
 	\item No behavioral restriction is instructed to participants during the capture, and subjects are randomly recruited
@@ -16,37 +16,77 @@ The objective of our dataset is to study the correlation among subtle socials si
 	\centering
 	\includegraphics[width=\linewidth]{ssp_fig/haggling_ex}
 	\caption{An example of the haggling sequence. (Left) an example scene showing two sellers and one buyer. (Right) Reconstructed 3D social signals showing body, face, and 3D hand motion.} 
-	\label{fig:hagglign_ex}
+	\label{fig:haggling_example}
 \end{figure}
-
-
-\begin{figure}
-	\centering
-	\includegraphics[height=0.95\textwidth]{figures/domedb}
-	\caption{The Panoptic Studio Dataset website. We have collected a large number of sequences in various situations. All the 521 sensor measurements as well as reconstructed 3D motion capture results are available.} 
-	\label{fig:domedb}
-\end{figure}
-
 \section{Related Work}
 
-\subsection{Social Signal Processing:}
+%\subsection{Social Signal Processing DB:}
 
-\subsection{Sentimental Analysis:}
 
-\subsection{Social Formation:}
+%Emilya: Emotional body database
+%FABO corpos
+%GEMEP corpus: actor behave
+%Modeling human affective postures: an information theoretic characterization of posture features
+%\subsection{Affective Posture Database:}
+A research domain considers to recognize emotions in body gestures. Almost all databases in this domain are collected from actors where actors are instructed to behave certain emotions~\cite{gunes2006bimodal, banziger2012introducing, de2004modeling}. 
+
+%\subsection{Face-to-face Social Interacton Database:}
+%SALSA: alameda2016salsa
+%AMI meeting db: mccowan2005ami
+
+%Free-standing
+%Space speaks: towards socially and personality aware visual surveillance
+
+%Other device:
+%13. Pentland, A.: Looking at people: Sensing for ubiquitous and wearable computing.
+%IEEE PAMI. 22(1) (2000) 107–119
+%14. Choudhury, T., Pentland, A.: The sociometer: A wearable device for understanding
+%human networks. In: CSCW - Workshop on ACCUCE. (2002
 
 %\textbf{Social Signal Dataset:}
-How to measure and collect nonverbal signal data is important to pursue a data-driven approach for our goal. However, only few datasets contain socially interacting group motion~\cite{alameda2016salsa, mccowan2005ami, lepri2012connecting, rehg2013decoding}. The scenes in these datasets are often in a table setup, limiting free body movement and capturing the upper-body only. There are datasets that capture more freely moving multiple people (e.g., cocktail party)~\cite{Zen-10, Cristani-11, farenzena2009social}, but these only contain location and orientation measurements for the people, introduced to study the social formation only. Datasets providing rich 3D body motion information captured with motion capture techniques exist, but they contains single subjects' motion only\cite{gross2001cmu, h36m_pami, sigal2010humaneva}. More recently, however, full body motion data of interacting groups using a large number of camera system was proposed for social interaction capture~\cite{Joo-15}. This work shows a potential in collecting a large scale social interaction data without the usual issues caused by wearing a motion capture suit and markers.
+How to measure and collect nonverbal signal data is important to pursue a data-driven approach for our goal.  A research domain considers to recognize emotions in body gestures. Almost all databases in this domain are collected from actors where actors are instructed to behave certain emotions without actual social interaction~\cite{gunes2006bimodal, banziger2012introducing, de2004modeling}. Few datasets contain socially interacting group motion~\cite{mccowan2005ami, zancanaro2006automatic, lepri2012connecting, rehg2013decoding}. The scenes in these datasets are often in a table setup, limiting free body movement and capturing the upper-body only. There are datasets that capture free-standing conversational groups (e.g., cocktail party)~\cite{Zen-10, Cristani-11, alameda2016salsa, farenzena2009social}, but these only contain location and orientation measurements for the people, introduced to study the social formation or coarse category level recognition tasks (e.g., speaker, personality, or role recognition).
 
-\subsection{Human Motion:}
+% Datasets providing rich 3D body motion information captured with motion capture techniques exist, but they contains single subjects' motion only\cite{gross2001cmu, h36m_pami, sigal2010humaneva}. More recently, however, full body motion data of interacting groups using a large number of camera system was proposed for social interaction capture~\cite{Joo-15}. This work shows a potential in collecting a large scale social interaction data without the usual issues caused by wearing a motion capture suit and markers.
 
+%\subsection{Human Motion Capture Database:}
+Datasets providing rich 3D body motion information captured with motion capture techniques exist, but they contains single subjects' non-social motion only\cite{gross2001cmu, h36m_pami, sigal2010humaneva}. 
+
+Notably, there is not previous work where socially interacting groups are non-intrusively captured with full body motion capture measurements. 
 
 
 \section{The Haggling Game Protocol}
-To evoke natural interactions, we involved participants in a social game named the \emph{Haggling} game. This game induces a variety of rich non-verbal signals in participants. In our captures, subjects were informed of the rules of the game but were otherwise not instructed about how to behave, nor was their clothing or appearance controlled. They were also not initially aware of our research goals to avoid potential biases in their gestures. The majority of the sequences are captured with people randomly recruited from a university campus. We invent this haggling game to simulate a haggling situation among two sellers and a buyer. The triadic interaction is chosen to include interesting social behaviors such as turn taking, and attention changes, which are missing in dyadic interactions~\cite{rehg2013decoding}. During the game, two sellers are promoting their own comparable products for selling, and a buyer makes the decision about which product he/she buys between the two. They are given a minute for the haggling, and the seller who has sold his/her product is awarded $\$5$. To maximize the influence of each seller's behavior on the buyer's decision-making, the items assigned to sellers are the same type of product with slightly different properties. We provide simple written descriptions to sellers about the items 1 minute before the game. Over the 8 days of captures, 122 subjects participated and 180 haggling sequences were captured (about 3 hours data). The captured sequences contain a lot of voluntary social behaviors of diverse people in a common social context (an example scene is shown in Fig.~\ref{fig:hagglign_ex}. Note that the capture space does not contain other objects which may distract the motion of the target, so we can assume no $X_e(t)$ is necessary in our social signal prediction problem.
+To evoke natural interactions, we involved participants in a social game named the \emph{Haggling} game. This game induces a variety of rich non-verbal signals in participants. In our captures, subjects were informed of the rules of the game but were otherwise not instructed about how to behave, nor was their clothing or appearance controlled. They were also not initially aware of our research goals to avoid potential biases in their gestures. The majority of the sequences are captured with people randomly recruited from a university campus. We invent this haggling game to simulate a haggling situation among two sellers and a buyer. The triadic interaction is chosen to include interesting social behaviors such as turn taking, and attention changes, which are missing in dyadic interactions~\cite{rehg2013decoding}. During the game, two sellers are promoting their own comparable products for selling, and a buyer makes the decision about which product he/she buys between the two. They are given a minute for the haggling, and the seller who has sold his/her product is awarded $\$5$. To maximize the influence of each seller's behavior on the buyer's decision-making, the items assigned to sellers are the same type of product with slightly different properties. We provide simple written descriptions to sellers about the items 1 minute before the game. Over the 8 days of captures, 122 subjects participated and 180 haggling sequences were captured (about 3 hours data). The captured sequences contain a lot of voluntary social behaviors of diverse people in a common social context (an example scene is shown in Fig.~\ref{fig:haggling_example}. Note that the capture space does not contain other objects which may distract the motion of the target, so we can assume no $X_e(t)$ is necessary in our social signal prediction problem.
+
+
+
+\begin{table}[h]
+	\centering
+
+	\begin{tabular}{ c| c | c  }
+		\hline	
+		Items & Seller 1  &  Seller 2\\
+		\hline	
+		\hline	
+		Phone &  \makecell{Light weight \\ Medium storage}    & \makecell{Medium weight\\ Large storage}\\
+		\hline			
+		Laptop &  \makecell{Light weight \\ Medium speed}    & \makecell{Medium weight\\ Fast speed}\\
+		\hline			
+		Tablet PC &  \makecell{Large storage\\ Medium speed}    & \makecell{Medium storage\\ Fast speed}\\
+		\hline	
+		Speaker &  \makecell{High quality audio\\ Wired}    & \makecell{Medium quality audio\\ Wireless}\\
+		\hline	
+	\end{tabular}
+	\caption{Example of items assigned to sellers}
+	\label{table:haggling_items}
+\end{table}
+
+
+
+
+
 
 \section{Social Signal Measurements}
-We use the Panoptic Studio System to reconstruct 3D anatomical keypoints of multiple interacting people~\cite{joo2017panoptic, joo2018}. As a key advantage, the method does not require attaching sensors or markers on subject's body, and no behavior restrictions nor initialization poses are needed from the subjects. As output, the system produces 3D body motion $\mathbf{J(t)}$, 3D face motion $\mathbf{F(t)}$, and 3D hand motion $\mathbf{H(t)}$ for each individual at each time $t$. From this measurement, we additionally compute the body orientation $\theta(t)$ and face orientation $\phi(t)$ by finding the 3D normal direction of torso and face. These orientations are computed only on the $x$-$y$ plane with respect to the $y$-axis. We decouple the global location $x$ and body orientation $\theta$ from the body motion capture results, following previous work~\cite{jain2016structural, holden2016deep}, and $\mathbf{J(t)}$ only contains body motions in the person-centric coordinate (root joint is at the origin and body is facing the $z$ direction). An example scene is shown in Fig.~\ref{fig:hagglign_ex}. The voice data $V(t)$ of each individual is also recorded by wireless microphones assigned to each individual. From the audio signal, we manually annotate a binary speaking label $\mathbf{S}(t) \in \{0,1\}$ describing whether the target subject is speaking (labelled as $1$) or not speaking (labelled as $0$) at time $t$. In summary we measure the following signals for each individual:
+We use the Panoptic Studio System to reconstruct 3D anatomical keypoints of multiple interacting people~\cite{joo2017panoptic, joo2018}. As a key advantage, the method does not require attaching sensors or markers on subject's body, and no behavior restrictions nor initialization poses are needed from the subjects. As output, the system produces 3D body motion $\mathbf{J(t)}$, 3D face motion $\mathbf{F(t)}$, and 3D hand motion $\mathbf{H(t)}$ for each individual at each time $t$. From this measurement, we additionally compute the body orientation $\theta(t)$ and face orientation $\phi(t)$ by finding the 3D normal direction of torso and face. These orientations are computed only on the $x$-$y$ plane with respect to the $y$-axis. We decouple the global location $x$ and body orientation $\theta$ from the body motion capture results, following previous work~\cite{jain2016structural, holden2016deep}, and $\mathbf{J(t)}$ only contains body motions in the person-centric coordinate (root joint is at the origin and body is facing the $z$ direction). An example scene is shown in Fig.~\ref{fig:haggling_example}. The voice data $V(t)$ of each individual is also recorded by wireless microphones assigned to each individual. From the audio signal, we manually annotate a binary speaking label $\mathbf{S}(t) \in \{0,1\}$ describing whether the target subject is speaking (labelled as $1$) or not speaking (labelled as $0$) at time $t$. In summary we measure the following signals for each individual:
 \begin{equation}
 [ \mathbf{x}, \boldsymbol{\theta}, \boldsymbol{\phi}, \mathbf{J}, \mathbf{F}, \mathbf{H}, \mathbf{V}, \mathbf{S} ].
 \label{equation:measurement}
@@ -102,6 +142,13 @@ Our dataset contains more than 10 hours of sequences, capturing more than 150 pa
 		\hline	
 	\end{tabular}
 \end{table}
+
+\begin{figure}
+	\centering
+	\includegraphics[height=0.95\textwidth]{figures/domedb}
+	\caption{The Panoptic Studio Dataset website. We have collected a large number of sequences in various situations. All the 521 sensor measurements as well as reconstructed 3D motion capture results are available.} 
+	\label{fig:domedb}
+\end{figure}
 
 %\section{Expected Contributions in Computer Vision Community}
 %While our dataset is mainly intended to study kinesic signals in social situations, there exist a huge potential in using our dataset for various other computer vision topics. Our dataset contains various type of measurement and automatically generated annotations about dynamically moving human motions. Because all the sensor are temporally and spatially calibration, the dataset can be used as a dataset for various type of computer vision problems to learn the relation among video based scene understanding. 
