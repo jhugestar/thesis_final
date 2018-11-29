@@ -42,7 +42,7 @@ Note that we only consider the positions and orientations on the ground plane (i
 
 To implement this, we use a simple 1-D temporal convolutional neural network to model $\mathcal{F}_p$. The network is trained with a window of frames $N=120$ (corresponding to 4 seconds), but arbitrary length of input can be used in testing time since our network is fully convolutional. We use a simple encoder-decoder network. The encoder has  3 convolutional layers followed by dropout (0.25) and RELU, and 1D pooling layer (with stride 2). The decoder uses a single transposed convolution layer. We use L2 loss function with a L1 regularization term (with weight 0.1). We simply use the global position and orientations with standardization, rather than any local or relative coordinate.
 
-\subsection{Predicting Kinesic Signals}
+\subsection{Predicting Body Gestures}
 Predicting body motion in social situations (by using other subjects' signals) is challenging, because the correlation among body signals are subtle and less explicit. To study this, we present two baseline approaches here. 
 
 \textbf{By Using Social Formation Only.} The first approach uses only the social formation information of other subjects:
@@ -63,68 +63,5 @@ where $\mathcal{F}_{p2J}$ is a mapping between the target subject's own social t
 \end{gather}
 In this particular example, we expect ``better" prediction quality than the previous baseline by using other subject's body motions as a cue to determine the target person's body motion. We found that this method shows more diverse upper body motion, responding the motions of other subjects. To this end, we present a hybrid method combining the upper body prediction results of this method to the root and leg motions of the previous method. 
 
-% \subsection{Social Kinesic Signal Prediction: A Baseline}
 
-% However, group discussion scenarios such our negotiation setting often do not have dominant location changes, and people make and keep a certain formation. But still a lot of nonverbal signals are transmitted by body gestures. To study this, as the next level of representation, we include full body landmarks,
-% \begin{gather}	
-% \mathbf{U}^i(t) = [\Delta \mathbf{x}^{i}_i(t), \Delta \theta_i(t),  \mathbf{j}_i(2:15,t)]^T
-% \end{gather}
-% where in this case the $\mathbf{x}^{i}_i(t)$ and $\theta_i(t)$ are computed from the root location (neck) of the body skeletons.
-
-% As the richest version, we consider both body and face together:
-% \begin{gather}	
-% \mathbf{U}^i(t) = [\Delta \mathbf{x}^{i}_i(t), \Delta \theta_i(t),  \mathbf{j}_i(2:15,t), \mathbf{j}_i(k_f,t), \eta_i (t)]^T
-% \end{gather}
-
-% To study social communication, we consider the similar type of representation originated from other people. Let us assume that the target person $i$ receives signals from $j$-th person ($\mathbf{V}^j$). A way to represent the signals is by using exactly same representation as defined above.
-
-% \begin{gather}	
-% \mathbf{V}^j(t) = [\Delta \mathbf{x}^{j}_j(t), \Delta \theta_j(t)]^T\\ \nonumber
-% \mathbf{V}^j(t) = [\Delta \mathbf{x}^{j}_j(t), \Delta \theta_j(t),  \mathbf{j}_j(2:15,t)]^T\\ \nonumber
-% \mathbf{V}^j(t) = [\Delta \mathbf{x}^{j}_j(t), \Delta \theta_j(t),  \mathbf{j}_j(2:15,t), \mathbf{j}_j(k_f,t), \eta_j (t)]^T
-% \end{gather}
-% In this case, however, the formation information among people is completely ignored.
-
-% As the second option, we can consider the representation of location differential of $j$-th person in our target person's coordination system, to relate them.
-% \begin{gather}	
-% \mathbf{V}^j(t) = [\Delta \mathbf{x}^{i}_j(t), \Delta \theta^i_j(t)]^T\\ \nonumber
-% \mathbf{V}^j(t) = [\Delta \mathbf{x}^{i}_j(t), \Delta \theta^i_j(t),  \mathbf{j}_j(2:15,t)]^T\\ \nonumber
-% \mathbf{V}^j(t) = [\Delta \mathbf{x}^{i}_j(t), \Delta \theta^i_j(t),  \mathbf{j}_j(2:15,t), \mathbf{j}_j(k_f,t), \eta_j (t)]^T
-% \end{gather}
-% In this case, relative formation information is implied in the differential of root locations.
-
-% As the third option, we can consider relative formation from the target person without using differentials.
-% \begin{gather}	
-% \mathbf{V}^j(t) = [\mathbf{x}^{i}_j(t), \theta^i_j(t)]^T\\ \nonumber
-% \mathbf{V}^j(t) = [\mathbf{x}^{i}_j(t), \theta^i_j(t),  \mathbf{j}_j(2:15,t)]^T\\ \nonumber
-% \mathbf{V}^j(t) = [\mathbf{x}^{i}_j(t), \theta^i_j(t),  \mathbf{j}_j(2:15,t), \mathbf{j}_j(k_f,t), \eta_j (t)]^T
-% \end{gather}
-
-
-% \subsection{Social Kinesic Signal Prediction: Advanced}
-
-% Actually modeling the body dymamics. Any noticable improvemenet?
-
-% \section{Predicting Social Signals}
-    
-% Our model takes, as input, nonverbal signals from fixed window of time, and predicts future motion signals at a future time. We try multiple baselines and compare their social signal prediction performance. As defined in Equation~\ref{equation:F_ours}, the input is the combination of $\mathbf{U} (t-w:t)$ and $\mathbf{V} (t-w:t)$. $\mathbf{U}(t-w:t) \in \mathbf{R}^{N \times w}$  is a matrix where $N$ is the dimension of the chosen signals. To model social signals from other people together, we concatenate $U$ and $V$s vertically. For example, in our triadic negotiation cases, the input becomes,
-% \begin{equation}
-% \Theta(t) = [\mathbf{U}(t-w:t); \mathbf{V}^1  (t-w:t); \mathbf{V}^2  (t-w:t) ]
-% \label{eq:input}
-% \end{equation}
-% , where $\mathbf{V}^1$ and $\mathbf{V}^2$ are signals from two other people. 
-
-% To this end, we generate a training set from the following form,
-% \begin{equation}
-% \mathcal{F} ( \Theta(t) ) = \mathbf{U}(t+h).
-% \end{equation}
-
-
-% \subsection{Social Signal Prediction for Individuals}
-
-
-% \subsection{Social Signal Prediction for Social Formation}
-
-
-% \subsection{Social Signal Prediction for Kinesic Signals}
-
+\subsection{Predicting Facial Signals}
