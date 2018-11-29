@@ -7,6 +7,7 @@
 \usepackage{bm}
 \usepackage{amsmath,amssymb,amsthm,mathrsfs,amsfonts,dsfont}
 \usepackage{gensymb}
+\usepackage{makecell}
 % ******************************************************************************
 % ******************************* Class Options ********************************
 % *********************** See README for more details **************************
@@ -145,26 +146,30 @@
 %	\input{relatedwork}
 %%	
 %%	
-%%
-%	\part{Sensing Social Signals}
-%	\include{Chapter2/system}
-%%	
-%	\part{Measuring Social Signals}
-%	\epigraph{``Measure what is measurable, and make measurable what is not so."\par\raggedleft--- \textup{Galileo Galilei}}
-%	
-%	Scientific achievements are often preceded by new innovations of measurement methods. Similarly, a method to accurately measure sosical signals at high resolution is the key to computationally analyze nonverbal communications. In this part of thesis, we build a system, the Panoptic studio, developed to capture social interactions, and present novel algorithms to measure full body motion of multiple people in social situations. The measured social signals include 3D movements of anatomical landmarks from face, body, and hands, and also contain dense 3D trajectories from body surfaces with part labels. Our method also enables to build a deformable 3D human model to capture dense 3D mesh structures for human body motion. 
-%%	\pagebreak
-%	
 %
-%	\include{Chapter3/method_trajectorystream}
-%	\include{Chapter4/method_mocap}
-%	\include{Chapter5/method_totalCapture}
+	\part{Sensing Social Signals}
+	\include{Chapter2/system}
 %	
-%	
+	\part{Measuring Social Signals}
+	\epigraph{``Measure what is measurable, and make measurable what is not so."\par\raggedleft--- \textup{Galileo Galilei}}
+	
+	Scientific achievements are often preceded by new innovations of measurement methods. Similarly, a method to accurately measure sosical signals at high resolution is the key to computationally analyze nonverbal communications. In this part of thesis, we build a system, the Panoptic studio, developed to capture social interactions, and present novel algorithms to measure full body motion of multiple people in social situations. The measured social signals include 3D movements of anatomical landmarks from face, body, and hands, and also contain dense 3D trajectories from body surfaces with part labels. Our method also enables to build a deformable 3D human model to capture dense 3D mesh structures for human body motion. 
+%	\pagebreak
+	
+
+	\include{Chapter3/method_trajectorystream}
+	\include{Chapter4/method_mocap}
+	\include{Chapter5/method_totalCapture}
+	
+	
 %	
 	\part{Modeling Social Signals}
 	\epigraph{``We respond to gestures with an extreme alertness and, one might almost say, in accordance with an elaborate and secret code that is written nowhere, known by none, and understood by all"\par\raggedleft--- \textup{Edward Sapir~\cite{Sapir-1949}}}
-	
+%	
+%	\epigraph{``Man is by nature a social animal."\par\raggedleft--- \textup{ Aristotle~\cite{Aristotle328}}}
+%	
+%	\epigraph{``Computers are socially ignorant"\par\raggedleft--- \textup{Alex Pentland~\cite{pentland2005socially}}}
+%	
 	The Panoptic studio allows us to measure kinesic signals of a large group of interacting people for the first time. We propose to model these signals as information flow in a communication system. The core thesis of our approach is that a meaningful encoding of body movement will emerge from representations that are optimized for efficient prediction of these kinesic communication signals. We hope to see this approach inspire continuous and quantitative models in the future study of social behavior. 
 %	
 %	\pagebreak
