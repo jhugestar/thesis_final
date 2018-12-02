@@ -1,0 +1,25 @@
+% !TEX root = thesis.tex
+
+\chapter{Discussion}
+\label{chapter:discussion}
+
+\section{Summary}
+
+This goal of this thesis is to endow robots with nonverbal communication skills, to ultimately make them genuinely interact with humans. We argue that this can be enabled by computational methods leveraging a large scale data describing how humans are actually using subtle social signals during communication.  This thesis focuses on the fundamental issue of lack of avaialble such dataset, and directly tackle the problem by buidling a new sensor system, along with new methods to measure full spectrum of social signals by exploiting the large number of views of the system.  The final part of this thesis verifies that social signals are highly correlated and predictive each other, and introduce a social signal prediction task as a way to modeling nonverbal communication.
+
+This thesis demonstrates that it is possible to capture the total motion of freely interacting groups can be markerless captured. This is crucial to capture more voluntarily motions of people. Importantly, the captured data can be additionally used to as an essential source to make better measurmenet tools. For exmple, it enables to build the first widely used hand keypoint detector, and a deformable human model with full expressive power of face, body, and hands. We expect this dataset will play an impotant role for the filed of sensing humans in the wild. The database provide the first opportunity to consider the correlation of all nonverbal signals, which should be an important step for AI and also pychology community.
+
+\section{Future Work}
+This thesis starts with an ambitious goal and during the journey we found several limitation which opens up new interesting direction.
+
+
+\paragraph{Measuring Higher Fidelity Social Signals.}
+This theis presents a state-of-the art sensor system and measurement techiniques. However, the output is still missing for several important signals. For example, eye gaze, which plays an important role in social communication~\cite{rayner1998eye,friesen1998eyes,ricciardelli2002my}, and subtle details of face are missing, which was mainly cause by limited camera reoslution. These are possible tackled by building a system with higher resolutiona cameras (e.g. 4K), but it directly introduce additional difficulties in handling and processing the larger data size. Current hand reconstruction is vulnerable if both hands are overlapped each other. These are also interesting direction with many applications to pychology, robotics, HCI, VR/AR. 
+
+
+\paragraph{Measuring 3D Social Signals In-the-Wild.}
+The Internet is a golden trove of social communication data, and a key goal of my research is to capture social signals in-the-wild. Obtaining 3D signals (rather than 2D) is important to be independent from biases caused by camera views and human pose orientations. I plan to expand my research toward obtaining 3D social signals (e.g., 3D keypoints) directly from a image captured in-the-wild. This research requires 3D annotations for each 2D image, which cannot be reliably annotated by human annotators. While recent methods in this direction mainly rely on synthetic data (e.g., CAD models with rendering), a multiview setup can be a better solution providing 3D measurements for real data. For example, in the dataset of the Panoptic Studio, 3D measurements (3D keypoints and 3D point clouds) corresponding to an image are available for training a model. As a core research challenge, the dataset biases caused from the lab-specific environment needs to be solved to generalize them to in-the-wild scenarios. 
+
+
+\paragraph{Predictive Understanding of Long-term Social Behavior in A Living Environment.}
+Interpersonal social behaviors can change over time. As a future work, I am enthusiastic to expand my research into a long-term social behavior analysis, by using the dataset the Panoptic Home will provide. By computationally analyzing an individual's behavior in social situations for a long term, a subject specific model which predicts the future signals of the particular person can be trained. As human reactions responding to the same input signals vary across people, the individual-specific prediction model can produce a distinctive output reflecting the target individual's characteristics. There are many novel scientific questions we can consider from the measurements in this new scenario including: (1) Does social familiarity influence interpersonal social behaviors; (2) How does scene affordance (e.g., furniture or TV) affect social behaviors (e.g., social formation); (3) Can long-term observations of the same person increase the social signal prediction accuracy of the particular person. 
