@@ -147,50 +147,35 @@
 %%	
 %%	
 %%
-%	\part{Sensing Social Signals}
+	\part{Sensing Social Signals}
 %	\include{Chapter2/system}
-%%	
-%	\part{Measuring Social Signals}
-%	\epigraph{``Measure what is measurable, and make measurable what is not so."\par\raggedleft--- \textup{Galileo Galilei}}
 %	
-%	Scientific achievements are often preceded by new innovations of measurement methods. Similarly, a method to accurately measure sosical signals at high resolution is the key to computationally analyze nonverbal communications. In this part of thesis, we build a system, the Panoptic studio, developed to capture social interactions, and present novel algorithms to measure full body motion of multiple people in social situations. The measured social signals include 3D movements of anatomical landmarks from face, body, and hands, and also contain dense 3D trajectories from body surfaces with part labels. Our method also enables to build a deformable 3D human model to capture dense 3D mesh structures for human body motion. 
-%%	\pagebreak
-%	
-%
+%%	\part{Measuring Social Signals}
+	\part{Reconstructing Social Signals}
+	\epigraph{``Measure what is measurable, and make measurable what is not so."\par\raggedleft--- \textup{Galileo Galilei}}
+	
+	Scientific achievements are often preceded by new innovations of measurement methods. Similarly, a method to accurately measure sosical signals at high resolution is the key to computationally analyze nonverbal communications. In this part of thesis, we build a system, the Panoptic studio, developed to capture social interactions, and present novel algorithms to measure full body motion of multiple people in social situations. The measured social signals include 3D movements of anatomical landmarks from face, body, and hands, and also contain dense 3D trajectories from body surfaces with part labels. Our method also enables to build a deformable 3D human model to capture dense 3D mesh structures for human body motion. 
+%	\pagebreak
+	
 %	\include{Chapter3/method_trajectorystream}
 %	\include{Chapter4/method_mocap}
 %	\include{Chapter5/method_totalCapture}
 %	
+	\part{Modeling Social Signals}
+	\epigraph{``We respond to gestures with an extreme alertness and, one might almost say, in accordance with an elaborate and secret code that is written nowhere, known by none, and understood by all"\par\raggedleft--- \textup{Edward Sapir~\cite{Sapir-1949}}}
 %	
-%%	
-%	\part{Modeling Social Signals}
-%	\epigraph{``We respond to gestures with an extreme alertness and, one might almost say, in accordance with an elaborate and secret code that is written nowhere, known by none, and understood by all"\par\raggedleft--- \textup{Edward Sapir~\cite{Sapir-1949}}}
-%%	
-%%	\epigraph{``Man is by nature a social animal."\par\raggedleft--- \textup{ Aristotle~\cite{Aristotle328}}}
-%%	
-%%	\epigraph{``Computers are socially ignorant"\par\raggedleft--- \textup{Alex Pentland~\cite{pentland2005socially}}}
-%%	
-%	The Panoptic studio allows us to measure kinesic signals of a large group of interacting people for the first time. We propose to model these signals as information flow in a communication system. The core thesis of our approach is that a meaningful encoding of body movement will emerge from representations that are optimized for efficient prediction of these kinesic communication signals. We hope to see this approach inspire continuous and quantitative models in the future study of social behavior. 
-%%	
-%%	\pagebreak
-%%	
+%	\epigraph{``Man is by nature a social animal."\par\raggedleft--- \textup{ Aristotle~\cite{Aristotle328}}}
+%	
+%	\epigraph{``Computers are socially ignorant"\par\raggedleft--- \textup{Alex Pentland~\cite{pentland2005socially}}}
+%	
+	The Panoptic studio allows us to measure kinesic signals of a large group of interacting people for the first time. We propose to model these signals as information flow in a communication system. The core thesis of our approach is that a meaningful encoding of body movement will emerge from representations that are optimized for efficient prediction of these kinesic communication signals. We hope to see this approach inspire continuous and quantitative models in the future study of social behavior. 
+%	
+%	\pagebreak
+%	
 	\input{Chapter6/dataset}
-	\input{Chapter7/ssp_main}
+%	\input{Chapter7/ssp_main}
+%	\input{Chapter8/summary}
 %	
-	
-	\chapter{Summary}
-	
-	This objective of this thesis is to push the envelop of our understanding about kinesic signals in social communication. We have built a system and a method to measure high-resolution kinesic signals at their full bandwidth, down to the nuanced and momentary movements of multiple people in a group. This system enables us to collect a large scale dataset capturing social interactions of hundreds of participants for the first time, and it affords us the unprecedented opportunity to spur a new scientific revolution in computational theories in social communication.
-	
-	As proposed work, we present an approach to model kinesic communication by predicting response kinesic signals in an optimization framework. We present a preliminary result of predicting attention in a triadic scene, and show a quantification of the influence of each body part signals related to the attention prediction. The preliminary experiments are performed only for attention prediction task, and a single time instance is considered as an input and an output. We plan to extend this approach to various resolution of signals including spatial and temporal variations. The future work is summarized as follows:
-	
-	\begin{enumerate}
-		\item Building a model that \emph{understands} the flow of kinesic signals at high resolution in social communication. 
-		\item Quantifying the influence and role of each body signal in social communication.
-	\end{enumerate}
-	
-	
-	
 	
 	% ********************************** Back Matter *******************************
 	% Backmatter should be commented out, if you are using appendices after References
