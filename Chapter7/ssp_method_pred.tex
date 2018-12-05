@@ -8,7 +8,7 @@ We regress the function defined in Equation~\ref{equation:F_ours} using the data
 \mathbf{X}^i = [ \mathbf{x}^i, \boldsymbol{\theta}^i, \boldsymbol{\phi}^i, \mathbf{J}^i, \mathbf{F}^i, \mathbf{H}^i, \mathbf{V}^i, \mathbf{S}^i ],
 \end{gathered}
 \end{equation}
-where we use the superscript 0 to denote the social signals of the target subject (the output of social signal prediction). Directly considering or predicting these full spectrum social signals is challenging and hard to analyze. In our work, we introduce several sub-problems using baseline methods. 
+where we use the superscript 0 to denote the social signals of the target subject (the output of social signal prediction). Directly considering or predicting these full spectrum social signals is challenging and hard to analyze because the complexity of the motion space exponentially increases by considering higher dimensional social signals.  In our work, we consider this social signal prediction problem by several sub-problems using baseline methods. 
 
 % \begin{figure*}
 % 	\centering
@@ -40,7 +40,7 @@ where $\mathbf{Y}_p$ and $\mathbf{X}_p^i$ contains global location and orientati
 Note that we only consider the positions and orientations on the ground plane (in 2D), ignoring the height of the subjects. Thus $\mathbf{x} \in \mathbb{R}^2 $ representing $x$ and $z$ coordinate of the subjects. We use a 2D unit vector to represent the orientations $\theta \in \mathbb {R}^2$ and face orientation $\phi \in \mathbb{R}^2$, because the angle representation has a discontinuity issue when wrapping around $2\phi$ and $-2\phi$. In summary, $\mathbf{X}^i(t)$ and $\mathbf{X}^i(t)$ are a $6 \times N$ dimensional matrix where $N = t- t_0$ is the size of the temporal window. This prediction problem is intended to see whether the machine can learn how to build a social formation to interact with humans~\cite{vazquez2017towards}. Social formation is one of the most noticeable social properties with strong correlation, allowing us to easily evaluate the performance.
 
 
-To implement this, we use a simple 1-D temporal convolutional neural network to model $\mathcal{F}_p$. The network is trained with a window of frames $N=120$ (corresponding to 4 seconds), but arbitrary length of input can be used in testing time since our network is fully convolutional. We use a simple encoder-decoder network. The encoder has  3 convolutional layers followed by dropout (0.25) and RELU, and 1D pooling layer (with stride 2). The decoder uses a single transposed convolution layer. We use L2 loss function with a L1 regularization term (with weight 0.1). We simply use the global position and orientations with standardization, rather than any local or relative coordinate.
+%To implement this, we use a simple 1-D temporal convolutional neural network to model $\mathcal{F}_p$. The network is trained with a window of frames $N=120$ (corresponding to 4 seconds), but arbitrary length of input can be used in testing time since our network is fully convolutional. We use a simple encoder-decoder network. The encoder has  3 convolutional layers followed by dropout (0.25) and RELU, and 1D pooling layer (with stride 2). The decoder uses a single transposed convolution layer. We use L2 loss function with a L1 regularization term (with weight 0.1). We simply use the global position and orientations with standardization, rather than any local or relative coordinate.
 
 \subsection{Predicting Body Gestures}
 Predicting body motion in social situations (by using other subjects' signals) is challenging, because the correlation among body signals are subtle and less explicit. To study this, we present two baseline approaches here. 
@@ -55,13 +55,16 @@ This is an ill-posed problem with diverse possible solutions, because the format
  = \mathcal{F}_{p2J} \left( \mathbf{Y}_p (t_0:t)  \right),
  \label{eq:pred_p2J}
 \end{gather}
-where $\mathcal{F}_{p2J}$ is a mapping between the target subject's own social trajectory to body skeleton. Since the trajectory (position and orientations) is a sub-part of the body behavior, we expect the predicted skeleton to contain similar signals as the social trajectory. For the function $\mathcal{F}_{p2b}$, we follow a similar approach to the work of Holden et al.~\cite{holden2016deep}. As in the Holden's work, we train an autoencoder to find the motion manifold space. As a major difference, we do not use foot step generator, and directly regress from the trajectory to the motion manifold space. We train this model in our dataset only, since the walking and running motion used in \cite{holden2016deep} is rare in our scenarios. 
+where $\mathcal{F}_{p2J}$ is a mapping between the target subject's own social trajectory to body skeleton. Since the trajectory (position and orientations) is a sub-part of the body behavior, we expect the predicted skeleton to contain similar signals as the social trajectory. For the function $\mathcal{F}_{p2J}$, we follow a similar approach to the work of Holden et al.~\cite{holden2016deep}. As in the Holden's work, we train an autoencoder to find the motion manifold space. As a major difference, we do not use foot step generator, and directly regress from the trajectory to the motion manifold space. We train this model in our dataset only, since the walking and running motion used in \cite{holden2016deep} is rare in our scenarios. 
 
 \textbf{By using Body Motions as Input.} We can use the entire body signals of conversational partners as input for our function:
 \begin{gather}	
 \mathbf{J}^0 (t_0:t) = \mathcal{F}_{J2J} \left( \mathbf{J}^1 (t_0:t), \mathbf{J}^2 (t_0:t) \right) .
 \end{gather}
-In this particular example, we expect ``better" prediction quality than the previous baseline by using other subject's body motions as a cue to determine the target person's body motion. We found that this method shows more diverse upper body motion, responding the motions of other subjects. To this end, we present a hybrid method combining the upper body prediction results of this method to the root and leg motions of the previous method. 
+In this particular example, we expect ``better" prediction quality than the previous baseline by using other subject's body motions as a cue to determine the target person's body motion. We found that this method shows more diverse upper body motion, responding the motions of other subjects. 
 
+\textbf{By using Body Motions as Input.} To this end, we present a hybrid method combining the upper body prediction results of this method to the root and leg motions of the previous method. The lower part of the output model follows the movement to keep to social formation and upper body produce more dynamic behaviors responding input signals.
 
 \subsection{Predicting Facial Signals}
+
+
