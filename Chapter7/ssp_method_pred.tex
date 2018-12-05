@@ -20,12 +20,12 @@ where we use the superscript 0 to denote the social signals of the target subjec
 \subsection{Predicting Speaking}
 As a simple task, we predict whether the target subject is currently speaking or not. This is a binary classification task and relatively easier to train compared to the task of regressing motion parameters as output. We first study the correlation between the speaking signal and the target person's own body motion, which should be more explicit. We then compare it with the performance of a classifier that uses the conversational partner's social signals. More specifically, a function $\mathcal{F}_{s0}$ uses the target person's own body motion $\mathbf{J}^0(t_0:t)$ to predict the speaking signal:
 \begin{gather}	
-\mathbf{S}^0(t) = \mathcal{F}_{s0} ( \mathbf{J}^0(t_0:t)),
+\mathbf{S}^0(t) = \mathcal{F}_{s0} \left( \mathbf{J}^0(t_0:t) \right),
 \label{eq:speaking_0}
 \end{gather}
 and we compare this with a function $\mathcal{F}_{s12}$ that uses other subjects' body motions as input:
 \begin{gather}	
-\mathbf{S}^0(t) = \mathcal{F}_{s12} ( \mathbf{J}^1(t_0:t), \mathbf{J}^2(t_0:t)).
+\mathbf{S}^0(t) = \mathcal{F}_{s12} \left( \mathbf{J}^1(t_0:t), \mathbf{J}^2(t_0:t) \right).
 \label{eq:speaking_1}
 \end{gather}
 We hypothesize that the correlation between the speaking and body motion should be stronger than the speaking of the target and other people's body motions. But we still presume that there exists a clear correlation in building the function ~\ref{eq:speaking_1}; for example, if another person is talking we can guess the target person is not speaking due the ``turn-taking" implicitly followed during a social conversation. % This study is interesting because it demonstrates the existence of social correlation among social signals.
@@ -33,7 +33,7 @@ We hypothesize that the correlation between the speaking and body motion should 
 \subsection{Predicting Social Formations}
 As another sub-problem, we predict the location and orientations of the target person. This problem is strongly related to Proxemics~\cite{Hall66} and F-formation~\cite{kendon90}, illustrating how humans use their space in social communications.
 \begin{gather}	
- \mathbf{Y}_p (t_0:t) = \mathcal{F}_p ( \mathbf{X}_p^1(t_0:t), \mathbf{X}_p^2(t_0:t)),
+ \mathbf{Y}_p (t_0:t) = \mathcal{F}_p \left( \mathbf{X}_p^1(t_0:t), \mathbf{X}_p^2(t_0:t) \right),
  \label{eq:pred_formation}
 \end{gather}
 where $\mathbf{Y}_p$ and $\mathbf{X}_p^i$ contains global location and orientation signals $[\mathbf{x}, \boldsymbol{\theta}, \boldsymbol{\phi} ]$ for the target subject and others.
@@ -47,7 +47,7 @@ Predicting body motion in social situations (by using other subjects' signals) i
 
 \textbf{By Using Social Formation Only.} The first approach uses only the social formation information of other subjects:
 \begin{gather}	
-\mathbf{J}^0(t_0:t) = \mathcal{F}_{j0} ( \mathbf{X}_p^1(t_0:t), \mathbf{X}_p^2(t_0:t) ).
+\mathbf{J}^0(t_0:t) = \mathcal{F}_{j0} \left( \mathbf{X}_p^1(t_0:t), \mathbf{X}_p^2(t_0:t) \right).
 \end{gather}
 This is an ill-posed problem with diverse possible solutions, because the formation signals of communication partners barely tells us about the detailed behavior of our target person. Yet, we can consider several required properties of the predicted skeleton. For example, the body location and orientation need to satisfy the social formation property, and when the target person's location is changing the appropriate leg motion needs to be predicted. Intuitively, we expect the predicted skeleton shows a similar social amount of information, location and orientations, as in social formation prediction, but using more complicated structure, body motion. In that sense, we can divide the function $\mathcal{F}_{j0}$ into two stages: predicting a social formation by $\mathcal{F}_p$ described in Eq.~\ref{eq:pred_formation} and predicting 3D body motion from the predicted social trajectory $\mathbf{Y}_p (t_0:t)$:
 \begin{gather}	
@@ -66,5 +66,7 @@ In this particular example, we expect ``better" prediction quality than the prev
 \textbf{By using Body Motions as Input.} To this end, we present a hybrid method combining the upper body prediction results of this method to the root and leg motions of the previous method. The lower part of the output model follows the movement to keep to social formation and upper body produce more dynamic behaviors responding input signals.
 
 \subsection{Predicting Facial Signals}
-
-
+We predict the facial expression signal of the target person, by taking facial signals of other subjects as input. 
+\begin{gather}	
+\mathbf{F}^0(t_0:t) = \mathcal{F}_{F} \left( \mathbf{F}_p^1(t_0:t), \mathbf{F}_p^2(t_0:t) \right).
+\end{gather}
