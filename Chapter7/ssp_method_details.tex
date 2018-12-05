@@ -20,7 +20,8 @@ We describe the dimensions of social signal representations, used for the input 
 \end{figure}
 
 \begin{figure*}[t]	
-	\includegraphics[width=\textwidth]{ssp_fig/networks}
+	%\includegraphics[width=\textwidth]{ssp_fig/networks}
+	\includegraphics[width=\textwidth]{ssp_fig/networks_face}
 	\caption{Network Architectures. We use fully convolutional networks to predict sub-parts of our social signal prediction. We adopts the architecture of Holden et al.~\cite{holden2016deep}, and modify the dimensions and structures based on the input and output dimensions. }
 	\label{fig:architectures}
 \end{figure*}
@@ -35,7 +36,8 @@ The input of this network is the body motion of the other seller in the haggling
 The input of the social formation network is the concatenation of global position and orientation information of the communication partners, represented by a $f \times 12$ matrix.  We use a simple autoencoder structure, as shown in the second row of Figure~\ref{fig:architectures}.
 
 \begin{figure*}[t]	
-	\includegraphics[width=\textwidth]{ssp_fig/ssp_pipeline}
+%	\includegraphics[width=\textwidth]{ssp_fig/ssp_pipeline}
+	\includegraphics[width=\textwidth]{ssp_fig/ssp_pipeline_wFace}
 	\caption{Our Social Signal Prediction Pipeline. We present a baseline method to predict position, orientations, and body gestures, and speaking status of the target subject. }
 	\label{fig:pipeline}
 \end{figure*}
@@ -54,8 +56,7 @@ In this case, we use the other two partners' body motions as input. Different fr
 
 \subsection{Predicting Face Signals from Other Face Signals (Face2Face)}
 
-In this case, we use the other two partners' body motions as input. Different from the ``Traj2Body" network in the subsection \ref{sec:traj2body}, we use smaller filter sizes, because we empirically found it makes the body motions more diverse. The network is shown in the fifth row of Figure~\ref{fig:architectures}.
-
+We use a similar framework with body gesture prediction by learning a manifold space via an autoencoder and predicting the latent code using a regressor, as shown in the sixth row of Figure~\ref{fig:architectures}.
 
 \section{Pipeline of Our Social Signal method}
-We use the proposed networks to predict sub-parts of the social signals of the target person. The predicted social signals are consolidated together to mimic the target person's social behaviors, responding to behaviors of conversational partners. The figure~\ref{fig:pipeline} shows the illustration of the pipeline, where the dark blue boxes are the final outputs. Our results are best shown in our supplementary video. 
+Each subtask focuses on predicting a part of social signals of the target subject.  To this end,  the predicted social signals are consolidated together to mimic the target person's social behaviors, responding to behaviors of conversational partners. The figure~\ref{fig:pipeline} shows the illustration of the pipeline, where the dark blue boxes are the final outputs. 
