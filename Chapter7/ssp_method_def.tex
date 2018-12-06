@@ -21,7 +21,7 @@ The goal of social signal prediction is to find a function $\mathcal{F}$ which t
 \end{equation}
 where $t_0:t$ represents a range of time from $t_0$ to $t$ affecting the current behavior of the target person. Note that we define the function $\mathcal{F}$ to take the history of the target person's own signals $\mathbf{Y} (t_0:t)$. Intuitively, this formulation models the human behavior as a function that maps the correlation among social signals the target person receiving and emitting. The function can be defined for a specific individuals, representing the personal behavior of the target person encoding characteristic, gender, and culture of the target. Based on that, different individuals may behave differently. If the function is regressed by data of many people, then we hypothesize that the function produces more general and common social behaviors, where the person's specific behaviors are averaged out.
 
-Previous approaches can be considered as subsets of this model. For example, conversational interfaces (or chatbots) using natural language only can be represented as:
+Previous approaches can be considered as subsets of this model. For example, conversational agents (or chatbots) using natural language only can be represented as:
 \begin{equation}
 \mathbf{Y}_v (t+1) =  \mathcal{F} \left( \mathbf{X}_v (t_0:t) \right),
 \end{equation}
