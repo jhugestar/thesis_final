@@ -2,9 +2,9 @@
 
 
 \section{Social Signal Prediction}
-The objective of \emph{Social Signal Prediction} is to predict the behavior of a target person in a social situation. The target person's behavior is correlated to the social situation. For example, the location and orientation of the target person should be strongly affected by the position of conversational partners (known as Proxemics~\cite{Hall66} and F-formation~\cite{kendon90}), and the gaze direction, body gestures, and facial expressions of the target person should also be ``conditioned" by the behaviors of the conversational partners. In the social signal prediction task, we model this conditional distribution among interacting subjects, to ultimately teach a robot how to behave in a similar social situation driven by the behavior of communication partners. There exist cases where the correlation of the social signals among subjects is strong, such as hand-shaking or greeting (waving hands or bowing). But in most of the cases, the correlation is implicit---there exists no specific rules how to behave given other people's behavior, which makes it hard to manually define the rules. In our approach, we tackle this problem in a data-driven manner, by automatically learning the conditional distributions using a large scale multimodal social signals corpus.  
+The objective of \emph{Social Signal Prediction} is to predict the behavior of a target person in a social situation. The target person's behavior is correlated with the social situation. For example, the location and orientation of the target person should be strongly affected by the position of conversational partners (known as Proxemics~\cite{Hall66} and F-formation~\cite{kendon90}), and the gaze direction, body gestures, and facial expressions of the target person should also be ``conditioned" by the behaviors of the conversational partners. In the social signal prediction task, we model this conditional distribution among interacting subjects, to ultimately teach a robot how to behave in a similar social situation driven by the behavior of communication partners. There exist cases where the correlation of the social signals among subjects is strong, such as hand-shaking or greeting (waving hands or bowing). But in most of the cases, the correlation is implicit---there exist no specific rules on how to behave given other people's behavior, which makes it hard to manually define the rules. In our approach, we tackle this problem in a data-driven manner, by automatically learning the conditional distributions using a large scale multimodal social signals corpus.  
 
-Let us denote all types of signals that the target person received in a social situation at time $t$ as $\mathbf{X}(t)$. Thus $\mathbf{X}(t)$ includes the social signals---body gestures, facial expression, body position, voice tones, verbal languages---and other contextual factors such as the space where the conversation is performed or other visible objects which may affect the behavior of the target person (e.g., some sounds or objects may attract the attention of the person). We divide the inpu signal $\mathbf{X}(t)$ into two parts, the signals from the conversational partners, $\mathbf{X}_c(t)$, and signals from other sources (e.g., objects, environment, and other human subjects not interacting with the target person), $\mathbf{X}_e(t)$.  Thus,
+Let us denote all types of signals that the target person received in a social situation at time $t$ as $\mathbf{X}(t)$. Thus $\mathbf{X}(t)$ includes the social signals---body gestures, facial expression, body position, voice tones, verbal languages---and other contextual factors such as the space where the conversation is performed or other visible objects which may affect the behavior of the target person (e.g., some sounds or objects may attract the attention of the person). We divide the input signal $\mathbf{X}(t)$ into two parts, the signals from the conversational partners, $\mathbf{X}_c(t)$, and signals from other sources (e.g., objects, environment, and other human subjects not interacting with the target person), $\mathbf{X}_e(t)$.  Thus,
 \begin{equation}
 \mathbf{X} (t) = \{  \mathbf{X}_c (t), \mathbf{X}_e (t)\}.
 \end{equation}
@@ -19,7 +19,7 @@ The goal of social signal prediction is to find a function $\mathcal{F}$ which t
 \mathbf{Y} (t+1) = \mathcal{F} \left( \mathbf{X} (t_0:t), \mathbf{Y} (t_0:t) \right),
 \label{equation:socialPrediction_1}
 \end{equation}
-where $t_0:t$ represents a range of time from $t_0$ to $t$ affecting the current behavior of the target person. Note that we define the function $\mathcal{F}$ to take the history of the target person's own signals $\mathbf{Y} (t_0:t)$. Intuitively, this formulation models the human behavior as a function that maps the correlation among social signals the target person receiving and emitting. The function can be defined for a specific individuals, representing the personal behavior of the target person encoding characteristic, gender, and culture of the target. Based on that, different individuals may behave differently. If the function is regressed by data of many people, then we hypothesize that the function produces more general and common social behaviors, where the person's specific behaviors are averaged out.
+where $t_0:t$ represents a range of time from $t_0$ to $t$ affecting the current behavior of the target person. Note that we define the function $\mathcal{F}$ to take the history of the target person's own signals $\mathbf{Y} (t_0:t)$. Intuitively, this formulation models the human behavior as a function that maps the correlation among social signals the target person receiving and emitting. The function can be defined for a specific individual, representing the personal behavior of the target person encoding characteristic, gender, and culture of the target. Based on that, different individuals may behave differently. If the function is regressed by data of many people, then we hypothesize that the function produces more general and common social behaviors, where the person's specific behaviors are averaged out.
 
 Previous approaches can be considered as subsets of this model. For example, conversational agents (or chatbots) using natural language only can be represented as:
 \begin{equation}
@@ -37,136 +37,3 @@ In our work, we focus on non-verbal social signal prediction in a triadic social
 \label{equation:F_ours}
 \end{equation}
 where we predict the social signals of the target person given the signals of the two other people during the same window of time. %Modeling rich non-verbal socials (e.g., body motion) among interacting multiple people (more than two) has been rarely studied in previous work.
-
-%What signal?
-
-% \section{Predicting Social Signals in a Tridadic }
-
-
-
-
-
-
-% emitted from the target person at time $t$ are represented as $\mathbf{U} (t)$. Here, we define $\mathbf{U} (t)$ to include verbal signal $\mathbf{U}_v (t)$ and nonverbal signals $\mathbf{U}_n (t)$, 
-
-
-
-
-
-% for example
-
-
-% responding other people's social signals (either same window of time or future). The signal is not arbitrary but should have a strong correlation with the signals the person transmitted and received. Let us assume that all types of signals emitted from the target person at time $t$ are represented as $\mathbf{U} (t)$. Here, we define $\mathbf{U} (t)$ to include verbal signal $\mathbf{U}_v (t)$ and nonverbal signals $\mathbf{U}_n (t)$, 
-% % and even non-measurable internal ``signals" of the person, $\mathbf{x}_{\omega} (t)$, such as feeling, emotions, thought, belief, religion, knowledge and so on, which can affect the future motion of the target person\footnote{Such non-measurable signals can only be ``measurable" by the target person oneself.}.
-% \begin{equation}
-% 	\mathbf{U} (t) = \{  \mathbf{U}_v (t), \mathbf{U}_n (t)\}.%, \mathbf{x}_{\omega} (t) \}
-% \end{equation}
-
-% We also define the signals $\mathbf{V}(t)$ originated from outside and received (or sensed) by the target person. This signals contains verbal $\mathbf{V}_v (t)$ and non-verbal signals $\mathbf{V}_n (t)$,
-% \begin{equation}
-% \mathbf{V} (t) = \{  \mathbf{V}_v (t), \mathbf{V}_n (t)\}.%, \mathbf{y}_{e} (t) \}. 
-% \end{equation}
-
-
-% We denote the signals emitted from non-human environment  $\mathbf{E}(t)$ that affects the target person's future motion. For example, the existence a chair induce the person to sit on it, and existence of roads makes the person to walk on it. Note that both $\mathbf{U}$ and $\mathbf{E}$ should be measurable by the target person's sensing system, otherwise the signals do not affect to the target person's future motion. We ignore all the non-sensible signals (e.g., infrared light and ultra sound).
-
-% During social communications, humans use all the current and previous information to make a future decision. Similarly, Social Signal Prediction should take into account all the observed signals up to the time to predict the future signal $\mathbf{U} (t+1)$. The goal of Social Signal Prediction is to regress a function $\mathcal{F}$ defined as:
-% \begin{equation}
-% \mathcal{F} \left( \mathbf{U}  (t_0:t),   \mathbf{V} (t_0:t), \mathbf{E}(t_0:t) \right) = \mathbf{U} (t+1),
-% \label{equation:F}
-% \end{equation}
-% where $\mathbf{U}(t_0:t)$, $\mathbf{V} (t_0:t)$, and $\mathbf{E} (t_0:t)$ represent signals from $t_0$ to $t$, and the $t_0$ denotes the very initial time that the target person transmits/receives any signals (his/her birth). 
-
-% Intuitively, $\mathcal{F}$ model how to react in future considering all the input the person has observed from outside and by oneself. In non-social situations where the person is alone ($\mathbf{V(t)}=\phi$), the future motion is mainly dependent to the person's own status and environments. For example, we can predict that a pedestrian will keep walking on the road, because of the ``walking" signals in $\mathbf{U}(t-w:t)$ and existence of road signal in $\mathbf{E}(t-w:t)$, where $t-w$ is the recent past time. In social communication situation, $\mathcal{F}$ produces output as an reaction of other people's signals. For example, making a certain distance from the location of other people, listening when other people are speaking, and speaking when other people are listen (turn taking), facing each other, and so on. $\mathcal{F}$ can be affected by the input from a long-term history, reflecting the person's culture, education, and personality. Depending on it, each person may react differently given the same current signals. 
-
-% In practice, it is infeasible to train the Equation~\ref{equation:F} with all the data from one's birth. However, we hypothesize there exist many nonverbal communication protocols that is dominantly dependent to current and near past signals, and commonly performed by people. Additionally, we further assume that we can ignore $\mathbf{E}$ by only considering the scenes to minimize this, and also ignore verbal signals to only focus on nonverbal cues. In this work, we consider the following equation, 
-% \begin{equation}
-% \mathcal{F} \left( \mathbf{U}_n  (t-w:t), \mathbf{V}_n (t-w:t) \right) =\mathbf{U}_n (t+h).
-% \label{equation:F_ours}
-% \end{equation}
-% Note that we try regress the function to predict a future time $t+h$ where $h$ is a horizon we are interested in. 
-
-% There are two issues to be discussed here. First, we assume that $\mathbf{U}$ and $\mathbf{V}$ only contain social signals already ``precessed" from raw data. For example, raw signals are sensed by human by sensing system (e.g., videos from eyes and audios from ears), and they are interpreted by a perception system as body gestures and facial expressions. To focus on the social signal prediction itself, we assume that the input of the Equation \ref{equation:F_ours} is already processed by computer vision algorithms. Second, the level of richness of the input signals should affect the prediction performance. Ideally, all the signals that are measurable by human should be considered. However, there still exists several challenges in machine perception methods. In this paper, we use measurement nonverbal signals (3D body and face landmarks) obtained by the-state-of-the art computer vision system  and more focus on the impact of $V$ compared to the case using $U$ alone.
-
-% \subsection{Notations for Social Signals}
-
-% In this section, we formally define the notation of $\mathbf{U}(t)$ and $\mathbf{V}(t)$ of Equation~\ref{equation:F_ours}. We consider multiple tasks by considering different type of $\mathbf{U}(t)$ and $\mathbf{V}(t)$. In our experiment, we use location and orientation as the simplest signal types (considering social formations), and full 3D body and face landmarks as the richest signals. 
-
-% \textbf{Root location/orientation}:	We consider a 3D point and an angle to represent a person's location and orientation. These can be defined based on either face or upper body. In either case, we choose a root landmark and extract a normal direction using cross product among three selected landmarks, as shown in Figure~\ref{fig:bodyFaceNormals}. We denote $\mathbf{x}_i(t) \in \mathbb{R}^3$ to represent the location of $i$-th person in the world coordinate at time $t$. $\mathbf{x}_i(1:t) \in \mathbb{R}^{3 \times t}$ is a row vector by concatenating root locations from time $1$ to $t$ of the $i$-th person. The differential of locations, $\Delta \mathbf{x}_i(t) = \mathbf{x}_i(t+1) - \mathbf{x}_i(t) \in \mathbb{R}^3$, represents a location change in subsequent frames at world coordinate. Orientation is represented only w.r.t. $Y$ axis using a single scalar angle value, similar to ~\cite{mnih2012conditional, Fragkiadaki_2015_ICCV}. The orientation of $i$-th person $\theta_i(t) \in \mathbb{S}$ is computed by projecting the normal vector on XZ plane and computing the counter-clockwise angle from positive X axis. From this angle, we can deterministically compute a rotation matrix $\mathbf{R}_i(t)$ w.r.t. $Y$ axis, which transforms the coordinate from world to the person-centric views. We also consider its concatenation as $\theta_i(1:t) \in \mathbb{S}^{t}$, and its differential, $\Delta \theta_i(t) = \theta_i(t+1) - \theta_i(t) \in \mathbb{S}$.
-
-% 	The location defined in the global coordinate system can be transformed to a person centric coordinate system. The $i$-th subject's location in $j$-th person centric coordinate system at $t$ is represented as,
-% 	\begin{equation}
-% 	\mathbf{x}^{j,t_j}_i(t) = \mathbf{R}_j(t_j) \left( \mathbf{x}_i(t) - \mathbf{x}_j(t_j)  \right)  + \mathbf{x}_j(t_j).
-% 	\label{eq:personCentric}
-% 	\end{equation}
-% 	Note that we allow to consider different times for $i$-th and $j$-th person in this equation ($t$ vs $t_j$). Using this notation, we can compute the location at $t+1$ in the its own person-centric coordinate at time $t$,
-% 	\begin{equation}
-% 	\mathbf{x}^{i,t}_i(t+1) = \mathbf{R}_i(t) \left( \mathbf{x}_i(t+1) - \mathbf{x}_i(t)  \right)  + \mathbf{x}_i(t)
-% 	\end{equation}
-% 	The differential of locations in the person-centric coordinate system is represented by 
-%   \begin{gather}	
-% 	\Delta \mathbf{x}^{i}_i(t) = \mathbf{R}_i (t) \left( \mathbf{x}_i(t+1) - \mathbf{x}_i(t)  \right) ) =  \mathbf{R}_i (t)\Delta \mathbf{x}_i(t)
-% 	\end{gather}
-% 	Similarly, we can consider the differential of the $i$-th person in $j$-th person's coordinate system. 
-%   \begin{gather}	
-%   \Delta \mathbf{x}^{j}_i(t) = \mathbf{R}_j (t) \left( \mathbf{x}_i(t+1) - \mathbf{x}_j(t)  \right) ).
-%   \end{gather}	
-% 	This representation is less intuitive because it mixes two type of differentials, between times ($t$ and $t+1$) and a relative social formation between $i$-th and $j$-th person. We found, however, that this representation works better in modeling social signals. 
-% 	The differential of orientation in the person centric coordinate system is the the same as in world coordinate, $\Delta \theta_i(t) = \Delta \theta^j_i(t)$, because $\theta$ is a scalar value.
-
-% 	\textbf{Body skeleton}:  In this paper, joint landmarks at a time $t$ is always considered in a person-centric coordinate system by decoupling global translation and orientations, using the Equation~\ref{eq:personCentric}. Each $k$-th body landmark of $i$-th person a $t$ is represented by the relative unit direction w.r.t. the parent joint landmarks:
-% 	\begin{equation}
-% 	\mathbf{j}_i(k, t) = \frac{\gamma_i(k, t)  -  \gamma_i ({p(k)}, t)} {|| \gamma_i (k, t)  -  \gamma_i (p(i),t)  ||_2}
-% 	\end{equation}
-% where $\gamma_i (k,t) \in \mathbb{R}^3$ represents the $k$-th landmark location of person $i$ at $t$ in the person-centric coordinate, and $p(k)$ is the index of the parent landmark of $k$-th joint. So, $\mathbf{j}_i$ is a unit vector representing the bone direction by canceling out bone length information of the person. We also consider a row vector concatenating all joints, $\mathbf{j}_i(2:15, t)$ (from joint 2 to 15). We ignore the first joint because it is the root defined above.
-
-% 	\textbf{Face landmark}: 53 facial landmarks are generated by the system. To reduce the dimension, we run PCA, and reduce the dimension to 20 variables, $ \eta_i(t) \in \mathbb{R}^{20}$. This particular dimension is chosen to maintain XX percents of the variation in the face. 
-
-% 	\textbf{Face and body connection}: In practice, the face landmarks are rigidly linked to the body skeletons. We connect face to body using an extra connection from head top to the face center (nose top). This additional joint is also represented in the same way as other body joint and denoted as $\mathbf{j}_i(k_f,t) \in \mathbb{R}^3$, where $k_f$ means the joint index for face. % and determines the location and orientation of the face.
-% %		
-% %			
-% %	  Vector concatenation of root orientations of subject $i$  from time $1$ to $t$\\
-% %	
-% %	
-% %	To compute this we project normal vector on t Orientation w.r.t. Y-axis of subject $i$ at time $t$\\
-% %			
-% %	in a 2D space ignoring Y axis (height).  We extract the location and orientation data from the reconstructed faces.  \\
-% %	
-% %	 As a measured signal we consider 3D face and 3D body as the  landmarks as nonverbal signals, to represent coherent  
-% %	
-% %	 represents 3D face and body landmarks. There can be diverse variation about how to model this. Important concept is how to normalize, represent the data to keep better coherency. This is related to ``invariance" of the data. Such as person-invariant, location-invariance. and so on. 
-% %	
-% %
-% %	
-% %	\noindent
-% %	$\mathbf{x}_i(t) \in \mathbb{R}^2$:  location in the world coordinate of subject $i$ at time $t$\\
-% %	$\mathbf{x}_i(1:t) \in \mathbb{R}^{2 \times t}$: Vector concatenation of root locations of subject $i$ from time $1$ to $t$\\
-% %	
-% %	$\Delta \mathbf{x}_i(t) = \mathbf{x}_i(t+1) - \mathbf{x}_i(t) \in \mathbb{R}^3$: location changes in world coordinate\\
-% %	$\mathbf{x}^{j}_i(t) = \mathbf{R}_j(t) \left( \mathbf{x}_i(t) - \mathbf{x}_j(t)  \right) )\in \mathbb{R}^3$: location changes between time $t$ and $t+1$ in the person-centric coordinate of subject $j$ at time $t$. $\mathbf{R}_j(t)$ is a rotation matrix to transform from world coordinate to the person-centric coordinate of subject $j$ \\
-% %	$\Delta \mathbf{x}^{j}_i(t) = \mathbf{x}^{j}_i(t+1)  - \mathbf{x}^{j}_i(t)$\\  
-% %	$=  \mathbf{R}_j(t+1) \left( \mathbf{x}_i(t+1) - \mathbf{x}_j(t+1)  \right) ) - \\ 
-% %	\quad \quad \mathbf{R}_j(t) \left(  \mathbf{x}_i(t) - \mathbf{x}_j(t)  \right) )    \in \mathbb{R}^3$: 
-% %	location changes between time $t$ and $t+1$ of subject $i$ in the person-centric coordinate of subject $j$ at each corresponding time. Intuitive, the value represents changes in relative location between the subject $i$ and $j$   \\
-% %	
-% %	
-% %	\noindent
-% %	$\theta_i(t) \in \mathbb{S}$:  Orientation w.r.t. Y-axis of subject $i$ at time $t$\\
-% %	$\theta_i(1:t) \in \mathbb{S}^{t}$: Vector concatenation of root orientations of subject $i$  from time $1$ to $t$\\
-% %	$\Delta \theta_i(t) = \theta_i(t+1) - \theta_i(t) \in \mathbb{S}$: orientation changes in world coordinate\\
-% %	$\Delta \theta_i(t) = \Delta \theta^j_i(t)$: orientation changes in a person-centric is the same as the changes in world coordinate (since the values is a scalar)\\
-% %	
-% %	%Body joint representation
-% %	We represent body using the relative location of joint w.r.t parent joint. The method of Joo et al produces only joint locations without angles. To make the representation independent from person identity and global orientation, we first decouple global root motion from the original coordinate system, and represent joint in the person centric coordinate system. And we also normalize the distance and only keep the directional vector to the joint from its parent joint. 
-% %	
-% %	\begin{equation}
-% %	j_1(i)  = R_{w1} (t) \dot 	( j_w(i) - j_w(i_p))
-% %	\end{equation}
-% %	
-% %	
-% %	%Face
-% %	Face dimension is reduced by PCA. Original dimension is $53\times3$ but it doesn't have much variation. After PCA, we only use 20 dimensition to represent variabtion of face from the mean face. 
-% %	
-% %	In our results, we shows that different representation also affect the learning performance. 
-% %	%	$\mathbf{J}_i(k,t) \in \mathbb{R}^{3}$: $k$-th joint representation of subject $i$ w.r.t. parent joint in person centric coordinate system (after canceling out root location and orientation). $|| \mathbf{J}_i(k,t) ||=1$\\
-% %	%	$\mathbf{J}_i(1:k,t) \in \mathbb{R}^{3}$: Vector concatenation of joint 1 to $k$
