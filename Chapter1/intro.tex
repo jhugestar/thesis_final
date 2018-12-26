@@ -43,7 +43,7 @@ In the latter part of this thesis, we computationally study the dynamics among i
 \section{Key Challenges}
 This thesis aims to computationally model social interaction, focusing on nonverbal social signals. Two major challenges in pursuing the direction are addressed.
 %To achieve the goal, the signals naturally emerging from interacting people should be obtained first. However, it is challenging to capture and measure such signals in social situations due to multiple challenges addressed in this section. The lack of existing data limits the opportunity to computationally model nonverbal social communication, causing a singular focus on limited measurements and scenarios (e.g., face only~\cite{tronick1989infant} or a table setup allowing limited body motions~\cite{gunes2006bimodal, banziger2012introducing, de2004modeling}). In this thesis, two major challenges in pursuing computational analysis of nonverbal social interactions are addressed.\\ % . 
-\paragraph{How To Measure Nonverbal Social Signals:}
+\paragraph{How To Sense and Measure Nonverbal Social Signals:}
 To achieve the goal of this thesis, the signals naturally emerging from interacting people should be obtained first. However, it is challenging to sense and measure such social signals, because of the following three reasons. First, during social interactions, strong occlusions emerge functionally (e.g., people systematically face each other while interacting, bodies are occluded by gesticulating limbs). Thus, measurements from a monocular view can hardly capture the entire social signals of all the people involved in the communication (e.g., Figure~\ref{fig:teaser}). Second, subtle motions from faces and hands that play an important role in social interactions should be measured together with large motions from torsos and limbs. This introduces a sensing challenge because often face and hand motions are captured at close range~\cite{beeler2010high,ghosh2011multiview, Beeler2011, bradley2010high, valgaerts2012lightweight, Oikonomidis-12, Tompson-14a, Sridha-15, Tzionas-16}, while torso and limb motions are captured in a sufficiently large working volume where people can freely move~\cite{deAguiar-2008, Gall-09, Stoll-11, Elhayek-15}. Third, the social signals should be measured non-intrusively to allow the people involved a communication to behave naturally and voluntarily. Thus, popular marker-based motion capture systems (e.g., \cite{VICON}) are not applicable. 
 
 Despite the advances in human sensing and markerless motion capture fields in computer vision and graphics, these challenges have not been fully solved yet. Most of the existing methods prior to this thesis focus on the motion of a single subject~\cite{deAguiar-2008,Vlasic-2009,Furukawa2008,Gall-09, Stoll-11, Baak-13,Shotton-13} or exaggerated motions of actors~\cite{Ye-2012,Liu-2013}. Importantly, there is no existing system that can track, without markers, the human body, face, and hands of multiple individuals simultaneously.
@@ -98,7 +98,8 @@ Finally, it is unclear how to evaluate the performance of the model. For example
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[trim=0 0 0 0, clip=true, width=\textwidth]{figures/intro_framework}
+	%\includegraphics[trim=0 0 0 0, clip=true, width=\textwidth]{figures/intro_framework}
+	\includegraphics[trim=0 0 0 0, clip=true, width=\textwidth]{figures/overview_threeStages.png}
 	\caption{Thesis overview. We explore new approaches in sensing, measuring, and modeling social signals to ultimately endow machines with nonverbal communication abilities}	
 	\label{fig:thesis_overview}
 \end{figure}
