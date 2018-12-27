@@ -9,38 +9,6 @@ In this section, we show experimental results in predicting the several importan
 Given the motion data of the Haggling games, we first annotate the start and end time of the game, where the start time is decided when the social formation is built and the end time is defined when the social formation is broken. We crop out the motion dataset based on this start and end time, so that we ignore the time while subjects enter and exit the capture space. For each haggling game scene we also annotate the roles in the game, buyer, left-seller, and right-seller, where the left and right are determined in the buyer's viewpoint. In our experiment, we specify that the left seller is our target person and predict the social behavior of these subjects. Following the work of~\cite{holden2016deep}, we re-target the motion data to a standardized skeleton size to remove size variation from the body skeletons. We also synthesize footstep signals and decouple the body motion from global translation and orientation using the method of ~\cite{holden2016deep}. Finally, we divide the dataset into 140 training sets and 40 test sets. However, since there exist sequences where the reconstruction errors are severe for some frames, we select only 79 training sets and 28 testing sets which are manually verified to be error free. Although our dataset captures face and body signals, we do not include these data in our current experiments. 
 
 
-\subsection{Verification of Proxemics}
-An interesting experiment is to consider the well-know theories in psychology again using the new data we collected in our sensor system. Our dataset has the measurement of fully spontaneous motions (including the position and orientation of groups) of interacting people, and enables us to revisit the well-known proxemics theory~\cite{Hall66}. We first compute the average distance between a pair of subjects: (1) buyer and right sellers (B-RS), (2) buyer and left seller (B-LS), and (3) left seller and right seller (LS-RS). The results are shown in Table~\ref{table:proxemics_comp}. We found that the result approximately follows the social distance categories defined in the Hall's categorization~\cite{Hall66}. The distances among sellers are within the close phase of social distance ranges (from 120-210 $cm$) and the average distance among sellers and buyers are within the far phase of social distance (from 210 to 370 $cm$) in \cite{Hall66}. To analyze the shape of the social formation, we plot the average formation of games in a person-centric coordinate by a buyer. The results are shown in the Figure~\ref{fig:socialgeo_distribution}, showing that the formation is often similar to isosceles triangles with relatively far distances between a buyer and two sellers than the distance between sellers. 
-
-
-\begin{table}[t]
-	\centering
-%	\footnotesize
-	\caption{Average distances (cm) between subjects. B, RS, and LS denote buyer, right seller, and left seller respectively.}
-	\label{table:proxemics_comp}
-	\begin{tabular}{c| c| c| c| c}
-		\hline
-		%Types & Avg. dist. (cm) & Std.(cm) & Min dist. (cm)  & Max dist. (cm)\\
-		& Avg. dist. & Std. & Min & Max \\
-		\hline
-		B-RS & 148.11 & 27.26 & 99.03 & 265.52 \\
-		\hline
-		B-LS & 151.45 & 29.62 & 104.24  & 284.85 \\
-		\hline
-		LS-RS & 124.13 & 24.05  & 77.70  & 206.26 \\
-		\hline
-	\end{tabular}
-\end{table}
-
-\begin{figure}
-	\centering       
-	\includegraphics[ width=0.8\linewidth]{ssp_fig/haggling_proxemics_stat.pdf}
-	% 	\includegraphics[trim=120 0 120 0,clip, width=0.45\linewidth]{plot/haggling_proxemics_polygon.pdf}
-	% 	\includegraphics[width=0.45\linewidth]{plot/haggling_proxemics_heatmap.pdf} 
-	%	\subfigure[TrajCompares]{\label{Fig:asso_traj}\includegraphics[width=0.5\textwidth]{img/trajCompare}}   
-	\caption{Visualizing social formations in the haggling sequences as triangles (left) and a heat map (right). The formation is normalized w.r.t the buyer's location, and the green circle on the right shows the buyer location (origin) and orientation ($z$-axis).} 
-	\label{fig:socialgeo_distribution}
-\end{figure}
 
 
 
@@ -59,13 +27,6 @@ An interesting experiment is to consider the well-know theories in psychology ag
 \end{figure}
 
 
-
-\begin{figure}[t]
-	\centering       
-	\includegraphics[ width=0.9\linewidth]{ssp_fig/result_buyer_bias}
-	\caption{result buyer bias} 
-	\label{fig:result_buyer_bias}
-\end{figure}
 
 
 
@@ -212,6 +173,52 @@ We also introduce a baseline. The baseline method (denoted as ``Mirroring" in Ta
 \end{figure*}
 
 
+
+\subsection{Revisiting Proxemics}
+An interesting experiment is to consider the well-know theories in psychology again using the new data we collected in our sensor system. Our dataset has the measurement of fully spontaneous motions (including the position and orientation of groups) of interacting people, and enables us to revisit the well-known proxemics theory~\cite{Hall66}. We first compute the average distance between a pair of subjects: (1) buyer and right sellers (B-RS), (2) buyer and left seller (B-LS), and (3) left seller and right seller (LS-RS). The results are shown in Table~\ref{table:proxemics_comp}. We found that the result approximately follows the social distance categories defined in the Hall's categorization~\cite{Hall66}. The distances among sellers are within the close phase of social distance ranges (from 120-210 $cm$) and the average distance among sellers and buyers are within the far phase of social distance (from 210 to 370 $cm$) in \cite{Hall66}. To analyze the shape of the social formation, we plot the average formation of games in a person-centric coordinate by a buyer. The results are shown in the Figure~\ref{fig:socialgeo_distribution}, showing that the formation is often similar to isosceles triangles with relatively far distances between a buyer and two sellers than the distance between sellers. 
+
+
+
+
+
+\begin{figure}
+	\centering       
+	\includegraphics[ width=0.8\linewidth]{ssp_fig/haggling_proxemics_stat.pdf}
+	% 	\includegraphics[trim=120 0 120 0,clip, width=0.45\linewidth]{plot/haggling_proxemics_polygon.pdf}
+	% 	\includegraphics[width=0.45\linewidth]{plot/haggling_proxemics_heatmap.pdf} 
+	%	\subfigure[TrajCompares]{\label{Fig:asso_traj}\includegraphics[width=0.5\textwidth]{img/trajCompare}}   
+	\caption{Visualizing social formations in the haggling sequences as triangles (left) and a heat map (right). The formation is normalized w.r.t the buyer's location, and the green circle on the right shows the buyer location (origin) and orientation ($z$-axis).} 
+	\label{fig:socialgeo_distribution}
+\end{figure}
+
+
+
+
+\begin{table}[t]
+	\centering
+	%	\footnotesize
+	\caption{Average distances (cm) between subjects. B, RS, and LS denote buyer, right seller, and left seller respectively.}
+	\label{table:proxemics_comp}
+	\begin{tabular}{c| c| c| c| c}
+		\hline
+		%Types & Avg. dist. (cm) & Std.(cm) & Min dist. (cm)  & Max dist. (cm)\\
+		& Avg. dist. & Std. & Min & Max \\
+		\hline
+		B-RS & 148.11 & 27.26 & 99.03 & 265.52 \\
+		\hline
+		B-LS & 151.45 & 29.62 & 104.24  & 284.85 \\
+		\hline
+		LS-RS & 124.13 & 24.05  & 77.70  & 206.26 \\
+		\hline
+	\end{tabular}
+\end{table}
+
+\begin{figure}[t]
+	\centering       
+	\includegraphics[ width=0.9\linewidth]{ssp_fig/result_buyer_bias}
+	\caption{result buyer bias} 
+	\label{fig:result_buyer_bias}
+\end{figure}
 
 
 % \subsection{Correlation between Body, Face, and Hands}
