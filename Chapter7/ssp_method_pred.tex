@@ -1,6 +1,13 @@
 % !TEX root = thesis.tex
 
 \section{Social Signal Prediction in Haggling Scenes}
+
+We use our Haggling sequences to computationally model triadic interaction.  In this subsection, we define notations of the measured signals from our motion markerless capture method~\cite{joo2017panoptic, joo2018}. As output, the system produces 3D body motion $\mathbf{J(t)}$, 3D face motion $\mathbf{F(t)}$, and 3D hand motion $\mathbf{H(t)}$ for each individual at each time $t$. From this measurement, we additionally compute the body orientation $\theta(t)$ and face orientation $\phi(t)$ by finding the 3D normal direction of torso and face. These orientations are computed only on the $x$-$y$ plane with respect to the $y$-axis. We decouple the global location $x$ and body orientation $\theta$ from the body motion capture results, following previous work~\cite{jain2016structural, holden2016deep}, and $\mathbf{J(t)}$ only contains body motions in the person-centric coordinate (root joint is at the origin and body is facing the $z$ direction). The voice data $V(t)$ of each individual is also recorded by wireless microphones assigned to each individual. From the audio signal, we manually annotate a binary speaking label $\mathbf{S}(t) \in \{0,1\}$ describing whether the target subject is speaking (labelled as $1$) or not speaking (labelled as $0$) at time $t$. In summary we measure the following signals for each individual:
+\begin{equation}
+[ \mathbf{x}, \boldsymbol{\theta}, \boldsymbol{\phi}, \mathbf{J}, \mathbf{F}, \mathbf{H}, \mathbf{V}, \mathbf{S} ].
+\label{equation:measurement}
+\end{equation}
+
 By leveraging the various behavioral cues measured in the Haggling sequences, we model the dynamics of nonverbal social signals in a triadic interaction. The objective of our direction is to regress the function defined in Equation~\ref{equation:F_ours}. To further constrain the problem we assume that the target person is the seller positioned on the left side of the buyer, and as input we use the social signals of the buyer ($\mathbf{X}^1$) and the other seller ($\mathbf{X}^2$). Based on our social signal measurements, the input and output of the function are represented as the measurement types described in Eq.~\ref{equation:measurement}. For example,
 \begin{equation}
 \begin{gathered}
@@ -56,38 +63,3 @@ Note that we only consider the positions and orientations on the ground plane (i
 
 
 %To implement this, we use a simple 1-D temporal convolutional neural network to model $\mathcal{F}_p$. The network is trained with a window of frames $N=120$ (corresponding to 4 seconds), but arbitrary length of input can be used in testing time since our network is fully convolutional. We use a simple encoder-decoder network. The encoder has  3 convolutional layers followed by dropout (0.25) and RELU, and 1D pooling layer (with stride 2). The decoder uses a single transposed convolution layer. We use L2 loss function with a L1 regularization term (with weight 0.1). We simply use the global position and orientations with standardization, rather than any local or relative coordinate.
-
-\subsection{Predicting Body Gestures}
-\label{section:pred_body}
-Predicting body motion in social situations by using other subjects' signals is challenging, because the correlation between body signals are subtle and less explicit. To study this, we present three baseline approaches here. 
-
-\paragraph{By Using Predicted Social Formation.} The first approach uses only the social formation information of other subjects:
-\begin{gather}	
-\mathbf{J}^0(t_0:t) = \mathcal{F}_{P12\rightarrow J} \left( \mathbf{X}_p^1(t_0:t), \mathbf{X}_p^2(t_0:t) \right).
-\end{gather}
-This is an ill-posed problem with diverse possible solutions, because the formation signals of communication partners barely tell us about the detailed behavior of our target person. Yet, we can consider several required properties of the predicted skeleton. For example, the body location and orientation need to satisfy the social formation property, and when the target person's location is changing the appropriate leg motion needs to be predicted. Intuitively, we expect the predicted skeleton shows a similar social amount of information, location and orientations, as in social formation prediction, but using more complicated structure, body motion. In that sense, we can divide the function $\mathcal{F}_{P12\rightarrow J}$ into two stages: predicting a social formation by $\mathcal{F}_p$ described in Eq.~\ref{eq:pred_formation} and predicting 3D body motion from the predicted social trajectory $\mathbf{Y}_p (t_0:t)$:
-\begin{gather}	
-\mathbf{J}^0 (t_0:t) = \mathcal{F}_{P0\rightarrow J} \left(   \mathcal{F}_p \left( \mathbf{X}_p^1(t_0:t), \mathbf{X}_p^2(t_0:t) \right) \right) \nonumber \\ 
-= \mathcal{F}_{P0\rightarrow J} \left( \mathbf{Y}_p (t_0:t)  \right),
-\label{eq:pred_p2J}
-\end{gather}
-where $\mathcal{F}_{P0\rightarrow J}$ is a mapping between the target subject's own social trajectory to body skeleton. Since the trajectory (position and orientations) is a sub-part of the body behavior, we expect the predicted skeleton to contain similar signals as the social trajectory. For the function $\mathcal{F}_{P0\rightarrow J}$, we follow a similar approach to the work of Holden et al.~\cite{holden2016deep}. As in the Holden's work, we train an autoencoder to find the motion manifold space. As a major difference, we do not use foot step generator, and directly regress from the trajectory to the motion manifold space. We train this model in our dataset only, since the walking and running motion used in \cite{holden2016deep} is rare in our scenarios. 
-
-\paragraph{By Using Body Motions as Input.} We can use the entire body signals of conversational partners as input for our function:
-\begin{gather}	
-\mathbf{J}^0 (t_0:t) = \mathcal{F}_{J12\rightarrow J} \left( \mathbf{J}^1 (t_0:t), \mathbf{J}^2 (t_0:t) \right) .
-\end{gather}
-In this particular example, we expect ``better" prediction quality than the previous baseline by using other subject's body motions as a cue to determine the target person's body motion. We found that this method shows more diverse upper body motion, responding to the motions of other subjects. To this end, we present a hybrid method combining the upper body prediction results of this method to the root and leg motions of the previous method. The lower part of the output model follows the movement to keep to the social formation and upper body produce more dynamic behaviors responding to input signals.
-
-\paragraph{By Using Body Motions as Input.} We can also use the face motions of conversational partners as input for our function:
-\begin{gather}	
-\mathbf{J}^0 (t_0:t) = \mathcal{F}_{F12\rightarrow J} \left( \mathbf{F}^1 (t_0:t), \mathbf{F}^2 (t_0:t) \right) .
-\end{gather}
-
-The main motivation of this approach is that face motion provides stronger cues to predict the speaking status of the target person (or turn-taking of the interaction). Thus, we expect this approach may provide a better performance in predicting body signals, especially considering the turn-taking timing of the scenes. 
-
-\subsection{Predicting Facial Signals}
-We also predict the facial expression signal of the target person, by taking facial signals of other subjects as input. 
-\begin{gather}	
-\mathbf{F}^0(t_0:t) = \mathcal{F}_{F12\rightarrow F} \left( \mathbf{F}_p^1(t_0:t), \mathbf{F}_p^2(t_0:t) \right).
-\end{gather}
