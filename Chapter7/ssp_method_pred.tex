@@ -28,41 +28,43 @@ where we use the superscript 0 to denote the social signals of the target subjec
 
 \subsection{Predicting Speaking}
 \label{subsection:ssp_pred_speak}
-As the first task, we predict whether the target subject is currently speaking or not. This is a binary classification task and relatively easier to train. We first study the correlation between the speaking signal and the target person's own social signals, either body motion or facial motion, or both. We expect this correlation is stronger than the link between individuals. We then compare it with the performance of a classifier that uses the conversational partner's social signals. More specifically, a function $\mathcal{F}_{j0\rightarrow s}$ uses the target person's own body motion $\mathbf{J}^0(t_0:t)$ to predict the speaking signal:
+As the first task, we predict whether the target subject is currently speaking or not, that is $\mathbf{S}^0$.  This is a binary classification task and relatively easier to train. We first study the correlation between the speaking signal and the target person's own social signals, either body motion or facial motion, or both. We expect this correlation is stronger than the link between individuals. We then compare it with the performance of a classifier that uses the conversational partner's social signals. More specifically, a function $\mathcal{F}_{J0\rightarrow S0}$ uses the target person's own body motion $\mathbf{J}^0(t_0:t)$ to predict the speaking signal:
 \begin{gather}	
-\mathbf{S}^0(t_0:t) = \mathcal{F}_{J0\rightarrow S} \left( \mathbf{J}^0(t_0:t) \right),
+\mathbf{S}^0(t_0:t) = \mathcal{F}_{J0\rightarrow S0} \left( \mathbf{J}^0(t_0:t) \right),
 \label{eq:speaking_0}
 \end{gather}
 and similarly,
 \begin{gather}	
-\mathbf{S}^0(t_0:t) = \mathcal{F}_{F0\rightarrow S} \left( \mathbf{F}^0(t_0:t) \right),\\
-\mathbf{S}^0(t_0:t) = \mathcal{F}_{(F0, J0)\rightarrow S} \left( \mathbf{F}^0(t_0:t) , \mathbf{J}^0(t_0:t)\right),
+\mathbf{S}^0(t_0:t) = \mathcal{F}_{F0\rightarrow S0} \left( \mathbf{F}^0(t_0:t) \right),\\
+\mathbf{S}^0(t_0:t) = \mathcal{F}_{(F0, J0)\rightarrow S0} \left( \mathbf{F}^0(t_0:t) , \mathbf{J}^0(t_0:t)\right),
 \label{eq:speaking_0_facebody}
 \end{gather}
-where $\mathcal{F}_{F0\rightarrow S}$ uses the target person's own face motion, and $\mathcal{F}_{(F0, J0)\rightarrow S}$ uses both. 
+where $\mathcal{F}_{F0\rightarrow S0}$ uses the target person's own face motion, and $\mathcal{F}_{(F0, J0)\rightarrow S0}$ uses both. 
 
-We compare the performance of these functions with the functions that takes the signals from the communication partners:
+We compare the performance of these functions with the functions that takes the signals from a communication partner, the other seller:
 \begin{gather}	
-\mathbf{S}^0(t_0:t) = \mathcal{F}_{J12\rightarrow S} \left( \mathbf{J}^1(t_0:t), \mathbf{J}^2(t_0:t) \right),\\
-\mathbf{S}^0(t_0:t) = \mathcal{F}_{F12\rightarrow S} \left( \mathbf{F}^1(t_0:t), \mathbf{F}^2(t_0:t) \right),\\
-\mathbf{S}^0(t_0:t) = \mathcal{F}_{(F12, J12)\rightarrow S} \left( \mathbf{J}^1(t_0:t), \mathbf{J}^2(t_0:t), \mathbf{F}^1(t_0:t), \mathbf{F}^2(t_0:t) \right),
+\mathbf{S}^0(t_0:t) = \mathcal{F}_{J2\rightarrow S0} \left( \mathbf{J}^2(t_0:t) \right),\\
+\mathbf{S}^0(t_0:t) = \mathcal{F}_{F2\rightarrow S0} \left( \mathbf{F}^2(t_0:t) \right),\\
+\mathbf{S}^0(t_0:t) = \mathcal{F}_{(F2, J2)\rightarrow S0} \left( \mathbf{F}^2(t_0:t), \mathbf{J}^2(t_0:t) \right),
 \label{eq:speaking_1}
-\end{gather},
+\end{gather}
 where the functions use body cues, face cues, and both cues, respectively. 
 
-We hypothesize that the correlations of the target person's own signals are stronger than the correlations among the interpersonal signals, while we still expect that there exists a clear link in the latter case. We verify this in our experimental results.
+Equipped with this framework, we can computationally study the correlation of different types of social signals from the same individual and across individuals. We hypothesize that the correlations of the target person's own signals are stronger than the correlations among the interpersonal signals, while we still expect that there exists a clear link in the latter case. We verify this in our experimental results.
 
 %the social signals oindividual dynamics of the social signals is stronger than correlation between the speaking and the social signal body motion should be stronger than the speaking of the target and other people's body motions. But we still presume that there exists a clear correlation in building the function ~\ref{eq:speaking_1}; for example, if another person is talking we can guess the target person is not speaking due the ``turn-taking" implicitly followed during a social conversation. % This study is interesting because it demonstrates the existence of social correlation among social signals.
 
 \paragraph{Implementation Details.}
-\label{section:body2speak}
-The input of this network is the body motion of the other seller in the haggling sequence, which is a $f \times 73$ matrix, where $f$ is the number of frames of an input sequence. Here, we ignore the buyer's body motion because often little movement is observed from the buyers.  We use four convolutional layers for the network where the last layer has $1\times1$ convolutions, followed by a sigmoid activation layer. The network architecture is shown in the first row of Figure~\ref{fig:architectures}.
+We use four 1-D convolutional layers (the first three networks have 128, 256, and 512 dimensional output features respectively and filter widths are 7 for all of them) for the network where the last layer has $1\times1$ convolutions, followed by a sigmoid activation layer. Our model does not require a fixed window size for the input, but we separate input data into small clips with a fixed size (denoted by $f$) for the efficiency in training. During testing time, our models can be applied to the input of arbitrary length. We use $f=120$, about 4 seconds, for the input window size. The feature dimension of the input of our network is the same as the concatenation of face motion and body motion (78 dimensions), but if fewer cues are used (e.g., face only or body only) we mask out the unused channels by keeping the same network structure for the fair comparison. We use the stochastic gradient descent algorithm Adam~\cite{kingma2014adam}. Dropout is also applied with a retention probability of 0.25.  
 
+%The basic architecture follows the work of Holden et al.~\cite{holden2016deep} that demonstrates a compelling result for the mapping between a 2D trajectory and human motions. We modify the network architecture based on the input and output dimensions. 
 
-
+%The network architecture is shown in the first row of Figure~\ref{fig:architectures}.
+%\label{section:body2speak}
+%The input of this network is the body motion of the other seller in the haggling sequence, which is a $f \times 73$ matrix, where $f$ is the number of frames of an input sequence. Here, we ignore the buyer's body motion because often little movement is observed from the buyers.  
 
 \subsection{Predicting Social Formations}
-As another sub-problem, we predict the location and orientations of the target person. This problem is strongly related to Proxemics~\cite{Hall66} and F-formation~\cite{kendon90}, illustrating how humans use their space in social communications.
+We predict the location and orientations of the target person. This problem is strongly related to Proxemics~\cite{Hall66} and F-formation~\cite{kendon90}, illustrating how humans use their space in social communications.
 \begin{gather}	
  \mathbf{Y}_p (t_0:t) = \mathcal{F}_p \left( \mathbf{X}_p^1(t_0:t), \mathbf{X}_p^2(t_0:t) \right),
  \label{eq:pred_formation}
