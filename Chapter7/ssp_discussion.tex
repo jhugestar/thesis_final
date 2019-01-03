@@ -7,20 +7,16 @@ We present a data-driven social signal prediction framework, which allows us to 
 We believe the approach described in this chapter is an important direction to endow machines with the nonverbal communication ability. However, there are several unexplored directions in this chapter, and two important questions are discussed in this section. 
 
 \subsection{Predicting More Complicated Signals}
-We may tackle to predict more complicated output signals given a similar social signal prediction framework. For example, we predict body gestures of the target individual by using communication partners' body signals as input:
+We may tackle predicting more complicated social signals using the social signal prediction framework presented in this chapter. For example, we predict body gestures of the target individual by using communication partners' body signals as input:
 
 \begin{gather}	
 \mathbf{B}^0 (t_0:t) = \mathcal{F}_{(B1,B2)\rightarrow B0} \left( \mathbf{B}^1 (t_0:t), \mathbf{B}^2 (t_0:t) \right) .
 \end{gather}
 
-We have tested this approach by implementing a neural network with a similar approach, after building a human manifold space~\cite{holden2016deep} and finding the mapping between the input and output body motions. The results show human-like body behavior, since they are constrained by the human manifold, but the correlation among body signals are less clearly shown. We consider two core reasons of this limited performance: (1) our dataset is not sufficient to model the correlation of these higher dimensional feature spaces, and (2) the loss function and the evaluation metric, the Euclidean (or L2) distance, we used for our modeling may not be good enough to efficiently extract the subtle correlations among high dimensional social signals.
-
-%Problem Definition. We have tested using a baseline method. 
-%The results is not satisfactory (as shown in the table?) 
-%Why? Qualitative vs Quantitative?
+We have tested this approach by implementing a neural network. For the implementation, we follow the work of \cite{holden2016deep} to first learn a human motion manifold space, and then build another neural network to find the mapping between the input signals (body motions from other individuals) and the output body motion (the target individual's body motion). We found that this approach produces human-like body motions with dynamic movements on legs and upper bodies, but it was less clear that this approach can capture the social behaviors showing a strong correlation across interacting individuals. Two core reasons can be considered about the limited performance: (1) the quantity of our dataset is not sufficient to model the correlation among high dimensional signal spaces, and (2) the metric used for training models as loss function and also for the evaluation metric, the Euclidean (or L2) distance, may not be ideal to effectively extract the subtle correlations among high dimensional social signals.
 
 \subsection{Evaluating Social Signal Prediction}
-The output of social signal prediction should satisfy the following two requirements: (1) the predicted signals should be within a feasible human motion space showing realistic human motions, and (2) the predicted signals should follow the social rules, responding to the behaviors of communication partners. However, it is challenging to evaluate these requirements, because there is no objective metric to quantify ``realistic" or ``social" properties in behaviors. Notably, the L2 distance between the predicted signals and ground-truth may not be a good metric because it also does not consider such properties. For example, although several human behaviors can be still acceptable given the same input in our social signal prediction task, this metric penalizes them if they are different from the single ground-truth motion, regardless their quality. Due to the reason, the L2 metric often favors the output close to the mean of the data distribution, although it is qualitatively far from the expected output. The similar issue has been discussed in human motion forecasting field~\cite{mnih2012conditional, Fragkiadaki_2015_ICCV, jain2016structural, zhou2018autoconditioned}. In body gesture prediction trial, we found a similar issue as shown in the Table~\ref{}, where the mean pose outperformes our results, although it is far from the realistic motions.  A positive belief, however, in this issue is that, the L2 distance can be still meaninful if the amount of data is sufficicently large. 
+The output of social signal prediction should satisfy the following two requirements: (1) the predicted signals should be within a feasible human motion space showing realistic human motions, and (2) the predicted signals should follow the social rules, responding to the behaviors of communication partners. However, it is challenging to evaluate these requirements, because there is no objective metric to quantify ``realistic'' or ``social'' properties in behaviors. Notably, the L2 distance between the predicted signals and ground-truth may not be a good metric because it also does not consider such properties. For example, although several human behaviors can be still acceptable given the same input in our social signal prediction task, this metric penalizes them if they are different from the single ground-truth motion, regardless their quality. Due to the reason, the L2 metric often favors the output close to the mean of the data distribution, although it is qualitatively far from the expected output. The similar issue has been discussed in human motion forecasting field~\cite{mnih2012conditional, Fragkiadaki_2015_ICCV, jain2016structural, zhou2018autoconditioned}. In body gesture prediction trial described above, we found a similar issue as shown in the Table~\ref{table:predBody_errors}, where the mean pose of the training set outperforms our prediction result, although the mean pose is is far from the realistic motion with only a static pose, while our result shows human-like motion with reasonable dynamics. This issue also causes the social signal modeling more challenging.
 
 %We found that the L2 distance is reliable for the signals in relatively lower dimensions, showing that the lower error clearly means the better quality.
 
@@ -40,17 +36,21 @@ The output of social signal prediction should satisfy the following two requirem
 		%		\hline
 		Mean Pose & \underline {\textbf{7.83}} & 2.33\\
 		\hline
-		Body2Body & 8.72 & 2.00\\
+		Prediction by our method & 8.72 & 2.00\\
 		\hline
 	\end{tabular}
-	\caption{Social Body Gesture Prediction Errors (cm). Body orientation and face orientation are computed between estimated and GT unit vectors (need to be fixed) \label{table:predBody_errors}}
+	\caption{Social Body Gesture Prediction Errors (cm). The error is computed by averaging L2 distance of all joints using the Ground Truth body motion. \label{table:predBody_errors}}
 \end{table}
+
+\subsection{Modeling More Diverse Social Interaction}
+In this chapter, we demonstrate social signal modeling in a triadic scene, focusing on the Haggling scenario we defined. As an important future direction, more general social scenarios (e.g., polyadic interaction among an arbitrary number of individuals) needs to be considered. This direction requires a way to build a larger social interaction database in more diverse social scenarios, which may not be handled by our studio setup. The video sequence capturing social interaction, millions of which are already available on the Internet, can be an important source for this direction, although obtaining 3D signals from these in-the-wild monocular videos is a challenging problem. In our recent work, we show a promising result in this direction by presenting a monocular total capture method~\cite{Xiang2019}. How to model social interaction among an arbitrary number of communication partners is another issue, since our current approach assumes a fixed number of communication partners. 
+%Triadic is chosen and studied? What about other cases?
 
 %
 %\subsection{Necessity of High Resolutional Social Signals}  
 %Do we need all this measurment? My own belief?
 %
-%\subsection{Considering More General Interaction}    
+%\subsection{Considering More General Interaction}    o
 %Triadic is chosen and studied? What about other cases?
 
 
