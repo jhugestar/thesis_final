@@ -1,13 +1,14 @@
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
-\documentclass[a4paper,12pt,times,numbered,print, index]{Classes/PhDThesisPSnPDF}
+\documentclass[a4paper,12pt,times,numbered,print,chapter, index]{Classes/PhDThesisPSnPDF}
 \usepackage{epigraph}
 \usepackage{subcaption}
 \usepackage{bm}
 \usepackage{amsmath,amssymb,amsthm,mathrsfs,amsfonts,dsfont}
 \usepackage{gensymb}
 \usepackage{makecell}
+
 % ******************************************************************************
 % ******************************* Class Options ********************************
 % *********************** See README for more details **************************
@@ -118,7 +119,7 @@
 %\includeonly{Chapter2/system}
 %\includeonly{Abstract/abstract}
 %\includeonly{Chapter1/intro}
-\includeonly{Dedication/dedication}
+%\includeonly{Dedication/dedication}
 \fi
 
 % ******************************** Front Matter ********************************
@@ -154,12 +155,21 @@
 %%	
 %%
 	\part{Sensing Social Signals}
+	
+	\begin{figure}
+		\centering
+		\includegraphics[clip, trim=0.1cm 0.1cm 0.1cm 0.1cm, width=\textwidth]{figures/virtualizingstudio.pdf}
+	%\caption{The Initial System Design named  virtualizing studio.} 
+		%\label{fig:ssp_notation1}
+	\end{figure}
+	
+	
 	\include{Chapter2/system}
 %	
 %%	\part{Measuring Social Signals}
-	\part{Reconstructing Social Signals}
+	\part{Measuring Social Signals}
 	\epigraph{``Measure what is measurable, and make measurable what is not so."\par\raggedleft--- \textup{Galileo Galilei}}
-	
+
 %	Scientific achievements are often preceded by new innovations of measurement methods. Similarly, a method to accurately measure social signals at high resolution is the key to computationally analyze nonverbal communications. In this part of thesis, we build a system, the Panoptic studio, developed to capture social interactions, and present novel algorithms to measure full body motion of multiple people in social situations. The measured social signals include 3D movements of anatomical landmarks from face, body, and hands, and also contain dense 3D trajectories from body surfaces with part labels. Our method also enables to build a deformable 3D human model to capture dense 3D mesh structures for human body motion. 
 %	\pagebreak
 	

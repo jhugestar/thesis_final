@@ -95,15 +95,13 @@ Finally, it is unclear how to evaluate the performance of the model. For example
 %	\label{fig:kinesicflow}
 %\end{figure}
 
-
 \begin{figure}[t]
 	\centering
 	%\includegraphics[trim=0 0 0 0, clip=true, width=\textwidth]{figures/intro_framework}
-	\includegraphics[trim=0 0 0 0, clip=true, width=\textwidth]{figures/overview_threeStages.png}
+	\includegraphics[trim=3 3 3 3, clip=true, width=\textwidth]{figures/overview_threeStages.pdf}
 	\caption{Thesis overview. We explore new approaches in sensing, measuring, and modeling social signals to ultimately endow machines with nonverbal communication abilities}	
 	\label{fig:thesis_overview}
 \end{figure}
-
 
 
 \section{Thesis Contribution}
@@ -149,13 +147,45 @@ We present the first method to measure the full spectrum of 3D social signals in
 %	\label{fig:teaser}
 %\end{figure}
 
+%
+%\begin{figure}[t]
+%	\centering
+%%	\includegraphics[width=\textwidth]{figures/teaser_4}
+%	\includegraphics[width=\textwidth]{figures/teaser_new}
+%	\caption{(Top left) The Panoptic Studio; (Top right) 521 unique views by 480 VGAs, 31 HDs, and 10 RGB+D sensors capturing a social interaction within the Panoptic Studio; (Middle left) An example scene captured in the Panoptic Studio; (Middle center) Measured anatomical landmarks from bodies, faces, and hands; and (Middle right) Measured motion of dense 3D surface points of multiple people; (Bottom) a total motion capture result by the Adam model, showing an input image (left), the reconstruct mesh models overlaid on an input image (middle), and a 3D view (right).}	
+%	\label{fig:teaser}
+%\end{figure}
 
 \begin{figure}[t]
-	\centering
-	\includegraphics[width=\textwidth]{figures/teaser_4}
-	\caption{(Top left) The Panoptic Studio; (Top right) 521 unique views by 480 VGAs, 31 HDs, and 10 RGB+D sensors capturing a social interaction within the Panoptic Studio; (Middle left) An example scene captured in the Panoptic Studio; (Middle center) Measured anatomical landmarks from bodies, faces, and hands; and (Middle right) Measured motion of dense 3D surface points of multiple people; (Bottom) a total motion capture result by the Adam model, showing an input image (left), the reconstruct mesh models overlaid on an input image (middle), and a 3D view (right).}	
-	\label{fig:teaser}
+	\centering       
+	\begin{subfigure}{\textwidth}
+		\includegraphics[width=\textwidth]{figures/teaser_part1}
+		\caption{The Panoptic Studio}
+	\end{subfigure}\\
+	\vspace{2pt}
+	\begin{subfigure}{\textwidth}
+		\includegraphics[width=\textwidth]{figures/teaser_part2}
+		\caption{Measuring 3D Anatomical Landmarks}
+	\end{subfigure}\\
+	\vspace{2pt}
+	\begin{subfigure}{\textwidth}
+		\includegraphics[width=\textwidth]{figures/teaser_part3}
+		\caption{Total Body Motion Capture}
+	\end{subfigure}\\
+	\vspace{2pt}
+	\begin{subfigure}{\textwidth}
+		\includegraphics[width=\textwidth]{figures/teaser_part4}  
+		\caption{Modeling Social Interaction}
+	\end{subfigure}\\
+	\caption{Thesis contribution. (a) The Panoptic Studio with 521 unique views by 480 VGAs, 31 HDs, and 10 RGB+D sensors; (b) An example scene captured in the Panoptic Studio and measured 3D anatomical landmarks from bodies, faces, and hands; (c) A total motion capture result showing the reconstructed 3D mesh models; (d, left and middle) An example Haggling Game scene with measured social signals; (d, right)  an example output of social signal modeling (speaking prediction for the individual colored as red)\label{fig:teaser}}	
 \end{figure}
+%
+%\begin{figure}[t]
+%	\centering
+%	\includegraphics[width=\textwidth]{figures/teaser_new}
+%	\caption{(Top left) The Panoptic Studio; (Top right) 521 unique views by 480 VGAs, 31 HDs, and 10 RGB+D sensors capturing a social interaction within the Panoptic Studio; (Middle left) An example scene captured in the Panoptic Studio; (Middle center) Measured anatomical landmarks from bodies, faces, and hands; and (Middle right) Measured motion of dense 3D surface points of multiple people; (Bottom) a total motion capture result by the Adam model, showing an input image (left), the reconstruct mesh models overlaid on an input image (middle), and a 3D view (right).}	
+%	\label{fig:teaser}
+%\end{figure}
 
 \subsection{A Large-Scale Human Motion Database (Chapter~\ref{chapter:dataset})  }
 We build a large-scale dataset by capturing face-to-face interactions of hundreds of participants in our Panoptic Studio. The scenes are captured in a carefully designed triadic negotiation scenario, referred to as \emph{Haggling}, where voluntary social behaviors can naturally emerge. The common social scenario makes it easier to model social interaction, by putting all the subjects in the same social situation. The various behavioral cues including facial expressions, body motions, hand gestures, and individual voices, are sensed and measured by our markerless motion capture system. 
