@@ -13,6 +13,7 @@ We use our Haggling scenario as an example problem of social signal prediction t
 
 
 \subsection{Notation}
+\label{section:Notation}
 Our measurement method in the Panoptic Studio reconstructs 3D body motion $\mathbf{B}(t)$ and 3D face motion $\mathbf{F}(t)$ for each individual at each time $t$\footnote{We do not use the hand motion measurement due to the occasional failures in challenging hand motions (e.g., when both hands are close to each other), making it hard to train our model. We, however, believe this cue plays an important role in social interaction, which needs to be considered in future direction.}. We also denote the global position of the body as $\mathbf{X}(t)$. From these measurements, we additionally compute the body orientation $\boldsymbol{\theta}(t)$ and face orientation $\boldsymbol{\phi}(t)$ by finding the 3D normal direction of torso and face, respectively. We describe the details below, and the left of Figure \ref{fig:notation_input} shows an example visualization.
 
 %Some figures to explain this
