@@ -31,7 +31,7 @@ Given the measurement data of the Haggling games, we first manually annotate the
 
 
 \subsection{Speaking Status Prediction}
-We predict whether the target person is currently speaking or not by observing other channels of social signals in the scene.
+We predict whether the target person is currently speaking or not by observing other channels of social signals in the scene. 
 
 \paragraph{A result on intra-personal signals.} First, we investigate the performance when the target individual's own social signals are used as input. Three different input sources---facial expressions, body gestures, and both of them---are used to train neural network models respectively. In particular, we use the same neural network architecture for this experiment by keeping the input dimension and network size as the same to make the comparison as fair as possible. As described in the Section~\ref{subsection:ssp_pred_speak}, to train each network we mask out the unused channels in the input as their average values computed in the training set. The prediction accuracies from these input signals are shown in the first column of Table ~\ref{table:speaking_class}. As demonstrated in our result, the social signals from the target individual show strong correlations with the speaking. For example, the facial cue of the target person shows the strongest correlation (about $90\%$ accuracy) with the target person's own speaking status, presumably due to the strong correlation between the lip motion and speaking. The body motion also shows a strong correlation with more than $76\%$ prediction accuracy. The result with both body and face signals, shown in the first column of Table ~\ref{table:speaking_class}, is similar to the case that only face cue is used, and by applying an ablation study we found that this is because the network dominantly uses the face cues over the body cues for the prediction, as shown in the first column of  Table~\ref{table:speaking_class_ablation}. More specifically about this ablation study, given the trained model which takes both face and body as input, we mask out the face part or body part in the input data during the ``testing'' time and compute their performances. As shown in the Table~\ref{table:speaking_class_ablation}, the accuracy after removing the body part is similar to the original performance, meaning that the trained network is less dependent to the body cues, while there exists much larger drop if the face part is removed. 
 
@@ -87,6 +87,15 @@ We predict whether the target person is currently speaking or not by observing o
 	\label{fig:result_speakPred_ablation}
 \end{figure}
 
+
+\begin{figure}[t]
+	\centering       
+	\includegraphics[trim=20 10 2 10,clip, width=\linewidth]{ssp_fig/qual_predSpeak}
+	\caption{Qualitative results of the speaking prediction of the target person (red) by using the other seller's (yellow) face and body motions as input. The speaking prediction output is shown as the blue ``speaking" label above the target person's head, while the ground truth speaking status is shown as the red label. The prediction is accurate, if both blue and red labels are shown or not shown. Examples scenes of two haggling games (top and bottom) are shown, where the sequence on the top has high accuracy (89\%) and the sequence on the bottom has low accuracy (58\%). In the haggling game shown on the top, both sellers follow turn taking almost always, while both sellers frequently speak at the same time in the sequence shown on the bottom.} 
+	\label{fig:qual_spek_pred}
+\end{figure}
+
+
 \paragraph{A result on inter-personal signals.}
 %A more interesting experiment is investigating the performance by using the other seller's social signals as input to predict the target person's speaking status. Similarly, three different input sources are considered, and the results are shown in the second column of the Table ~\ref{table:speaking_class}.  The result clearly shows that there exists a strong link between interpersonal social signals. The other seller's facial motion shows a strong predictive power for the target person's speaking status, presumably due to the turn-taking property in social communication. For example, we can assume that the target person is not speaking, when the other seller is speaking. We can verify this by checking the tendency between the prediction performance and a measurement representing how well the turn-taking rule is satisfied during the communication, as shown in Figure~\ref{fig:turn-taking}. In this figure, we plot the speaking prediction accuracy for each testing sequence by using the other seller's both face and body signals as input, which is shown as yellow bars. The blue curve is the measurement to check the turn-taking status for each sequence, which is defined by counting the percentage of the timing where at most one person is speaking. In this measurement, 100\% means that there is no time that both sellers are speaking at the same time, where the turn-taking rules are perfectly satisfied. As shown in the figure, the prediction performance shows a very similar pattern to this turn-taking status. 
 
@@ -95,9 +104,7 @@ A more interesting experiment is investigating the performance by using the othe
 \begin{gather}	
 \frac{\sum \limits_{t} \delta \left(\mathbf{S}^0(t) + \mathbf{S}^1(t) <2 \right)}{T},
 \end{gather}
-where $T$ is the total time of a Haggling game, $\mathbf{S}$ is the speaking status for sellers, and $\delta$ is a function that returns 1 if the condition satisfies and returns 0 otherwise. In this measurement, 100\% means that there is no time that both sellers are speaking at the same time, where the turn-taking rules are perfectly satisfied. We compute this measurement to check the turn-taking status for each testing sequence as the blue curve in Figure~\ref{fig:turn-taking}. In this figure, we also plot the speaking prediction accuracy for each testing sequence by using the other seller's both face and body signals as input, which is shown as yellow bars. As shown in the figure, the prediction performance shows a very similar pattern to this turn-taking status, and this means that this implicit social ``rule'' is a source of linking the social signals across individuals.
-
-
+where $T$ is the total time of a Haggling game, $\mathbf{S}$ is the speaking status for sellers, and $\delta$ is a function that returns 1 if the condition satisfies and returns 0 otherwise. In this measurement, 100\% means that there is no time that both sellers are speaking at the same time, where the turn-taking rules are perfectly satisfied. We compute this measurement to check the turn-taking status for each testing sequence as the blue curve in Figure~\ref{fig:turn-taking}. In this figure, we also plot the speaking prediction accuracy for each testing sequence by using the other seller's both face and body signals as input, which is shown as yellow bars. As shown in the figure, the prediction performance shows a very similar pattern to this turn-taking status, and this means that this implicit social ``rule'' is a source of linking the social signals across individuals. Example qualitative results are shown in the Figure~\ref{fig:qual_spek_pred}.
 
 \paragraph{A result on random signals.}
 As a comparison, we also perform an experiment by using social signals from a random individual, where the individual is randomly selected in the testing set without any social link to our target individual. As shown in the third column of the Table~\ref{table:speaking_class_ablation}, the classification performance using a random person's motion as input shows about the chance level (50\%) with no predictive property.
@@ -127,7 +134,7 @@ As a comparison, we also perform an experiment by using social signals from a ra
 
 
 \subsection{Social Formation Prediction (Position and Orientation)}
-We predict the position and orientation of the target person, the ``left seller", by using the signals of communication partners. In this test, we explore the prediction accuracy by considering combinations of difference sources: using body position, body orientation, and face orientations. Table~\ref{table:predForm_errors} shows the results. By using all signals, we obtain the best performance. Intuitively, we can imagine that the target person's location can be estimated by triangulating the face normal direction of the other two subjects, which presumably learned from our network. The prediction performance using only position cues shows the worst, but still a reasonable, performance among them. 
+We predict the position and orientation of the target person, the ``left seller", by using the signals of communication partners. In this test, we explore the prediction accuracy by considering combinations of difference sources: using body position, body orientation, and face orientations. Table~\ref{table:predForm_errors} shows the results. By using all signals, we obtain the best performance. Intuitively, we can imagine that the target person's location can be estimated by triangulating the face normal direction of the other two subjects, which presumably learned from our network. The prediction performance using only position cues shows the worst, but still a reasonable, performance among them. Example qualitative results are shown in Figure~\ref{fig:qual_form_pred}.
 
 We also introduce a baseline. The baseline method (denoted as ``Mirroring" in Table~\ref{table:predForm_errors}) predicts the location of the target seller to mirror that of the other seller w.r.t the buyer's body orientation, and estimate body orientation as the average between the two input subjects. The face orientation is chosen to always face the buyer. This baseline has large errors, with poor prediction results when the buyer is directly facing the other sellers, making the target person be too close to the other seller. 
 
@@ -155,6 +162,16 @@ We also introduce a baseline. The baseline method (denoted as ``Mirroring" in Ta
 	\end{tabular}
 	\caption{Social Formation Prediction Errors (cm). Average position error between our estimation and ground-truth are reported in centimeters. The body orientation and face orientation are computed between the distance of estimated facial/body normal direction and GTs.\label{table:predForm_errors}}
 \end{table}
+
+
+
+\begin{figure}[t]
+	\centering       
+	\includegraphics[trim=20 2 2 10,clip, width=\linewidth]{ssp_fig/qual_predForm}
+	\caption{Qualitative results of the social formation prediction of a haggling game, visualized from the view at the top. The target person is shown as red spheres. The cues from other people (yellow and cyan spheres) are used as input for the prediction, and the prediction output is shown as the blue cube. The red lines represent body orientations, and the green lines represent face orientations.} 
+	\label{fig:qual_form_pred}
+\end{figure}
+
 
 
 %Our method shows a 25 cm error in the prediction, which is better than a baseline. As the baseline, we predict the location of the target seller to mirror that of the other seller w.r.t the buyer's body orientation, and estimate body orientation as the average between the two input subjects. The face orientation is chosen to always face the buyer (denoted as ``Mirroring" in Table~\ref{table:predForm_errors}). We also perform an ablation study to see what information is important to get better accuracy. To do this, we change the channel of the input, as in Table~\ref{table:predForm_errors}. We use the same network  but set unused input channels to their mean values in the training set. This experiment demonstrates that social formation estimation can take advantages from the body and face orientation signals. Intuitively, we can imagine that the target person's location can be estimated by triangulating the face normal direction of the other two subjects. To compute errors of orientations, we compute the 2D distance between the unit vectors representing the orientation estimation and the ground truth normal directions of face or body.% In Fig.~\ref{fig:predForm_errors}, the average position errors of each sequences are shown. 
